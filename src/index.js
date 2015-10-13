@@ -45,11 +45,15 @@ app.handler = function handler () {
 		var ctx = new Context(self, req, res);
 
 		fn.call(ctx, ctx.request, ctx.response)
+			.then(respond.bind(ctx, req, res))
 			.catch(function handleError (err) {
 				try {
 					console.log("Rill: Unhandled error.");
 					console.error(err && err.stack || err);
 				} catch (_) {}
+
+				res.status = 500;
+				respond.call(ctx, req, res);
 			});
 	};
 }
