@@ -74,7 +74,7 @@ function respond (req, res) {
 	if (isType.Stream(res.body)) {
 		res.body.pipe(this.res);
 	} else {
-		this.res.body.end(("HEAD" === req.method)
+		this.res.end(("HEAD" === req.method)
 			? undefined
 			: res.body
 		)
