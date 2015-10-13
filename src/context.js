@@ -34,12 +34,11 @@ context.assert = function assertHttp (val, code, message, meta) {
 };
 
 context.redirect = function redirect (url, alt) {
-	alt = URL.resolve(this.request.href, alt || "/");
-	url = URL.resolve(this.request.href, url);
-
-	this.response.headers["location"] = (url === "back")
+	url = (url === "back")
 		? this.response.headers["referrer"] || alt
 		: url;
+
+	this.response.headers["location"] = URL.resolve(this.request.href, url);
 }
 
 context.refresh = function refresh (url, delay) {
