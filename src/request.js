@@ -21,9 +21,9 @@ function Request (ctx) {
 	)
 
 	var parsed = URL.parse(URL.format({
-		path: this.url,
-		host: this.headers["x-forwarded-host"] || this.headers["host"],
-		protocol: (this.connection.encrypted)
+		path: req.url,
+		host: req.headers["x-forwarded-host"] || req.headers["host"],
+		protocol: (req.connection.encrypted)
 			? "https"
 			: "http"
 	}));
@@ -33,7 +33,7 @@ function Request (ctx) {
 		this[key] = parsed[key];
 	}
 
-	this.subdomains = (this.host || "")
+	this.subdomains = (this.hostname || "")
 		.split(".")
 		.reverse()
 		.slice(ctx.app.subdomainOffset);
