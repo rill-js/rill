@@ -19,7 +19,14 @@ function Request (ctx) {
 		req.connection.socket.remoteAddress
 	)
 
-	var parsed = URL.parse(req.url)
+	var parsed = URL.parse(URL.format({
+		path: this.url,
+		host: this.headers["x-forwarded-host"] || this.headers["host"],
+		protocol: (this.socket.encrypted)
+			? "https"
+			: "http"
+	}));
+
 	for (var key in parsed) {
 		if (typeof parsed[key] === "function") continue;
 		this[key] = parsed[key];
