@@ -11,7 +11,8 @@ function Request (ctx) {
 	this.files               = req.files || [];
 	this.body                = req.body || {};
 	this.params              = {};
-	this.socket              = req.socket;
+	this.socket              = req.socket || {};
+	this.connection          = req.connection;
 	this.ip                  = (
 		req.headers['x-forwarded-for'] ||
 		req.connection.remoteAddress ||
@@ -22,7 +23,7 @@ function Request (ctx) {
 	var parsed = URL.parse(URL.format({
 		path: this.url,
 		host: this.headers["x-forwarded-host"] || this.headers["host"],
-		protocol: (this.socket.encrypted)
+		protocol: (this.connection.encrypted)
 			? "https"
 			: "http"
 	}));
