@@ -1,6 +1,6 @@
 var URL       = require("url");
 var Cookies   = require("@rill/cookies");
-var HttpError = require("./error");
+var HttpError = require("@rill/error");
 var Request   = require("./request");
 var Response  = require("./response");
 
@@ -37,7 +37,7 @@ context.redirect = function redirect (url, alt) {
 	alt = URL.resolve(this.request.href, alt || "/");
 	url = URL.resolve(this.request.href, url);
 
-	this.response.headers["location"] = (url === "bacK")
+	this.response.headers["location"] = (url === "back")
 		? this.response.headers["referrer"] || alt
 		: url;
 }

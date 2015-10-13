@@ -26,12 +26,11 @@ var matches = {
 			var matches = req.pathname.match(reg);
 			if (!matches) return next();
 
-			// TODO: set params in req.
 			for (var key, match, i = keys.length; i--;) {
 				key = keys[i];
 				match = matches[i + 1];
-				req.params[key] = match;
 				if (!key.optional && match == null) return next();
+				req.params[key] = match;
 			}
 
 			return fn.call(this, req, res, next);
@@ -48,6 +47,14 @@ var matches = {
 		return function matchHost (req, res, next) {		
 			var matches = req.hostname.match(reg);
 			if (!matches) return next();
+
+			for (var key, match, i = keys.length; i--;) {
+				key = keys[i];
+				match = matches[i + 1];
+				if (!key.optional && match == null) return next();
+				req.subdomains[key] = match;
+			}
+
 			return fn.call(this, req, res, next);
 		}
 	},
@@ -64,6 +71,7 @@ var matches = {
 
 		method = app.config.method || method;
 		if (!method) return fn;
+		method = method.toUpperCase();
 
 		return function matchMethod (req, res, next) {		
 			if (req.method !== method) return next();

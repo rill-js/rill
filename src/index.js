@@ -1,6 +1,6 @@
 var http      = require("@rill/http");
 var chain     = require("@rill/chain");
-var HttpError = require("./error");
+var HttpError = require("@rill/error");
 var match     = require("./match");
 var mount     = require("./mount");
 var Context   = require("./context");
@@ -17,9 +17,11 @@ module.exports = Rill;
 function Rill () {
 	if (!(this instanceof Rill)) return new Rill();
 
-	this.url    = "/";
-	this.stack  = [];
-	this.config = {};
+	this.subdomainOffset = 2;
+	this.url             = "/";
+	this.env             = process.env.NODE_ENV;
+	this.stack           = [];
+	this.config          = {};
 }
 
 /**
@@ -32,13 +34,12 @@ app.handler = function handler () {
 	var self        = this;
 	var len         = this.stack.length;
 	var middleware  = new Array(len + 1);
-	middleware[len] = respond;
 	
 	// Here we ensure each middleware function has an updated app instance.
 	// This is to enabled lazy matching.
-	for (;len--;) middleware[len] = this.stack[len](this);
-
-	var fn = chain(middleware);
+	middleware[len]               = respond;
+	while (len--) middleware[len] = this.stack[len](this)
+	var fn                        = chain(middleware);
 
 	return function handleIncommingMessage (req, res) {
 		var ctx = new Context(self, req, res);
@@ -48,8 +49,8 @@ app.handler = function handler () {
 				try {
 					console.log("Rill: Unhandled error.");
 					console.error(err && err.stack || err);
-				} catch (_) {} }
-			);
+				} catch (_) {}
+			});
 	};
 }
 
@@ -73,8 +74,8 @@ app.listen = function listen () {
 app.setup = function setup () {
 	for (var fn, i = arguments.length; --i;) {
 		fn = arguments[i];
-		if (typeof fn !== "function") continue;
-		fn(this);
+		if (typeof fn === "function") fn(this);
+		else if (fn != null) throw new TypeError("Rill#setup: Setup must be a function or null.");
 	}
 
 	return this;
@@ -116,7 +117,7 @@ app.use = function use () {
 		} else if (typeof fn === "function") {
 			this.stack.push(match(config, fn));
 		} else {
-			throw new TypeError("Rill: Middleware must be an app, function, or null.")
+			throw new TypeError("Rill#use: Middleware must be an app, function, or null.");
 		}
 	}
 
@@ -127,6 +128,7 @@ app.use = function use () {
  * Syntactic sugar for `app.use({ pathname: config }, fns...);`
  */
 app.at = function at (config) {
+	if (typeof config !== "string") throw new TypeError("Rill#at: Path name must be a string.");
 	arguments[0] = { pathname: config }; 
 	return this.use.apply(this, arguments);
 };
@@ -135,28 +137,34 @@ app.at = function at (config) {
  * Syntactic sugar for `app.use({ hostname: config }, fns...);`
  */
 app.host = function host (config) {
+	if (typeof config !== "string") throw new TypeError("Rill#host: Host name must be a string.");
 	arguments[0] = { hostname: config }; 
 	return this.use.apply(this, arguments);
-}
+};
 
 /**
  * Syntactic sugar for `app.use({ method: method, pathname: config }, fns...);`
  */
-http.METHODS.forEach(function (method) {
-	app[method.toLowerCase()] = function (pathname) {
-		var options = { method: method };
+http.METHODS.forEach(function (config) {
+	var name = config.toLowerCase();
+	Object.defineProperty(method, "name", { value: name });
+
+	function method (pathname) {
+		var options = { method: config };
 		var len     = arguments.length + 1;
 		var arr     = new Array(len);
 
-		if (pathname && typeof pathname === "string" || pathname instanceof RegExp) {
+		if (typeof pathname === "string") {
 			options.pathname = pathname;
 			arguments[0]     = null;	
 		}
 
 		// Convert arguments to an array.
 		arr[0]                 = options;
-		for (;--len;) arr[len] = arguments[len - 1];
+		while (--len) arr[len] = arguments[len - 1];
 
 		return this.use.apply(this, arr);
 	};
+
+	app[name] = method;
 });
