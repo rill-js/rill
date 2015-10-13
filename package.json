@@ -18,6 +18,7 @@
     "@rill/cookies": "^0.3.1",
     "@rill/error": "^0.1.0",
     "@rill/http": "^0.3.5",
+    "@rill/is-type": "0.0.2",
     "join-url": "^0.2.0",
     "path-to-regexp": "^1.2.1"
   }
