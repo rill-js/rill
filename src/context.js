@@ -35,8 +35,13 @@ context.assert = function assertHttp (val, code, message, meta) {
 
 context.redirect = function redirect (url, alt) {
 	url = (url === "back")
-		? this.response.headers["referrer"] || alt
+		? this.request.headers["referrer"]
 		: url;
+
+	url = url || alt;
+
+	if (!url)
+		throw new TypeError("Rill#redirect: Cannot redirect, url not specified and alternative not provided.");
 
 	this.response.headers["location"] = URL.resolve(this.request.href, url);
 }
