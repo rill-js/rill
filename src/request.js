@@ -5,6 +5,7 @@ module.exports = Request;
 function Request (ctx) {
 	var req = ctx.req;
 
+	this.originalUrl         = req.url;
 	this.method              = req.method || "GET";
 	this.headers             = req.headers || {};
 	this.headers["referrer"] = this.headers["referer"];
