@@ -72,7 +72,7 @@ app.listen = function listen () {
  * @param {Function...} transformers
  */
 app.setup = function setup () {
-	for (var fn, i = arguments.length; --i;) {
+	for (var fn, i = arguments.length; i--;) {
 		fn = arguments[i];
 		if (typeof fn === "function") fn(this);
 		else if (fn != null) throw new TypeError("Rill#setup: Setup must be a function or null.");
