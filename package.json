@@ -4,10 +4,29 @@
   "description": "Isomorphic web application framework.",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "main": "src/index.js",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/rill-js/rill"
   },
+  "keywords": [
+    "api",
+    "app",
+    "application",
+    "framework",
+    "http",
+    "isomorphic",
+    "middleware",
+    "rack",
+    "react",
+    "rest",
+    "restfull",
+    "rill",
+    "router",
+    "tusk",
+    "universal",
+    "web"
+  ],
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-mocha": "^2.1.3",
