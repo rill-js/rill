@@ -22,6 +22,9 @@ var statuses = {
 	}
 };
 
+/**
+ * Runs general clean up on a request before ending it.
+ */
 function respond (req, res) {
 	// Skip request ended externally.
 	if (this.res.headersSent) return;

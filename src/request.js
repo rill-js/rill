@@ -2,6 +2,13 @@ var URL = require("url");
 
 module.exports = Request;
 
+/**
+ * Wrapper around nodejs `IncommingMessage` that has pre parsed url
+ * and other conveinences.
+ *
+ * @constructor
+ * @param {Context} ctx - The context for the request.
+ */
 function Request (ctx) {
 	var req = ctx.req;
 
@@ -33,5 +40,6 @@ function Request (ctx) {
 	this.subdomains = (this.hostname || "")
 		.split(".")
 		.reverse()
-		.slice(ctx.app.subdomainOffset);
+		.slice(ctx.subdomainOffset);
+
 }
