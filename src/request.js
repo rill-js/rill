@@ -40,6 +40,6 @@ function Request (ctx) {
 	this.subdomains = (this.hostname || "")
 		.split(".")
 		.reverse()
-		.slice(ctx.subdomainOffset);
+		.slice(ctx.app.subdomainOffset);
 
 }

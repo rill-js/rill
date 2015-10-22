@@ -66,7 +66,7 @@ var matches = {
 				key = keys[i];
 				match = matches[i + 1];
 				if (!key.optional && match == null) return next();
-				req.params[key] = match;
+				req.params[key.name] = match;
 			}
 
 			return fn.call(this, req, res, next);
@@ -99,7 +99,7 @@ var matches = {
 				key = keys[i];
 				match = matches[i + 1];
 				if (!key.optional && match == null) return next();
-				req.subdomains[key] = match;
+				req.subdomains[key.name] = match;
 			}
 
 			return fn.call(this, req, res, next);

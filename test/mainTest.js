@@ -53,6 +53,18 @@ describe("Rill", function () {
 		], done);
 	});
 
+	it("should attach params", function (done) {
+		var request = agent.create(
+			Rill().at("/test/:name", respond(200, function (req) {
+				assert.deepEqual(req.params, { name: "hi" });
+			}))
+		);
+
+		request
+			.get("/test/hi")
+			.end(done);
+	});
+
 	it("should match a hostname", function (done) {
 		var request = agent.create(
 			Rill().host("*test.com", respond(200))
@@ -105,6 +117,23 @@ describe("Rill", function () {
 		], done);
 	});
 
+	it("should attach a subdomain", function (done) {
+		var request = agent.create(
+			Rill().host(":name.test.com", respond(200, function (req) {
+				assert.equal(req.subdomains.length, 1);
+				assert.equal(req.subdomains[0], "hi");
+				assert.equal(req.subdomains.name, "hi");
+			}))
+		);
+
+		when([
+			request
+				.get("/")
+				.set("host", "hi.test.com")
+				.expect(200),
+		], done);
+	});
+
 	it("should match a method", function (done) {
 		var request = agent.create(
 			Rill().post(respond(200))
@@ -131,8 +160,11 @@ describe("Rill", function () {
 	});
 });
 
-function respond (status, headers) {
-	return function (req, res) { res.status = status; };
+function respond (status, test) {
+	return function (req, res) {
+		res.status = status;
+		if (typeof test === "function") test.call(this, req, res);
+	};
 }
 
 function when (promises, done) {
