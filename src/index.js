@@ -63,9 +63,10 @@ rill.handler = function handler () {
 
 	return function handleIncommingMessage (req, res) {
 		var ctx = new Context(self, req, res);
+		var end = function () { respond.call(ctx, ctx.request, ctx.response); };
 
 		fn.call(ctx, ctx.request, ctx.response)
-			.then(respond.bind(ctx, ctx.request, ctx.response))
+			.then(end)
 			.catch(function handleError (err) {
 				try {
 					console.log("Rill: Unhandled error.");
@@ -73,7 +74,7 @@ rill.handler = function handler () {
 				} catch (_) {}
 
 				res.status = 500;
-				respond.call(ctx, ctx.request, ctx.response);
+				end();
 			});
 	};
 }
