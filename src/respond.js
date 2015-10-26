@@ -4,7 +4,7 @@ var isType       = require("@rill/is-type");
 
 module.exports = respond;
 
-var htmlReg      = /^\s*</;
+var htmlReg  = /^\s*</;
 var statuses = {
 	redirect: {	
 		"300": true,
@@ -31,7 +31,7 @@ function respond (req, res) {
 
 	// Persist cookies.
 	var setCookie = this.cookies.serialize();
-	if (setCookie) res.headers["set-cookie"] = setCookie;
+	if (setCookie && setCookie.length) res.headers["set-cookie"] = setCookie;
 
 	// Ensure redirect status.
 	if (res.headers["location"]) res.status = res.status || 302;
