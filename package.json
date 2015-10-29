@@ -37,7 +37,7 @@
     "@rill/compose": "^0.1.1",
     "@rill/cookies": "^0.4.0",
     "@rill/error": "^0.1.0",
-    "@rill/http": "^0.5.0",
+    "@rill/http": "^0.5.1",
     "@rill/is-type": "0.0.2",
     "byte-length": "^0.1.0",
     "join-url": "^0.2.2",

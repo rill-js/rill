@@ -139,7 +139,7 @@ rill.use = function use () {
 	var end   = this._stack.length += arguments.length;
 
 	for (var fn, i = end; start < i--;) {
-		this._stack[i] = match({}, arguments[i - start]);
+		this._stack[i] = match(null, arguments[i - start]);
 	}
 
 	return this;
