@@ -2,6 +2,8 @@ var http      = require("@rill/http");
 var chain     = require("@rill/chain");
 var HttpError = require("@rill/error");
 var match     = require("./match");
+var Request   = require("./request");
+var Response  = require("./response")
 var Context   = require("./context");
 var respond   = require("./respond");
 var rill      = Rill.prototype;
@@ -21,6 +23,12 @@ function Rill () {
 	this.base            = {};
 	this._stack          = [];
 }
+
+// Expose other constructors.
+rill.Context   = Context;
+rill.Request   = Request;
+rill.Response  = Response;
+rill.HttpError = HttpError;
 
 /**
  * Function to create a valid set of middleware for the instance.
