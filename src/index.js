@@ -8,6 +8,11 @@ var Context   = require("./context");
 var respond   = require("./respond");
 var rill      = Rill.prototype;
 
+// Expose other constructors.
+Rill.Context   = Context;
+Rill.Request   = Request;
+Rill.Response  = Response;
+Rill.HttpError = HttpError;
 module.exports = Rill;
 
 /**
@@ -23,12 +28,6 @@ function Rill () {
 	this.base            = {};
 	this._stack          = [];
 }
-
-// Expose other constructors.
-rill.Context   = Context;
-rill.Request   = Request;
-rill.Response  = Response;
-rill.HttpError = HttpError;
 
 /**
  * Function to create a valid set of middleware for the instance.
