@@ -1,6 +1,5 @@
-var byteLength   = require("byte-length");
-var STATUS_CODES = require("@rill/http").STATUS_CODES;
-var isType       = require("@rill/is-type");
+var byteLength = require("byte-length");
+var isType     = require("@rill/is-type");
 
 module.exports = respond;
 
@@ -34,7 +33,6 @@ function respond (req, res) {
 
 	// Default the status to 200 if there is substance to the response.
 	if (Number(res.status) === 404 && res.body) res.status = 200;
-	res.statusText = res.statusText || STATUS_CODES[res.status];
 
 	switch (true) {
 		case statuses.empty[res.status] || res.body == null:
@@ -68,7 +66,7 @@ function respond (req, res) {
 			break;
 	}
 
-	this.res.writeHead(res.status, res.statusText, res.headers);
+	this.res.writeHead(res.status, res.statusMessage, res.headers);
 
 	if (isType.Stream(res.body)) {
 		res.body.pipe(this.res);
