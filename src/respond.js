@@ -1,5 +1,6 @@
-var byteLength = require("byte-length");
-var isType     = require("@rill/is-type");
+var byteLength   = require("byte-length");
+var isType       = require("@rill/is-type");
+var STATUS_CODES = require("@rill/http").STATUS_CODES;
 
 module.exports = respond;
 
@@ -33,6 +34,7 @@ function respond (req, res) {
 
 	// Default the status to 200 if there is substance to the response.
 	if (Number(res.status) === 404 && res.body) res.status = 200;
+	res.statusMessage = res.statusMessage || STATUS_CODES[res.status];
 
 	switch (true) {
 		case statuses.empty[res.status] || res.body == null:
