@@ -1,5 +1,4 @@
 var URL       = require("url");
-var Cookies   = require("@rill/cookies");
 var HttpError = require("@rill/error");
 var Request   = require("./request");
 var Response  = require("./response");
@@ -20,7 +19,6 @@ function Context (app, req, res) {
 	this.res      = res;
 	this.request  = new Request(this);
 	this.response = new Response(this);
-	this.cookies  = new Cookies(req.headers.cookie);
 }
 
 var context = Context.prototype;

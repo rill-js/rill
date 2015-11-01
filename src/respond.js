@@ -29,10 +29,6 @@ function respond (req, res) {
 	// Skip request ended externally.
 	if (this.res.headersSent) return;
 
-	// Persist cookies.
-	var setCookie = this.cookies.serialize();
-	if (setCookie && setCookie.length) res.headers["set-cookie"] = setCookie;
-
 	// Ensure redirect status.
 	if (res.headers["location"]) res.status = res.status || 302;
 
