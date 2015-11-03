@@ -1,4 +1,5 @@
-var URL = require("url");
+var URL     = require("url");
+var cookies = require("@rill/cookies");
 
 module.exports = Request;
 
@@ -8,19 +9,20 @@ module.exports = Request;
  *
  * @constructor
  * @param {Context} ctx - The context for the request.
+ * @param {IncommingMessage} req - The original node request.
  */
-function Request (ctx) {
-	var req = ctx.req;
-
-	this.originalUrl         = req.url;
+function Request (ctx, req) {
+	this.ctx                 = ctx;
+	this.original            = req;
+	this.socket              = req.socket || {};
+	this.connection          = req.connection || {};
 	this.method              = req.method || "GET";
 	this.headers             = req.headers || {};
 	this.headers["referrer"] = this.headers["referer"];
+	this.cookies             = cookies.parse(this.headers["cookie"]);
 	this.files               = req.files || [];
 	this.body                = req.body || {};
 	this.params              = {};
-	this.socket              = req.socket || {};
-	this.connection          = req.connection;
 	this.ip                  = (
 		req.headers['x-forwarded-for'] ||
 		req.connection.remoteAddress ||
@@ -37,9 +39,13 @@ function Request (ctx) {
 		this[key] = parsed[key];
 	}
 
+	if (this.protocol[this.protocol.length - 1] === ":") {
+		this.protocol = this.protocol.slice(0, -1);
+	}
+
+	this.secure = this.protocol === "https";
 	this.subdomains = (this.hostname || "")
 		.split(".")
 		.reverse()
 		.slice(ctx.app.subdomainOffset);
-
 }

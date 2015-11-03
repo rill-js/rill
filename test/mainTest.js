@@ -158,6 +158,34 @@ describe("Rill", function () {
 			);
 		});
 	});
+
+	it("should parse cookies", function (done) {
+		var request = agent.create(
+			Rill().use(respond(200, function (req) {
+				assert.deepEqual(req.cookies, { a: "1", b: "2" });
+			}))
+		);
+
+		request
+			.get("/")
+			.set("cookie", "a=1;b=2")
+			.expect(200)
+			.end(done);
+	});
+
+	it("should serialize cookies", function (done) {
+		var request = agent.create(
+			Rill().use(respond(200, function (req, res) {
+				res.cookie("a", 1, { httpOnly: true });
+			}))
+		);
+
+		request
+			.get("/")
+			.expect(200)
+			.expect("set-cookie", "a=1; httponly")
+			.end(done);
+	});
 });
 
 function respond (status, test) {

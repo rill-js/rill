@@ -27,7 +27,7 @@ var statuses = {
  */
 function respond (req, res) {
 	// Skip request ended externally.
-	if (this.res.headersSent) return;
+	if (res.original.headersSent) return;
 
 	// Ensure redirect status.
 	if (res.headers["location"]) res.status = res.status || 302;
@@ -68,12 +68,12 @@ function respond (req, res) {
 			break;
 	}
 
-	this.res.writeHead(res.status, res.statusMessage, res.headers);
+	res.original.writeHead(res.status, res.statusMessage, res.headers);
 
 	if (isType.Stream(res.body)) {
-		res.body.pipe(this.res);
+		res.body.pipe(res.original);
 	} else {
-		this.res.end(("HEAD" === req.method)
+		res.original.end(("HEAD" === req.method)
 			? undefined
 			: res.body
 		)

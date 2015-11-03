@@ -2,9 +2,9 @@ var http      = require("@rill/http");
 var chain     = require("@rill/chain");
 var HttpError = require("@rill/error");
 var match     = require("./match");
+var Context   = require("./context");
 var Request   = require("./request");
 var Response  = require("./response")
-var Context   = require("./context");
 var respond   = require("./respond");
 var rill      = Rill.prototype;
 
@@ -70,18 +70,17 @@ rill.handler = function handler () {
 
 	return function handleIncommingMessage (req, res) {
 		var ctx = new Context(self, req, res);
-		var end = function () { respond.call(ctx, ctx.request, ctx.response); };
 
 		fn.call(ctx, ctx.request, ctx.response)
-			.then(end)
 			.catch(function handleError (err) {
 				try {
+					ctx.response.status = 500;
 					console.log("Rill: Unhandled error.");
 					console.error(err && err.stack || err);
 				} catch (_) {}
-
-				res.status = 500;
-				end();
+			})
+			.then(function () {
+				respond(ctx.request, ctx.response);
 			});
 	};
 }

@@ -15,12 +15,9 @@ module.exports = Context;
  */
 function Context (app, req, res) {
 	this.app      = app;
-	this.req      = req;
-	this.res      = res;
-	this.request  = new Request(this);
-	this.response = new Response(this);
+	this.request  = new Request(this, req);
+	this.response = new Response(this, res);
 }
-
 var context = Context.prototype;
 
 /**
@@ -48,41 +45,4 @@ context.throw = function throwHttp (code, message, meta) {
  */
 context.assert = function assertHttp (val, code, message, meta) {
 	if (!val) this.throw(code, message, meta);
-};
-
-/**
- * Attaches relative location headers to perform a redirect.
- * Will redirect to the referrer if "back" is supplied as a url.
- *
- * @param {String} url - The url to redirect too or "back".
- * @param {String} alt - Used if the url is empty or "back" does not exist.
- */
-context.redirect = function redirect (url, alt) {
-	url = (url === "back")
-		? this.request.headers["referer"]
-		: url;
-	url = url || alt;
-
-	if (!url)
-		throw new TypeError("Rill#redirect: Cannot redirect, url not specified and alternative not provided.");
-
-	this.response.headers["location"] = URL.resolve(this.request.href, url);
-}
-
-/**
- * Attaches relative refresh headers to perform a timed refresh.
- * Will refresh to the referrer if "back" is supplied as a url.
- *
- * @param {String} url - The url to refresh or "back".
- * @param {String} delay - Delays the refresh by `delay` seconds.
- * @param {String} alt - Used if the url is empty or "back" does not exist.
- */
-context.refresh = function refresh (url, delay, alt) {
-	delay = delay || 0;
-	url = (url === "back")
-		? this.request.headers["referer"]
-		: url;
-	url = URL.resolve(this.request.href, url || alt || this.request.href);
-
-	this.response.headers["refresh"] = delay + "; url=" + url;
 };
