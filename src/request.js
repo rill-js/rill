@@ -49,3 +49,4 @@ function Request (ctx, req) {
 		.reverse()
 		.slice(ctx.app.subdomainOffset);
 }
+var request = Request.prototype;

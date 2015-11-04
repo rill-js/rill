@@ -25,7 +25,10 @@ var statuses = {
 /**
  * Runs general clean up on a request before ending it.
  */
-function respond (req, res) {
+function respond (ctx) {
+	var req = ctx.req;
+	var res = ctx.res;
+
 	// Skip request ended externally.
 	if (res.original.headersSent) return;
 

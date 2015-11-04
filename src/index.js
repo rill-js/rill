@@ -1,17 +1,10 @@
-var http      = require("@rill/http");
-var chain     = require("@rill/chain");
-var HttpError = require("@rill/error");
-var match     = require("./match");
-var Context   = require("./context");
-var Request   = require("./request");
-var Response  = require("./response")
-var respond   = require("./respond");
-var rill      = Rill.prototype;
-
-// Expose other constructors.
-Rill.Context   = Context;
-Rill.Request   = Request;
-Rill.Response  = Response;
+var http       = require("@rill/http");
+var chain      = require("@rill/chain");
+var HttpError  = require("@rill/error");
+var match      = require("./match");
+var Context    = require("./context");
+var respond    = require("./respond");
+var rill       = Rill.prototype;
 Rill.HttpError = HttpError;
 module.exports = Rill;
 
@@ -48,10 +41,8 @@ rill.stack = function stack () {
 			continue;
 		} else if (fn.constructor === Rill) {
 			result = result.concat(fn.stack());
-		} else if (typeof fn === "function") {
-			result.push(fn);
 		} else {
-			throw new TypeError("Rill: Middleware must be an app, function, or null.");
+			result.push(fn);
 		}
 	}
 
@@ -65,23 +56,21 @@ rill.stack = function stack () {
  * @return {Function}
  */
 rill.handler = function handler () {
-	var self = this;
-	var fn   = chain(this.stack());
+	var app = this;
+	var fn  = chain(this.stack());
 
 	return function handleIncommingMessage (req, res) {
-		var ctx = new Context(self, req, res);
+		var ctx = new Context(app, req, res);
 
-		fn.call(ctx, ctx.request, ctx.response)
+		fn(ctx)
 			.catch(function handleError (err) {
 				try {
-					ctx.response.status = 500;
+					ctx.res.status = 500;
 					console.log("Rill: Unhandled error.");
 					console.error(err && err.stack || err);
 				} catch (_) {}
 			})
-			.then(function () {
-				respond(ctx.request, ctx.response);
-			});
+			.then(function () { respond(ctx) });
 	};
 }
 

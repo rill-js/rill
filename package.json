@@ -33,7 +33,7 @@
     "supertest": "^1.1.0"
   },
   "dependencies": {
-    "@rill/chain": "^0.1.0",
+    "@rill/chain": "^0.2.1",
     "@rill/cookies": "^0.6.1",
     "@rill/error": "^0.1.0",
     "@rill/http": "^0.5.1",

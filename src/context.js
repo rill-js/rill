@@ -14,9 +14,9 @@ module.exports = Context;
  * @param {ServerResponse} res - A nodejs style response object.
  */
 function Context (app, req, res) {
-	this.app      = app;
-	this.request  = new Request(this, req);
-	this.response = new Response(this, res);
+	this.app = app;
+	this.req = new Request(this, req);
+	this.res = new Response(this, res);
 }
 var context = Context.prototype;
 
@@ -30,7 +30,7 @@ var context = Context.prototype;
  */
 context.throw = function throwHttp (code, message, meta) {
 	error = new HttpError(code, message, meta);
-	this.response.status = error.code;
+	this.req.status = error.code;
 	throw error;
 };
 

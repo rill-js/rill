@@ -19,10 +19,10 @@ bower install rill
 # Example
 
 ```javascript
-const rill = require("rill");
-const app  = rill();
+const Rill = require("rill");
+const app  = Rill();
 
-app.use(function (req, res, next) {
+app.use(function ({ req, res }, next) {
 	const start = new Date;
 
 	// Rill uses promises for control flow.
@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
 	});
 });
 
-app.use(function (req, res) {
+app.use(function ({ res }) {
 	res.body = 'Hello world.';
 });
 ```

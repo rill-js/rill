@@ -57,7 +57,8 @@ var matches = {
 		var keys = [],
 			reg = toReg(pathname, keys);
 
-		return function matchPath (req, res, next) {		
+		return function matchPath (ctx, next) {		
+			var req     = ctx.req;
 			var matches = req.pathname.match(reg);
 			if (!matches) return next();
 
@@ -69,7 +70,7 @@ var matches = {
 				req.params[key.name] = match;
 			}
 
-			return fn.call(this, req, res, next);
+			return fn(ctx, next);
 		}
 	},
 
@@ -90,7 +91,8 @@ var matches = {
 		var keys = [],
 			reg = toReg(hostname, keys, { strict: true });
 
-		return function matchHost (req, res, next) {		
+		return function matchHost (ctx, next) {
+			var req     = ctx.req;
 			var matches = req.hostname.match(reg);
 			if (!matches) return next();
 
@@ -102,7 +104,7 @@ var matches = {
 				req.subdomains[key.name] = match;
 			}
 
-			return fn.call(this, req, res, next);
+			return fn(ctx, next);
 		}
 	},
 
@@ -130,9 +132,10 @@ var matches = {
 		if (!method) return fn;
 		method = method.toUpperCase();
 
-		return function matchMethod (req, res, next) {		
+		return function matchMethod (ctx, next) {
+			var req = ctx.req;	
 			if (req.method !== method) return next();
-			return fn.call(this, req, res, next);
+			return fn(ctx, next);
 
 		}
 	}

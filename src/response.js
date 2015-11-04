@@ -18,7 +18,7 @@ function Response (ctx, res) {
 	this.status   = 404;
 	this.body     = undefined;
 
-	res.once("finish", function () { ctx.response.finished = true; });
+	res.once("finish", function () { ctx.res.finished = true; });
 }
 var response = Response.prototype;
 
@@ -61,7 +61,7 @@ response.clearCookie = function (key, opts) {
  * @param {String} alt - Used if the url is empty or "back" does not exist.
  */
 response.redirect = function redirect (url, alt) {
-	var req = this.ctx.request;
+	var req = this.ctx.req;
 
 	url = (url === "back")
 		? req.headers["referer"]
@@ -83,7 +83,7 @@ response.redirect = function redirect (url, alt) {
  * @param {String} alt - Used if the url is empty or "back" does not exist.
  */
 response.refresh = function refresh (url, delay, alt) {
-	var req = this.ctx.request;
+	var req = this.ctx.req;
 
 	delay = delay || 0;
 	url = (url === "back")

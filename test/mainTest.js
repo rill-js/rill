@@ -55,8 +55,8 @@ describe("Rill", function () {
 
 	it("should attach params", function (done) {
 		var request = agent.create(
-			Rill().at("/test/:name", respond(200, function (req) {
-				assert.deepEqual(req.params, { name: "hi" });
+			Rill().at("/test/:name", respond(200, function (ctx) {
+				assert.deepEqual(ctx.req.params, { name: "hi" });
 			}))
 		);
 
@@ -119,10 +119,10 @@ describe("Rill", function () {
 
 	it("should attach a subdomain", function (done) {
 		var request = agent.create(
-			Rill().host(":name.test.com", respond(200, function (req) {
-				assert.equal(req.subdomains.length, 1);
-				assert.equal(req.subdomains[0], "hi");
-				assert.equal(req.subdomains.name, "hi");
+			Rill().host(":name.test.com", respond(200, function (ctx) {
+				assert.equal(ctx.req.subdomains.length, 1);
+				assert.equal(ctx.req.subdomains[0], "hi");
+				assert.equal(ctx.req.subdomains.name, "hi");
 			}))
 		);
 
@@ -161,8 +161,8 @@ describe("Rill", function () {
 
 	it("should parse cookies", function (done) {
 		var request = agent.create(
-			Rill().use(respond(200, function (req) {
-				assert.deepEqual(req.cookies, { a: "1", b: "2" });
+			Rill().use(respond(200, function (ctx) {
+				assert.deepEqual(ctx.req.cookies, { a: "1", b: "2" });
 			}))
 		);
 
@@ -175,8 +175,8 @@ describe("Rill", function () {
 
 	it("should serialize cookies", function (done) {
 		var request = agent.create(
-			Rill().use(respond(200, function (req, res) {
-				res.cookie("a", 1, { httpOnly: true });
+			Rill().use(respond(200, function (ctx) {
+				ctx.res.cookie("a", 1, { httpOnly: true });
 			}))
 		);
 
@@ -189,9 +189,9 @@ describe("Rill", function () {
 });
 
 function respond (status, test) {
-	return function (req, res) {
-		res.status = status;
-		if (typeof test === "function") test.call(this, req, res);
+	return function (ctx) {
+		ctx.res.status = status;
+		if (typeof test === "function") test(ctx);
 	};
 }
 
