@@ -141,7 +141,7 @@ rill.use = function use () {
 };
 
 /**
- * Syntactic sugar for `rill.use({ pathname: config }, fns...);`
+ * Use middleware at a specific pathname.
  */
 rill.at = function at (pathname) {
 	if (typeof pathname !== "string") throw new TypeError("Rill#at: Path name must be a string.");
@@ -159,7 +159,7 @@ rill.at = function at (pathname) {
 };
 
 /**
- * Syntactic sugar for `rill.use({ hostname: config }, fns...);`
+ * Use middleware at a specific hostname.
  */
 rill.host = function host (hostname) {
 	if (typeof hostname !== "string") throw new TypeError("Rill#host: Host name must be a string.");
@@ -177,7 +177,7 @@ rill.host = function host (hostname) {
 };
 
 /**
- * Syntactic sugar for `rill.use({ method: method, pathname: config }, fns...);`
+ * Use middleware for a specific method / pathname.
  */
 http.METHODS.forEach(function (method) {
 	var name = method.toLowerCase();

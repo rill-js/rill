@@ -1,33 +1,22 @@
 var byteLength   = require("byte-length");
-var isType       = require("@rill/is-type");
+var checkType    = require("content-check");
 var STATUS_CODES = require("@rill/http").STATUS_CODES;
 
 module.exports = respond;
 
-var htmlReg  = /^\s*</;
-var statuses = {
-	redirect: {	
-		"300": true,
-		"301": true,
-		"302": true,
-		"303": true,
-		"305": true,
-		"307": true,
-		"308": true
-	},
-	empty: {
-		"204": true,
-		"205": true,
-		"304": true
-	}
+var empty = {
+	"204": true,
+	"205": true,
+	"304": true
 };
 
 /**
- * Runs general clean up on a request before ending it.
+ * Runs general clean up on a request and ends it.
  */
 function respond (ctx) {
 	var req = ctx.req;
 	var res = ctx.res;
+	var isStream = res.body && typeof res.body.pipe === "function";
 
 	// Skip request ended externally.
 	if (res.original.headersSent) return;
@@ -37,48 +26,38 @@ function respond (ctx) {
 
 	// Default the status to 200 if there is substance to the response.
 	if (Number(res.status) === 404 && res.body) res.status = 200;
+	// Default status message based on status code.
 	res.statusMessage = res.statusMessage || STATUS_CODES[res.status];
 
-	switch (true) {
-		case statuses.empty[res.status] || res.body == null:
+	if (res.headers["content-type"] != null) {
+		// Ensure no content-type for empty responses.
+		if (empty[res.status] || res.body == null) {
+			res.body = null;
 			delete res.headers["content-type"];
-			break;
-
-		case isType.String(res.body):
-			if (!res.headers["content-type"])
-				res.headers["content-type"] = "text/" + (
-					htmlReg.test(res.body)
-						? "html"
-						: "plain"
-				) + "; charset=UTF-8";
-			break;
-
-		case isType.Buffer(res.body):
-			res.headers["content-length"] = res.body.length;
-			break;
-
-		case isType.Stream(res.body):
-			if (!res.headers["content-type"])
-				res.headers["content-type"] = "application/octet-stream";
-			break;
-
-		default:
-			try {
-				res.body = JSON.stringify(res.body);
-				if (!res.headers["content-type"])
-					res.headers["content-type"] = "application/json; charset=UTF-8";
-			} catch (_) {}
-			break;
+		}
+	} else {
+		// Attempt to guess content type.
+		res.headers["content-type"] = checkType(res.body);
 	}
 
+	if (res.headers["content-length"] == null || isStream) {
+		delete res.headers["content-length"];
+	} else {
+		// Auto set content-length.
+		res.headers["content-length"] = byteLength(res.body);
+	}
+
+	// Send off headers.
 	res.original.writeHead(res.status, res.statusMessage, res.headers);
 
-	if (isType.Stream(res.body)) {
-		res.body.pipe(res.original);
+	if (req.method === "HEAD" || res.body == null) {
+		// Never send body on "HEAD"
+		res.original.end();
+	} else if (!isStream) {
+		// Send response.
+		res.original.end(res.body);
 	} else {
-		res.original.end(("HEAD" === req.method)
-			? undefined
-			: res.body
-		)
+		// Attempt to pipe streams.
+		res.body.pipe(res.original);
 	}
 }
