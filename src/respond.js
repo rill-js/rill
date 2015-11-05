@@ -50,14 +50,13 @@ function respond (ctx) {
 	// Send off headers.
 	res.original.writeHead(res.status, res.statusMessage, res.headers);
 
-	if (req.method === "HEAD" || res.body == null) {
-		// Never send body on "HEAD"
-		res.original.end();
-	} else if (!isStream) {
-		// Send response.
-		res.original.end(res.body);
-	} else {
+	if (isStream) {
 		// Attempt to pipe streams.
 		res.body.pipe(res.original);
+	} else {
+		res.original.end(req.method === "HEAD"
+			? undefined
+			: res.body
+		);
 	}
 }
