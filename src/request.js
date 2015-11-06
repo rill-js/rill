@@ -20,8 +20,6 @@ function Request (ctx, req) {
 	this.headers             = req.headers || {};
 	this.headers["referrer"] = this.headers["referer"];
 	this.cookies             = cookies.parse(this.headers["cookie"]);
-	this.files               = req.files || [];
-	this.body                = req.body || {};
 	this.params              = {};
 	this.ip                  = (
 		req.headers['x-forwarded-for'] ||
