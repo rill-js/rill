@@ -19,10 +19,18 @@ bower install rill
 # Example
 
 ```javascript
+/**
+ * The following code can run 100% in the browser or in node js.
+ */
+
 const Rill = require("rill");
 const app  = Rill();
 
-app.use(function ({ req, res }, next) {
+// Enable react rendering.
+app.use(require("@rill/react"));
+
+// Attach a response time logging middleware.
+app.use(function ({ req }, next) {
 	const start = new Date;
 
 	// Rill uses promises for control flow.
@@ -33,8 +41,11 @@ app.use(function ({ req, res }, next) {
 	});
 });
 
-app.use(function ({ res }) {
-	res.body = 'Hello world.';
+// Render the home page.
+app.get("/", function ({ req, res, render }) {
+	// Render the Page (react component).
+	// See @rill/react for documentation.
+	render(Page, { message: "Hello World" });
 });
 ```
 
