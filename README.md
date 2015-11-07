@@ -42,10 +42,10 @@ app.use(function ({ req }, next) {
 });
 
 // Render the home page.
-app.get("/", function ({ req, res, render }) {
+app.get("/", function ({ req, res }) {
 	// Render the Page (react component).
 	// See @rill/react for documentation.
-	render(Page, { message: "Hello World" });
+	res.render(Page, { message: "Hello World" });
 });
 ```
 
