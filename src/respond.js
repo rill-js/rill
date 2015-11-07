@@ -21,11 +21,13 @@ function respond (ctx) {
 	// Skip request ended externally.
 	if (res.original.headersSent) return;
 
-	// Ensure redirect status.
-	if (res.headers["location"]) res.status = res.status || 302;
+	if (Number(res.status) === 404) {
+		// Ensure redirect status.
+		if (res.headers["location"]) res.status = 302;
+		// Default the status to 200 if there is substance to the response.
+		else if (res.body) res.status = 200;
+	}
 
-	// Default the status to 200 if there is substance to the response.
-	if (Number(res.status) === 404 && res.body) res.status = 200;
 	// Default status message based on status code.
 	res.statusMessage = res.statusMessage || STATUS_CODES[res.status];
 
