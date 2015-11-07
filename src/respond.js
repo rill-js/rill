@@ -1,14 +1,8 @@
-var byteLength   = require("byte-length");
-var checkType    = require("content-check");
-var STATUS_CODES = require("@rill/http").STATUS_CODES;
+var byteLength = require("byte-length");
+var checkType  = require("content-check");
+var statuses   = require("statuses");
 
 module.exports = respond;
-
-var empty = {
-	"204": true,
-	"205": true,
-	"304": true
-};
 
 /**
  * Runs general clean up on a request and ends it.
@@ -29,11 +23,11 @@ function respond (ctx) {
 	}
 
 	// Default status message based on status code.
-	res.statusMessage = res.statusMessage || STATUS_CODES[res.status];
+	res.statusMessage = res.statusMessage || statuses[res.status];
 
 	if (res.headers["content-type"] != null) {
 		// Ensure no content-type for empty responses.
-		if (empty[res.status] || res.body == null) {
+		if (statuses.empty[res.status] || res.body == null) {
 			res.body = null;
 			delete res.headers["content-type"];
 		}
