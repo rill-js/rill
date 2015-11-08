@@ -93,3 +93,57 @@ response.refresh = function refresh (url, delay, alt) {
 
 	this.headers["refresh"] = delay + "; url=" + url;
 };
+
+/**
+ * Utility to retrieve a header for the response.
+ *
+ * @param {String} field
+ * @return {Array|String}
+ */
+response.get = function get (field) {
+	field = field.toLowerCase();
+	if (field === "referrer") field = "referer";
+	return this.headers[field] || "";
+};
+
+/**
+ * Utility to set a header for the response.
+ *
+ * @param {String} field
+ * @param {Array|String} val
+ */
+response.set = function set (field, val) {
+	field = field.toLowerCase();
+	if (field === "referrer") field = "referer";
+	this.headers[field] = val;
+};
+
+/**
+ * Utility to append to an existing header for the response.
+ *
+ * @param {String} field
+ * @param {Array|String} val
+ */
+response.append = function append (field, val) {
+	field = field.toLowerCase();
+	if (field === "referrer") field = "referer";
+
+	var headers = this.headers;
+	var cur     = this.headers[field];
+
+	if (null == cur) cur = [];
+	if (cur.constructor !== Array) cur = [cur];
+
+	headers[field] = cur.concat(val);
+};
+
+/**
+ * Utility to delete an existing header on the response.
+ *
+ * @param {String} field
+ */
+response.remove = function remove (field) {
+	field = field.toLowerCase();
+	if (field === "referrer") field = "referer";
+	delete this.headers[field];
+};

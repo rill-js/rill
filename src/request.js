@@ -48,3 +48,15 @@ function Request (ctx, req) {
 		.slice(ctx.app.subdomainOffset);
 }
 var request = Request.prototype;
+
+/**
+ * Utility to retrieve a header for the request.
+ *
+ * @param {String} field
+ * @return {Array|String}
+ */
+request.get = function get (field) {
+	field = field.toLowerCase();
+	if (field === "referrer") field = "referer";
+	return this.headers[field] || "";
+};
