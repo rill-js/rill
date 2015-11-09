@@ -30,11 +30,7 @@ var response = Response.prototype;
  * @param {Object} opts - options for the cookie.
  */
 response.cookie = function (key, val, opts) {
-	if (!this.headers["set-cookie"]) {
-		this.headers["set-cookie"] = [];
-	}
-
-	this.headers["set-cookie"].push(cookies.serialize(key, val, opts));
+	this.append("Set-Cookie", cookies.serialize(key, val, opts))
 };
 
 /**
@@ -45,12 +41,7 @@ response.cookie = function (key, val, opts) {
  */
 response.clearCookie = function (key, opts) {
 	opts.expires = new Date();
-
-	if (!this.headers["set-cookie"]) {
-		this.headers["set-cookie"] = [];
-	}
-
-	this.headers["set-cookie"].push(cookies.serialize(key, "", opts));
+	this.append("Set-Cookie", cookies.serialize(key, "", opts));
 };
 
 /**
@@ -64,14 +55,14 @@ response.redirect = function redirect (url, alt) {
 	var req = this.ctx.req;
 
 	url = (url === "back")
-		? req.headers["referer"]
+		? req.get("Referrer")
 		: url;
 	url = url || alt;
 
 	if (!url)
 		throw new TypeError("Rill#redirect: Cannot redirect, url not specified and alternative not provided.");
 
-	this.headers["location"] = URL.resolve(req.href, url);
+	this.set("Location", URL.resolve(req.href, url));
 }
 
 /**
@@ -87,11 +78,11 @@ response.refresh = function refresh (url, delay, alt) {
 
 	delay = delay || 0;
 	url = (url === "back")
-		? req.headers["referer"]
+		? req.get("Referrer")
 		: url;
 	url = URL.resolve(req.href, url || alt || req.href);
 
-	this.headers["refresh"] = delay + "; url=" + url;
+	this.set("Refresh", delay + "; url=" + url);
 };
 
 /**
