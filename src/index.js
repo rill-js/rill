@@ -19,6 +19,7 @@ function Rill () {
 	this.env             = process.env.NODE_ENV;
 	this.subdomainOffset = 2;
 	this.base            = {};
+	this.servers         = [];
 	this._stack          = [];
 }
 
@@ -81,8 +82,9 @@ rill.handler = function handler () {
  */
 rill.listen = function listen () {
 	// todo: accept a url string and parse out protocol, port and ip.
-	this.server = http.createServer(this.handler());
-	return this.server.listen.apply(this.server, arguments);
+	var server = http.createServer(this.handler());
+	this.servers.push(server);
+	return server.listen.apply(server, arguments);
 };
 
 /**
@@ -91,12 +93,15 @@ rill.listen = function listen () {
  * @return {Server}
  */
 rill.close = function close () {
-	if (!this.server) {
-		throw new Error("Rill: Unable to close. Server not started.")
+	if (!this.server || !this.server.length) {
+		throw new Error("Rill: Unable to close. No servers started.")
 	}
 
-	this.server.close();
-	this.server = undefined;
+	for (var i = this.servers.length; i--;) {
+		this.servers[i].close();
+	}
+
+	this.servers = [];
 	return this;
 };
 

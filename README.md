@@ -16,37 +16,48 @@ npm install rill
 bower install rill
 ```
 
+# Community
+
+* [API](https://github.com/rill-js/rill/blob/master/docs/api/index.md) documentation.
+* [Examples](https://github.com/rill-js/examples)
+* [Middleware](https://github.com/rill-js/rill/wiki) list
+* [Wiki](https://github.com/rill-js/rill/wiki)
+* [Reddit Community](https://www.reddit.com/r/Rill)
+
 # Example
 
 ```javascript
 /**
  * The following code can run 100% in the browser or in node js.
+ * Examples use es6/7 with Babel but this is optional.
  */
 
 const Rill = require("rill");
 const app  = Rill();
 
-// Enable react rendering.
-app.use(require("@rill/react"));
+// Logger
 
-// Attach a response time logging middleware.
-app.use(function ({ req }, next) {
+app.use(async ({ req }, next)=> {
 	const start = new Date;
 
 	// Rill uses promises for control flow.
 	// ES2016 async functions work great as well!
-	next().then(function () {
-		const ms = new Date - start;
-		console.log(`${req.method} ${req.url} - ${ms}`);
-	});
+	await next();
+
+	const ms = new Date - start;
+	console.log(`${req.method} ${req.url} - ${ms}`);
 });
 
-// Render the home page.
-app.get("/", function ({ req, res }) {
-	// Render the Page (react component).
-	// See @rill/react for documentation.
-	res.render(Page, { message: "Hello World" });
+// Response
+
+app.use(({ res })=> {
+	// Here we render a string,
+	// check out middleware such as @rill/react
+	// for isomorphic dom rendering.
+	res.body = "Hello World";
 });
+
+app.listen(3000);
 ```
 
 ### Contributions
