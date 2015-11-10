@@ -14,8 +14,6 @@ module.exports = Request;
 function Request (ctx, req) {
 	this.ctx                 = ctx;
 	this.original            = req;
-	this.socket              = req.socket || {};
-	this.connection          = req.connection || {};
 	this.method              = req.method || "GET";
 	this.headers             = req.headers || {};
 	this.headers["referrer"] = this.headers["referer"];

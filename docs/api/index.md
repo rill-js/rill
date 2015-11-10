@@ -142,7 +142,7 @@ app.at("/api/:resource", ({ req })=>
 );
 ```
 
-## app[METHOD]([path], function|application...)`
+## app|METHOD|([path], function|application...)`
 
   Add a middleware that will only be ran if an optional path string is matched
   and the request has the used method.
