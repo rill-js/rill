@@ -1,32 +1,31 @@
 # Request
 
-  A Rill `Request` object is an abstraction on top of node's vanilla request object,
-  or @rill/http in the browser.
+  A Rill `Request` object is an abstraction on top of node's vanilla request object, or @rill/http in the browser.
   It provides additional functionality that is useful for every day isomorphic development.
 
 ## API
 
-### request.original
+### req.original
  
  Original nodejs request object.
 
-### request.ctx
+### req.ctx
 
  The current [context](https://github.com/rill-js/rill/blob/master/docs/api/context.md).
 
-### request.headers
+### req.headers
 
  Request header object.
 
-### request.method
+### req.method
 
  Request method.
 
-### request.cookies
+### req.cookies
 
  Parsed cookies for the request.
 
-### request.href
+### req.href
 
   Get full request URL, include `protocol`, `host` and `url`.
 
@@ -35,7 +34,7 @@ ctx.req.href
 // => http://example.com/foo/bar?q=1#section
 ```
 
-### request.protocol
+### req.protocol
 
  Protocol for the request.
 
@@ -44,7 +43,7 @@ ctx.req.protocol;
 // => http
 ```
 
-### request.hostname
+### req.hostname
   
  Host name for the request.
 
@@ -53,7 +52,7 @@ ctx.req.hostname;
 // => example.com
 ```
 
-### request.port
+### req.port
   
  Port number for the request.
 
@@ -62,7 +61,7 @@ ctx.req.port;
 // => 80
 ```
 
-### request.host
+### req.host
   
  Host for the request, including port.
 
@@ -71,7 +70,7 @@ ctx.req.host;
 // => example.com:80
 ```
 
-### request.pathname
+### req.pathname
 
  The path section of the URL.
 
@@ -80,7 +79,7 @@ ctx.req.pathname;
 // => /foo/bar
 ```
 
-### request.search
+### req.search
 
   Get raw query string void of `?`.
 
@@ -89,7 +88,7 @@ ctx.req.search;
 // => q=1
 ```
 
-### request.path
+### req.path
 
  The concatenated pathname and querystring of the URL.
 
@@ -98,7 +97,7 @@ ctx.req.path;
 // => /foo/bar?q=1
 ```
 
-### request.query
+### req.query
 
  A parsed querstring object.
 
@@ -107,7 +106,7 @@ ctx.req.query;
 // => { q: "1" }
 ```
 
-### request.hash
+### req.hash
 
  The hash fragment of the URL (only in browser).
 
@@ -116,20 +115,20 @@ ctx.req.hash
 // => section
 ```
 
-### request.params
+### req.params
 
  An object containing the matches during a path middleware.
 
-### request.secure
+### req.secure
 
   Shorthand for `ctx.req.protocol == "https"` to check if a request was
   issued via TLS.
 
-### request.ip
+### req.ip
 
   Request remote address. Supports `X-Forwarded-For`.
 
-### request.subdomains
+### req.subdomains
 
   Return subdomains as an array.
 
@@ -141,6 +140,6 @@ ctx.req.hash
   If `app.subdomainOffset` is not set, this.subdomains is `["ferrets", "tobi"]`.
   If `app.subdomainOffset` is 3, this.subdomains is `["tobi"]`.
 
-### request.get(field)
+### req.get(field)
 
   Return request header.

@@ -25,7 +25,7 @@ function respond (ctx) {
 	}
 
 	// Default status message based on status code.
-	res.statusMessage = res.statusMessage || statuses[res.status];
+	res.message = res.message || statuses[res.status];
 
 	if (res.get("Content-Type")) {
 		// Ensure no content-type for empty responses.
@@ -46,7 +46,7 @@ function respond (ctx) {
 	}
 
 	// Send off headers.
-	original.writeHead(res.status, res.statusMessage, clean(res.headers));
+	original.writeHead(res.status, res.message, clean(res.headers));
 
 	if (isStream) {
 		// Attempt to pipe streams.

@@ -69,11 +69,11 @@ response.redirect = function redirect (url, alt) {
  * Attaches relative refresh headers to perform a timed refresh.
  * Will refresh to the referrer if "back" is supplied as a url.
  *
- * @param {String} url - The url to refresh or "back".
  * @param {String} delay - Delays the refresh by `delay` seconds.
+ * @param {String} url - The url to refresh or "back".
  * @param {String} alt - Used if the url is empty or "back" does not exist.
  */
-response.refresh = function refresh (url, delay, alt) {
+response.refresh = function refresh (delay, url, alt) {
 	var req = this.ctx.req;
 
 	delay = delay || 0;
