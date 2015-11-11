@@ -13,7 +13,8 @@ var tests      = "./test";
 */
 gulp.task("test", function () {
 	return gulp.src(tests + "/*Test.js", { read: false })
-		.pipe(mocha());
+		.pipe(mocha())
+		.once("end", process.exit);
 });
 
 /**

@@ -1,13 +1,12 @@
 var assert = require("assert");
-var agent  = require("./agent");
+var agent  = require("supertest");
 var Rill   = require("../src");
 
 describe("Rill", function () {
-	after(agent.clear);
-
 	it("should accept a request", function (done) {
-		var request = agent.create(
-			Rill().use(respond(200))
+		var request = agent(Rill()
+			.use(respond(200))
+			.listen()
 		);
 
 		request
@@ -17,8 +16,9 @@ describe("Rill", function () {
 	});
 
 	it("should match a pathname", function (done) {
-		var request = agent.create(
-			Rill().at("/test", respond(200))
+		var request = agent(Rill()
+			.at("/test", respond(200))
+			.listen()
 		);
 
 		when([
@@ -32,12 +32,13 @@ describe("Rill", function () {
 	});
 
 	it("should mount a pathname", function (done) {
-		var request = agent.create(
-			Rill().at("/test",
-				Rill().at("/1",
-					Rill().at("/2", respond(200))
+		var request = agent(Rill()
+			.at("/test", Rill()
+				.at("/1", Rill()
+					.at("/2", respond(200))
 				)
 			)
+			.listen()
 		);
 
 		when([
@@ -54,10 +55,11 @@ describe("Rill", function () {
 	});
 
 	it("should attach params", function (done) {
-		var request = agent.create(
-			Rill().at("/test/:name", respond(200, function (ctx) {
+		var request = agent(Rill()
+			.at("/test/:name", respond(200, function (ctx) {
 				assert.deepEqual(ctx.req.params, { name: "hi" });
 			}))
+			.listen()
 		);
 
 		request
@@ -66,8 +68,9 @@ describe("Rill", function () {
 	});
 
 	it("should match a hostname", function (done) {
-		var request = agent.create(
-			Rill().host("*test.com", respond(200))
+		var request = agent(Rill()
+			.host("*test.com", respond(200))
+			.listen()
 		);
 
 		when([
@@ -90,12 +93,13 @@ describe("Rill", function () {
 	});
 
 	it("should mount a subdomain/hostname", function (done) {
-		var request = agent.create(
-			Rill().host("test.com",
-				Rill().host("api",
-					Rill().host("test", respond(200))
+		var request = agent(Rill()
+			.host("test.com", Rill()
+				.host("api", Rill()
+					.host("test", respond(200))
 				)
 			)
+			.listen()
 		);
 
 		when([
@@ -118,12 +122,13 @@ describe("Rill", function () {
 	});
 
 	it("should attach a subdomain", function (done) {
-		var request = agent.create(
-			Rill().host(":name.test.com", respond(200, function (ctx) {
+		var request = agent(Rill()
+			.host(":name.test.com", respond(200, function (ctx) {
 				assert.equal(ctx.req.subdomains.length, 1);
 				assert.equal(ctx.req.subdomains[0], "hi");
 				assert.equal(ctx.req.subdomains.name, "hi");
 			}))
+			.listen()
 		);
 
 		when([
@@ -135,8 +140,9 @@ describe("Rill", function () {
 	});
 
 	it("should match a method", function (done) {
-		var request = agent.create(
-			Rill().post(respond(200))
+		var request = agent(Rill()
+			.post(respond(200))
+			.listen()
 		);
 
 		when([
@@ -151,19 +157,21 @@ describe("Rill", function () {
 
 	it("shouldn't mount methods twice", function () {
 		assert.throws(function () {
-			agent.create(
-				Rill().post(
-					Rill().get(respond(200))
+			agent(Rill()
+				.post(Rill()
+					.get(respond(200))
 				)
+				.listen()
 			);
 		});
 	});
 
 	it("should parse cookies", function (done) {
-		var request = agent.create(
-			Rill().use(respond(200, function (ctx) {
+		var request = agent(Rill()
+			.use(respond(200, function (ctx) {
 				assert.deepEqual(ctx.req.cookies, { a: "1", b: "2" });
 			}))
+			.listen()
 		);
 
 		request
@@ -174,10 +182,11 @@ describe("Rill", function () {
 	});
 
 	it("should serialize cookies", function (done) {
-		var request = agent.create(
-			Rill().use(respond(200, function (ctx) {
+		var request = agent(Rill()
+			.use(respond(200, function (ctx) {
 				ctx.res.cookie("a", 1, { httpOnly: true });
 			}))
+			.listen()
 		);
 
 		request
