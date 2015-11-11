@@ -18,9 +18,32 @@ function Rill () {
 
 	this.env             = process.env.NODE_ENV;
 	this.subdomainOffset = 2;
+	this.locals          = {};
 	this.base            = {};
 	this.servers         = [];
 	this._stack          = [];
+}
+
+/**
+ * Allow setting a local variable in the fluent api.
+ *
+ * @param {String} key
+ * @param {*} val
+ * @return {Rill}
+ */
+rill.set = function set (key, val) {
+	this.locals[key] = val;
+	return this;
+}
+
+/**
+ * Utility to retrieve a local variable for the app.
+ *
+ * @param {String} key
+ * @return {*}
+ */
+rill.get = function get (key) {
+	return this.locals[key];
 }
 
 /**

@@ -71,6 +71,27 @@ http.createServer(app.handler()).listen(3000);
 app.close();
 ```
 
+## app.locals
+
+  Locals set on the app will be automatically copied to `ctx.locals`.
+  Any sort of app level configuration should be set here.
+
+## app.set(key, value)
+
+  Set a value on `app.locals`. Locals will be cloned onto the context of an incomming request and are often use in view rendering libraries.
+
+```js
+app.set("title", "Hello World");
+```
+
+## app.get(key)
+
+  Retreive a value from the `app.locals`.
+
+```js
+app.get("title") //-> "Hello World"
+```
+
 ## app.handler()
 
   Return a callback function suitable for the `http.createServer()`
@@ -94,7 +115,7 @@ app.listen(3003);
   
   Returns the current middleware stack for the application as an array.
 
-## app.setup
+## app.setup(function...)
   
   Simple syntactic sugar for middleware that wish to modify the current
   application.

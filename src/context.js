@@ -14,9 +14,11 @@ module.exports = Context;
  * @param {ServerResponse} res - A nodejs style response object.
  */
 function Context (app, req, res) {
-	this.app = app;
-	this.req = new Request(this, req);
-	this.res = new Response(this, res);
+	this.app    = app;
+	this.req    = new Request(this, req);
+	this.res    = new Response(this, res);
+	this.locals = {};
+	for (var key in app.locals) this.locals[key] = app.locals[key];
 }
 var context = Context.prototype;
 

@@ -31,6 +31,10 @@ app.use(function (ctx) {
 
   Application instance reference.
 
+### ctx.locals
+
+  An object created during each incomming request that allows passing data between each middleware function. `ctx.locals` will also inherit any locals placed in `app.locals`.
+
 ### ctx.throw(status, [message], [properties])
 
   Helper method to throw an error with a `.status` property.
