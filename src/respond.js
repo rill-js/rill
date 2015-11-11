@@ -48,14 +48,14 @@ function respond (ctx) {
 	// Send off headers.
 	original.writeHead(res.status, res.message, clean(res.headers));
 
-	if (isStream) {
-		// Attempt to pipe streams.
-		body.pipe(res.original);
-	} else {
-		original.end(req.method === "HEAD"
-			? undefined
-			: body
-		);
+	// Don't send empty bodies.
+	if (req.method === "HEAD" || null == body) original.end();
+	// Attempt to pipe streams.
+	else if (isStream) body.pipe(original);
+	else {
+		// Stringify objects that are not buffers.
+		if (typeof body !== "string" && !body.buffer) body = JSON.stringify(body);
+		original.end(body);
 	}
 }
 
