@@ -56,5 +56,5 @@ var request = Request.prototype;
 request.get = function get (field) {
 	field = field.toLowerCase();
 	if (field === "referrer") field = "referer";
-	return this.headers[field] || "";
+	return this.headers[field];
 };
