@@ -34,17 +34,7 @@ function Rill () {
 rill.set = function set (key, val) {
 	this.locals[key] = val;
 	return this;
-}
-
-/**
- * Utility to retrieve a local variable for the app.
- *
- * @param {String} key
- * @return {*}
- */
-rill.get = function get (key) {
-	return this.locals[key];
-}
+};
 
 /**
  * Function to create a valid set of middleware for the instance.

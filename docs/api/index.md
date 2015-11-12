@@ -82,14 +82,7 @@ app.close();
 
 ```js
 app.set("title", "Hello World");
-```
-
-## app.get(key)
-
-  Retreive a value from the `app.locals`.
-
-```js
-app.get("title") //-> "Hello World"
+app.locals.title === "Hello World";
 ```
 
 ## app.handler()
