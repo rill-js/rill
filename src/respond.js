@@ -1,6 +1,7 @@
 var byteLength = require("byte-length");
 var checkType  = require("content-check");
 var statuses   = require("statuses");
+var buffer     = (function () { return this }()).Buffer || respond;
 
 module.exports = respond;
 
@@ -12,7 +13,6 @@ function respond (ctx) {
 	var res      = ctx.res;
 	var body     = res.body;
 	var original = res.original;
-	var isStream = (body && typeof body.pipe === "function");
 
 	// Skip request ended externally.
 	if (original.headersSent) return;
@@ -27,36 +27,25 @@ function respond (ctx) {
 	// Default status message based on status code.
 	res.message = res.message || statuses[res.status];
 
-	if (res.get("Content-Type")) {
-		// Ensure no content-type for empty responses.
-		if (statuses.empty[res.status] || !body) {
-			res.body = null;
-			res.remove("Content-Type");
-		}
+	// Ensure no content-type for empty responses.
+	if (req.method === "HEAD" || statuses.empty[res.status] || !body) {
+		body = null;
+		res.remove("Content-Type");
+		res.remove("Content-Length");
 	} else {
+		// Stringify objects that are not buffers.
+		if (!isBuffer(body) && typeof body !== "string") body = JSON.stringify(body);
 		// Attempt to guess content type.
-		res.set("Content-Type", checkType(body));
-	}
-
-	if (res.get("Content-Length")) {
-		if (isStream) res.remove("Content-Length");
-	} else {
-		// Auto set content-length.
-		res.set("Content-Length", byteLength(body));
+		if (!res.get("Content-Type")) res.set("Content-Type", checkType(res.body));
+		// Attempt to guess content-length.
+		if (!res.get("Content-Length")) res.set("Content-Length", byteLength(body));
 	}
 
 	// Send off headers.
 	original.writeHead(res.status, res.message, clean(res.headers));
-
-	// Don't send empty bodies.
-	if (req.method === "HEAD" || null == body) original.end();
-	// Attempt to pipe streams.
-	else if (isStream) body.pipe(original);
-	else {
-		// Stringify objects that are not buffers.
-		if (typeof body !== "string" && !body.buffer) body = JSON.stringify(body);
-		original.end(body);
-	}
+	// Finish response.
+	if (isStream(body)) body.pipe(original);
+	else original.end(body);
 }
 
 /**
@@ -71,3 +60,19 @@ function clean (obj) {
 			delete obj[key]
 	return obj;
 }
+
+/**
+ * Utility to check if a value is a node js stream.
+ *
+ * @param {*} val
+ * @return {Boolean}
+ */
+function isStream (val) { return val && typeof val.pipe === "function"; }
+
+/**
+ * Utility to check if a value is a node js buffer.
+ *
+ * @param {*} val
+ * @return {Boolean}
+ */
+function isBuffer (val) { return val instanceof buffer; }
