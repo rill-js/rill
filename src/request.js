@@ -1,4 +1,5 @@
 var URL     = require("url");
+var qSet    = require("q-set");
 var cookies = require("@rill/cookies");
 
 module.exports = Request;
@@ -28,8 +29,14 @@ function Request (ctx, req) {
 
 	var host     = req.headers["x-forwarded-host"] || req.headers["host"];
 	var protocol = (req.connection.encrypted) ? "https" : "http"
-	var parsed   = URL.parse(protocol + "://" + host + req.url);
+	var parsed   = URL.parse(protocol + "://" + host + req.url, true);
+	var query    = parsed.query;
+	parsed.query = {};
 
+	// Support nested querystrings.
+	for (var key in query) qSet(parsed.query, key, query[key]);
+
+	// Attach parsed data to request.
 	for (var key in parsed) {
 		if (typeof parsed[key] === "function") continue;
 		this[key] = parsed[key];

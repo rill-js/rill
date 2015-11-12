@@ -196,6 +196,30 @@ describe("Rill", function () {
 			.end(done);
 	});
 
+	it("should parse a nested querystring", function (done) {
+		var query = {
+			a: {
+				b: {
+					c: "1"
+				}
+			},
+			d: "2"
+		};
+
+		var request = agent(Rill()
+			.use(respond(200, function (ctx) {
+				assert.deepEqual(ctx.req.query, query)
+			}))
+			.listen()
+		);
+
+		request
+			.get("/")
+			.query(query)
+			.expect(200)
+			.end(done);
+	});
+
 	it("should set and get locals", function (done) {
 		var request = agent(Rill()
 			.set("title", "Hello")
