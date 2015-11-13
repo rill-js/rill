@@ -32,7 +32,8 @@ var context = Context.prototype;
  */
 context.throw = function throwHttp (code, message, meta) {
 	error = new HttpError(code, message, meta);
-	this.req.status = error.code;
+	this.res.status = error.code;
+	this.res.message = error.message;
 	throw error;
 };
 

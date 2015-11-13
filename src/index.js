@@ -77,13 +77,10 @@ rill.handler = function handler () {
 		var ctx = new Context(app, req, res);
 
 		fn(ctx)
-			.catch(function handleError (err) {
-				try {
-					ctx.res.status = 500;
-					console.log("Rill: Unhandled error.");
-					console.error(err && err.stack || err);
-				} catch (_) {}
-			})
+			.catch(function handleError (err) { try {
+				if (Number(ctx.res.status) === 404) ctx.res.status = 500;
+				if (!(err instanceof HttpError)) console.error(err && err.stack || err);
+			} catch (_) {}})
 			.then(function () { respond(ctx) });
 	};
 }

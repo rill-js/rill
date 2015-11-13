@@ -220,6 +220,18 @@ describe("Rill", function () {
 			.end(done);
 	});
 
+	it("should be able to throw an http error", function (done) {
+		var request = agent(Rill()
+			.use(respond(200, function (ctx) { ctx.throw(400); }))
+			.listen()
+		);
+
+		request
+			.get("/")
+			.expect(400)
+			.end(done);
+	});
+
 	it("should set and get locals", function (done) {
 		var request = agent(Rill()
 			.set("title", "Hello")
