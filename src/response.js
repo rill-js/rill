@@ -1,4 +1,5 @@
 var URL       = require("url");
+var toField   = require("header-field");
 var HttpError = require("@rill/error");
 var cookies   = require("@rill/cookies");
 
@@ -92,9 +93,7 @@ response.refresh = function refresh (delay, url, alt) {
  * @return {Array|String}
  */
 response.get = function get (field) {
-	field = field.toLowerCase();
-	if (field === "referrer") field = "referer";
-	return this.headers[field];
+	return this.headers[toField(field)];
 };
 
 /**
@@ -104,9 +103,7 @@ response.get = function get (field) {
  * @param {Array|String} val
  */
 response.set = function set (field, val) {
-	field = field.toLowerCase();
-	if (field === "referrer") field = "referer";
-	this.headers[field] = val;
+	this.headers[toField(field)] = val;
 };
 
 /**
@@ -116,14 +113,12 @@ response.set = function set (field, val) {
  * @param {Array|String} val
  */
 response.append = function append (field, val) {
-	field = field.toLowerCase();
-	if (field === "referrer") field = "referer";
-
+	field       = toField(field);
 	var headers = this.headers;
 	var cur     = this.headers[field];
 
 	if (null == cur) cur = [];
-	if (cur.constructor !== Array) cur = [cur];
+	else if (cur.constructor !== Array) cur = [cur];
 
 	headers[field] = cur.concat(val);
 };
@@ -134,7 +129,5 @@ response.append = function append (field, val) {
  * @param {String} field
  */
 response.remove = function remove (field) {
-	field = field.toLowerCase();
-	if (field === "referrer") field = "referer";
-	delete this.headers[field];
+	delete this.headers[toField(field)];
 };

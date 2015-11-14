@@ -1,5 +1,6 @@
 var URL     = require("url");
 var qSet    = require("q-set");
+var toField = require("header-field");
 var cookies = require("@rill/cookies");
 
 module.exports = Request;
@@ -61,7 +62,5 @@ var request = Request.prototype;
  * @return {Array|String}
  */
 request.get = function get (field) {
-	field = field.toLowerCase();
-	if (field === "referrer") field = "referer";
-	return this.headers[field];
+	return this.headers[toField(field)];
 };
