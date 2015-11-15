@@ -1,6 +1,6 @@
 # Response
 
-  A Rill `Response` object is an abstraction on top of node's vanilla response object, or @rill/http in the browser.
+  A Rill `Response` object is an abstraction on top of node's vanilla response object, or [@rill/http])(https://github.com/rill-js/http) in the browser.
   It provides additional functionality that is useful for every day isomorphic development.
 
 ## API
@@ -19,7 +19,7 @@
 
 ### res.status
 
-  Get response status. By default, `ctx.res.status` is not set unlike node's `res.statusCode` which defaults to `200`.
+  Get response status. By default, `ctx.res.status` is `404` unlike node's `res.statusCode` which defaults to `200`.
 
 ### res.status=
 
@@ -201,5 +201,5 @@ res.body = 'Redirecting to shopping cart';
 res.refresh(1);
 
 // Refresh the browser after 2 seconds and go to the login page.
-res.redirect(2, '/login');
+res.refresh(2, '/login');
 ```

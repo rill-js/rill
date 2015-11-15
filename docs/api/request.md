@@ -1,6 +1,6 @@
 # Request
 
-  A Rill `Request` object is an abstraction on top of node's vanilla request object, or @rill/http in the browser.
+  A Rill `Request` object is an abstraction on top of node's vanilla request object, or [@rill/http])(https://github.com/rill-js/http) in the browser.
   It provides additional functionality that is useful for every day isomorphic development.
 
 ## API

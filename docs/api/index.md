@@ -3,7 +3,7 @@
   Rill is supported in all recent versions of [nodejs](https://nodejs.org) and modern browsers.
   Rill can support IE9 and lower with a [History Location polyfill](https://github.com/devote/HTML5-History-API).
 
-  You can quickly install a supposed version of node/iojs with your favorite version manager:
+  You can quickly install a supported version of node/iojs with your favorite version manager:
 
 ```bash
 $ nvm install stable
@@ -43,11 +43,10 @@ const app = new Rill();
 
   A Rill application is not a 1-to-1 representation of a HTTP server.
   One or more Rill applications may be mounted together to form larger
-  applications with a single HTTP server.
+  applications and you can even listen to multiple ports with a single HTTP server.
 
-  All arguments provided are forwarded to `Server#listen()` and are simply
-  ignored in the browser. For server side arguments read the documentation on 
-  Create and return an HTTP server, passing the given arguments to [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback).
+  `listen` will return an HTTP server, passing the given arguments to [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback).
+  All arguments provided are forwarded to `Server#listen()` and are simply ignored in the browser.
   
   The following is a useless Rill application bound to port `3000`:
 
@@ -114,7 +113,7 @@ app.listen(3003);
   application.
 
 ```js
-app.setup(function (myapp) {
+app.setup((myapp)=> {
   myapp === app; // true
   myapp.customMethod = ...;
   myapp.use(customMiddleware);
@@ -152,7 +151,7 @@ app.at("/", ...);
 // Params will also be provided under req.params
 // For example using /api/user
 app.at("/api/:resource", ({ req })=>
-  res.params.resource === "user";
+  req.params.resource === "user";
 );
 ```
 
@@ -162,7 +161,7 @@ app.at("/api/:resource", ({ req })=>
   and the request has the used method.
 
 ```js
-// March all get requests.
+// Match all get requests.
 app.get(...);
 
 // Match request for the route path and uses the GET method.
@@ -177,7 +176,7 @@ app.get("/", ...);
 // Match request for a specific host.
 app.host("test.com", ...);
 
-// Subdomain marches will also be provided under req.subdomains
+// Subdomain matches will also be provided under req.subdomains
 // For example using api.user.test.com
 app.host("api.:resource.test.com", { req })=>
   res.subdomains.resource === "user";

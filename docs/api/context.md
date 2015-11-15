@@ -5,12 +5,14 @@
   web applications and APIs.
 
   A `Context` is created _per_ request, and is provided to middleware
-  as the first argument.
+  as the first argument. In an es6 capable environment it is easy to pull
+  out parts of the context that you need (as seen in some examples) like so
+  `{ req, res, app, locals }`.
 
 ```js
-app.use(function (ctx) {
-  ctx.req; // is a rill request.
-  ctx.res; // is a rill res.
+app.use((ctx)=> {
+  ctx.req; // is a Rill request.
+  ctx.res; // is a Rill response.
   ctx.app; // is the app that is handling the request.
 });
 ```
@@ -21,15 +23,15 @@ app.use(function (ctx) {
 
 ### ctx.req
 
-  A rill `Request` object.
+  A Rill `Request` object.
 
 ### ctx.res
 
-  A rill `Response` object.
+  A Rill `Response` object.
 
 ### ctx.app
 
-  Application instance reference.
+  Current Rill application.
 
 ### ctx.locals
 
