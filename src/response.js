@@ -53,17 +53,20 @@ response.clearCookie = function (key, opts) {
  * @param {String} alt - Used if the url is empty or "back" does not exist.
  */
 response.redirect = function redirect (url, alt) {
-	var req = this.ctx.req;
+	var req  = this.ctx.req;
+	var app  = this.ctx.app;
+	var base = app.base.pathname ? app.base.pathname + "/" : "";
 
 	url = (url === "back")
 		? req.get("Referrer")
 		: url;
 	url = url || alt;
+	url = URL.resolve(req.href, base, url);
 
 	if (!url)
 		throw new TypeError("Rill#redirect: Cannot redirect, url not specified and alternative not provided.");
 
-	this.set("Location", URL.resolve(req.href, url));
+	this.set("Location", url);
 }
 
 /**
@@ -76,13 +79,15 @@ response.redirect = function redirect (url, alt) {
  */
 response.refresh = function refresh (delay, url, alt) {
 	var req = this.ctx.req;
+	var app = this.ctx.app;
+	var base = app.base.pathname ? app.base.pathname + "/" : "";
 
 	delay = delay || 0;
 	url = (url === "back")
 		? req.get("Referrer")
 		: url;
 	url = url || alt || req.href;
-	url = URL.resolve(req.href, url);
+	url = URL.resolve(req.href, base, url);
 
 	this.set("Refresh", delay + "; url=" + url);
 };
