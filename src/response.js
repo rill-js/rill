@@ -41,6 +41,7 @@ response.cookie = function (key, val, opts) {
  * @param {Object} opts - options for the cookie.
  */
 response.clearCookie = function (key, opts) {
+	opts = opts || {};
 	opts.expires = new Date();
 	this.append("Set-Cookie", cookies.serialize(key, "", opts));
 };
