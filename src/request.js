@@ -47,6 +47,7 @@ function Request (ctx, req) {
 		this.protocol = this.protocol.slice(0, -1);
 	}
 
+	this.origin = this.protocol + "://" + this.host;
 	this.secure = this.protocol === "https";
 	this.subdomains = (this.hostname || "")
 		.split(".")

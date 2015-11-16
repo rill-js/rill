@@ -17,6 +17,7 @@ function respond (ctx) {
 	// Skip request ended externally.
 	if (original.headersSent) return;
 
+	// Apply default statuses.
 	if (Number(res.status) === 404) {
 		// Ensure redirect status.
 		if (res.get("Location")) res.status = 302;

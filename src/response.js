@@ -81,7 +81,8 @@ response.refresh = function refresh (delay, url, alt) {
 	url = (url === "back")
 		? req.get("Referrer")
 		: url;
-	url = URL.resolve(req.href, url || alt || req.href);
+	url = url || alt || req.href;
+	url = URL.resolve(req.href, url);
 
 	this.set("Refresh", delay + "; url=" + url);
 };
