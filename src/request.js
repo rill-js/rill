@@ -14,44 +14,44 @@ module.exports = Request;
  * @param {IncommingMessage} req - The original node request.
  */
 function Request (ctx, req) {
-	this.ctx                 = ctx;
-	this.original            = req;
-	this.method              = req.method || "GET";
-	this.headers             = req.headers || {};
-	this.headers["referrer"] = this.headers["referer"];
-	this.cookies             = cookies.parse(this.headers["cookie"]);
-	this.params              = {};
-	this.ip                  = (
+
+	var host     = req.headers["x-forwarded-host"] || req.headers["host"];
+	var protocol = (req.connection.encrypted) ? "https" : "http";
+	var parsed   = URL.parse(protocol + "://" + host + req.url, true);
+	
+
+	this.ctx        = ctx;
+	this.original   = req;
+	this.method     = req.method || "GET";
+	this.headers    = req.headers || {};
+	this.cookies    = cookies.parse(this.headers["cookie"]);
+	this.params     = {};
+	this.href       = parsed.href;
+	this.protocol   = protocol;
+	this.port       = parsed.port;
+	this.host       = parsed.host;
+	this.hostname   = parsed.hostname;
+	this.path       = parsed.path;
+	this.pathname   = parsed.pathname;
+	this.search     = parsed.search;
+	this.hash       = parsed.hash;
+	this.query      = {};
+	this.secure     = this.protocol === "https";
+	this.subdomains = (this.hostname || "")
+		.split(".")
+		.reverse()
+		.slice(ctx.app.subdomainOffset);
+	this.ip = (
 		req.headers['x-forwarded-for'] ||
 		req.connection.remoteAddress ||
 		req.socket.remoteAddress ||
 		req.connection.socket.remoteAddress
 	)
 
-	var host     = req.headers["x-forwarded-host"] || req.headers["host"];
-	var protocol = (req.connection.encrypted) ? "https" : "http"
-	var parsed   = URL.parse(protocol + "://" + host + req.url, true);
-	var query    = parsed.query;
-	parsed.query = {};
-
 	// Support nested querystrings.
-	for (var key in query) qSet(parsed.query, key, query[key]);
+	var query = parsed.query;
+	for (var key in query) qSet(this.query, key, query[key]);
 
-	// Attach parsed data to request.
-	for (var key in parsed) {
-		if (typeof parsed[key] === "function") continue;
-		this[key] = parsed[key];
-	}
-
-	if (this.protocol[this.protocol.length - 1] === ":") {
-		this.protocol = this.protocol.slice(0, -1);
-	}
-
-	this.secure = this.protocol === "https";
-	this.subdomains = (this.hostname || "")
-		.split(".")
-		.reverse()
-		.slice(ctx.app.subdomainOffset);
 }
 var request = Request.prototype;
 
