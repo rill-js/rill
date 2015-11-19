@@ -34,6 +34,15 @@ ctx.req.href
 // => http://example.com/foo/bar?q=1#section
 ```
 
+### req.href
+
+  Get the origin of the request (protocol, hostmame and port).
+
+```js
+ctx.req.origin
+// => http://example.com
+```
+
 ### req.protocol
 
  Protocol for the request.

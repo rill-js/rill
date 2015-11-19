@@ -50,14 +50,9 @@ rill.stack = function stack () {
 	// This is to enabled lazy matching path, host and method.
 	for (var i = 0, len = fns.length; i < len; i++) {
 		fn = fns[i](this);
-
-		if (fn == null) {
-			continue;
-		} else if (fn.constructor === Rill) {
-			result = result.concat(fn.stack());
-		} else {
-			result.push(fn);
-		}
+		if (fn == null) continue;
+		if (fn.constructor === Rill) fn = bindApp(this, fn);
+		result.push(fn);
 	}
 
 	return result;
@@ -216,3 +211,24 @@ http.METHODS.forEach(function (method) {
 		return this;
 	}, "name", { value: name });;
 });
+
+/**
+ * TODO: Make this a seperate utility.
+ *
+ * Utility to ensure that nested routers receive the appropriate app.
+ * Works by modifying ctx.app on the upstream and downstream of the request.
+ *
+ * @param {Rill} base - the app being mounted to.
+ * @param {Rill} app - the app being mounted.
+ */
+function bindApp (root, app) {
+	var downstream = chain(app.stack());
+
+	return function mount (ctx, upstream) {
+		ctx.app = app;
+		return downstream(ctx, function next () {
+			ctx.app = root;
+			return upstream().then(function () { ctx.app = app; });
+		}).then(function () { ctx.app = root; });
+	}
+}

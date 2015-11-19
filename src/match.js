@@ -17,23 +17,14 @@ module.exports = match;
  */
 function match (config, fn) {
 	if (fn == null) return noop;
-	var wrapper = null;
 
-	if (typeof fn === "function") {
-		wrapper = matches;
-	} else if (fn.stack) {
-		wrapper = mounts;
-	} else {
-		throw new TypeError("Rill: Middleware must be an app, function, or null.");
-	}
+	var wrapper = null;
+	if (typeof fn === "function") wrapper = matches;
+	else if (fn.stack) wrapper = mounts;
+	else throw new TypeError("Rill: Middleware must be an app, function, or null.");
 
 	return function (app) {
-		for (var type in config) {
-			if (type in wrapper) {
-				fn = wrapper[type](app, config[type], fn);
-			}
-		}
-
+		for (var type in config) if (type in wrapper) fn = wrapper[type](app, config[type], fn);
 		return fn;
 	};
 }

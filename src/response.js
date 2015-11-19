@@ -41,6 +41,7 @@ response.cookie = function (key, val, opts) {
  * @param {Object} opts - options for the cookie.
  */
 response.clearCookie = function (key, opts) {
+	opts = opts || {};
 	opts.expires = new Date();
 	this.append("Set-Cookie", cookies.serialize(key, "", opts));
 };
@@ -81,9 +82,9 @@ response.refresh = function refresh (delay, url, alt) {
 	url = (url === "back")
 		? req.get("Referrer")
 		: url;
-	url = URL.resolve(req.href, url || alt || req.href);
+	url = url || alt || req.href;
 
-	this.set("Refresh", delay + "; url=" + url);
+	this.set("Refresh", delay + "; url=" + URL.resolve(req.href, url));
 };
 
 /**

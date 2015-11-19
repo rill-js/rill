@@ -14,12 +14,9 @@ module.exports = Request;
  * @param {IncommingMessage} req - The original node request.
  */
 function Request (ctx, req) {
-
-	var host     = req.headers["x-forwarded-host"] || req.headers["host"];
-	var protocol = (req.connection.encrypted) ? "https" : "http";
-	var parsed   = URL.parse(protocol + "://" + host + req.url, true);
-	
-
+	var host        = req.headers["x-forwarded-host"] || req.headers["host"];
+	var protocol    = (req.connection.encrypted) ? "https" : "http";
+	var parsed      = URL.parse(protocol + "://" + host + req.url, true);
 	this.ctx        = ctx;
 	this.original   = req;
 	this.method     = req.method || "GET";
@@ -36,6 +33,7 @@ function Request (ctx, req) {
 	this.search     = parsed.search;
 	this.hash       = parsed.hash;
 	this.query      = {};
+	this.origin     = this.protocol + "://" + this.host;
 	this.secure     = this.protocol === "https";
 	this.subdomains = (this.hostname || "")
 		.split(".")
