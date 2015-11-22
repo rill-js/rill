@@ -225,10 +225,23 @@ function bindApp (root, app) {
 	var downstream = chain(app.stack());
 
 	return function mount (ctx, upstream) {
-		ctx.app = app;
+		var appLocals = {};
+		var locals    = ctx.locals;
+		ctx.app       = app;
+		ctx.locals    = appLocals;
+
+		for (var key in app.locals) appLocals[key] = app.locals[key];
+
 		return downstream(ctx, function next () {
-			ctx.app = root;
-			return upstream().then(function () { ctx.app = app; });
-		}).then(function () { ctx.app = root; });
+			ctx.app    = root;
+			ctx.locals = locals;
+			return upstream().then(function () {
+				ctx.app    = app;
+				ctx.locals = appLocals;
+			});
+		}).then(function () {
+			ctx.app    = root;
+			ctx.locals = locals;
+		});
 	}
 }
