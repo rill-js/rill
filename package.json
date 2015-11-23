@@ -1,6 +1,6 @@
 {
   "name": "rill",
-  "version": "0.1.94",
+  "version": "0.2.0",
   "description": "Isomorphic web application framework.",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "main": "src/index.js",

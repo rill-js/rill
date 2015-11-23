@@ -13,7 +13,7 @@
 app.use((ctx)=> {
   ctx.req; // is a Rill request.
   ctx.res; // is a Rill response.
-  ctx.app; // is the app that is handling the request.
+  ctx.locals; // a place to store local variables.
 });
 ```
 
@@ -29,13 +29,9 @@ app.use((ctx)=> {
 
   A Rill `Response` object.
 
-### ctx.app
-
-  Current Rill application.
-
 ### ctx.locals
 
-  An object created during each incomming request that allows passing data between each middleware function. `ctx.locals` will also inherit any locals placed in `app.locals`.
+  An object created during each incomming request that allows passing data between each middleware function.
 
 ### ctx.throw(status, [message], [properties])
 

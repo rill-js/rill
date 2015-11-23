@@ -1,3 +1,5 @@
+"use strict";
+
 var URL       = require("url");
 var HttpError = require("@rill/error");
 var Request   = require("./request");
@@ -9,16 +11,13 @@ module.exports = Context;
  * Creates an incomming message context.
  *
  * @constructor
- * @param {Rill} app - the App instance that created the message.
  * @param {IncommingMessage} req - A nodejs style request object.
  * @param {ServerResponse} res - A nodejs style response object.
  */
-function Context (app, req, res) {
-	this.app    = app;
+function Context (req, res) {
 	this.req    = new Request(this, req);
 	this.res    = new Response(this, res);
 	this.locals = {};
-	for (var key in app.locals) this.locals[key] = app.locals[key];
 }
 var context = Context.prototype;
 
@@ -31,7 +30,7 @@ var context = Context.prototype;
  * @throws HttpError
  */
 context.throw = function throwHttp (code, message, meta) {
-	error = new HttpError(code, message, meta);
+	var error = new HttpError(code, message, meta);
 	this.res.status = error.code;
 	this.res.message = error.message;
 	throw error;

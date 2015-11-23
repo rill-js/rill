@@ -1,7 +1,9 @@
+"use strict";
+
 var byteLength = require("byte-length");
 var checkType  = require("content-check");
 var statuses   = require("statuses");
-var buffer     = (function () { return this }()).Buffer || respond;
+var buffer     = global.Buffer || respond;
 
 module.exports = respond;
 

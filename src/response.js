@@ -1,3 +1,5 @@
+"use strict";
+
 var URL       = require("url");
 var toField   = require("header-field");
 var HttpError = require("@rill/error");

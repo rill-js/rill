@@ -232,24 +232,6 @@ describe("Rill", function () {
 			.end(done);
 	});
 
-	it("should set and get locals", function (done) {
-		var request = agent(Rill()
-			.set("title", "Hello")
-			.set("version", "0.1.0")
-			.use(respond(200, function (ctx) {
-				assert.deepEqual(ctx.locals, {
-					title: "Hello",
-					version: "0.1.0"
-				})
-			}))
-			.listen()
-		);
-
-		request
-			.get("/")
-			.expect(200)
-			.end(done);
-	});
 });
 
 function respond (status, test) {

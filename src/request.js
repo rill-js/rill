@@ -1,3 +1,5 @@
+"use strict";
+
 var URL     = require("url");
 var qSet    = require("q-set");
 var toField = require("header-field");
@@ -38,7 +40,7 @@ function Request (ctx, req) {
 	this.subdomains = (this.hostname || "")
 		.split(".")
 		.reverse()
-		.slice(ctx.app.subdomainOffset);
+		.slice(2);
 	this.ip = (
 		req.headers['x-forwarded-for'] ||
 		req.connection.remoteAddress ||

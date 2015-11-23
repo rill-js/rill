@@ -1,3 +1,5 @@
+"use strict";
+
 var http       = require("@rill/http");
 var chain      = require("@rill/chain");
 var HttpError  = require("@rill/error");
@@ -5,7 +7,6 @@ var match      = require("./match");
 var Context    = require("./context");
 var respond    = require("./respond");
 var rill       = Rill.prototype;
-Rill.HttpError = HttpError;
 module.exports = Rill;
 
 /**
@@ -15,26 +16,12 @@ module.exports = Rill;
  */
 function Rill () {
 	if (!(this instanceof Rill)) return new Rill();
-
 	this.env             = process.env.NODE_ENV;
 	this.subdomainOffset = 2;
-	this.locals          = {};
 	this.base            = {};
 	this.servers         = [];
 	this._stack          = [];
 }
-
-/**
- * Allow setting a local variable in the fluent api.
- *
- * @param {String} key
- * @param {*} val
- * @return {Rill}
- */
-rill.set = function set (key, val) {
-	this.locals[key] = val;
-	return this;
-};
 
 /**
  * Function to create a valid set of middleware for the instance.
@@ -44,15 +31,16 @@ rill.set = function set (key, val) {
  */
 rill.stack = function stack () {
 	var fns    = this._stack;
+	var base   = this.base;
 	var result = [];
 
 	// Here we ensure each middleware function has an updated app instance.
 	// This is to enabled lazy matching path, host and method.
-	for (var i = 0, len = fns.length; i < len; i++) {
-		fn = fns[i](this);
+	for (var fn, i = 0, len = fns.length; i < len; i++) {
+		fn = fns[i](base);
 		if (fn == null) continue;
-		if (fn.constructor === Rill) fn = bindApp(this, fn);
-		result.push(fn);
+		if (fn.constructor === Rill) result = result.concat(fn.stack());
+		else result.push(fn);
 	}
 
 	return result;
@@ -69,7 +57,7 @@ rill.handler = function handler () {
 	var fn  = chain(this.stack());
 
 	return function handleIncommingMessage (req, res) {
-		var ctx = new Context(app, req, res);
+		var ctx = new Context(req, res);
 
 		fn(ctx)
 			.catch(function handleError (err) { try {
@@ -211,37 +199,3 @@ http.METHODS.forEach(function (method) {
 		return this;
 	}, "name", { value: name });;
 });
-
-/**
- * TODO: Make this a seperate utility.
- *
- * Utility to ensure that nested routers receive the appropriate app.
- * Works by modifying ctx.app on the upstream and downstream of the request.
- *
- * @param {Rill} base - the app being mounted to.
- * @param {Rill} app - the app being mounted.
- */
-function bindApp (root, app) {
-	var downstream = chain(app.stack());
-
-	return function mount (ctx, upstream) {
-		var appLocals = {};
-		var locals    = ctx.locals;
-		ctx.app       = app;
-		ctx.locals    = appLocals;
-
-		for (var key in app.locals) appLocals[key] = app.locals[key];
-
-		return downstream(ctx, function next () {
-			ctx.app    = root;
-			ctx.locals = locals;
-			return upstream().then(function () {
-				ctx.app    = app;
-				ctx.locals = appLocals;
-			});
-		}).then(function () {
-			ctx.app    = root;
-			ctx.locals = locals;
-		});
-	}
-}

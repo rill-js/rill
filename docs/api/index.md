@@ -70,20 +70,6 @@ http.createServer(app.handler()).listen(3000);
 app.close();
 ```
 
-## app.locals
-
-  Locals set on the app will be automatically copied to `ctx.locals`.
-  Any sort of app level configuration should be set here.
-
-## app.set(key, value)
-
-  Set a value on `app.locals`. Locals will be cloned onto the context of an incomming request and are often use in view rendering libraries.
-
-```js
-app.set("title", "Hello World");
-app.locals.title === "Hello World";
-```
-
 ## app.handler()
 
   Return a callback function suitable for the `http.createServer()`

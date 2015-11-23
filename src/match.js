@@ -1,3 +1,5 @@
+"use strict";
+
 var URL   = require("url");
 var toReg = require("path-to-regexp");
 var join  = require("join-url");
@@ -17,14 +19,15 @@ module.exports = match;
  */
 function match (config, fn) {
 	if (fn == null) return noop;
+	if (config == null) config = {};
 
 	var wrapper = null;
 	if (typeof fn === "function") wrapper = matches;
 	else if (fn.stack) wrapper = mounts;
 	else throw new TypeError("Rill: Middleware must be an app, function, or null.");
 
-	return function (app) {
-		for (var type in config) if (type in wrapper) fn = wrapper[type](app, config[type], fn);
+	return function (base) {
+		for (var type in wrapper) fn = wrapper[type](base, config[type], fn);
 		return fn;
 	};
 }
@@ -34,19 +37,21 @@ var matches = {
 	/**
 	 * Creates a function that will match a path name before executing a function.
 	 *
-	 * @param {Rill} app - The rill instance that this match will run against.
+	 * @param {Object} base - Information about where the route is mounted.
 	 * @param {String} pathname - The pathname (converted to regex) to match.
 	 * @param {Function} fn - The function that will run after the match passes.
 	 * @return {Function}
 	 */
-	pathname: function (app, pathname, fn) {
+	pathname: function (base, pathname, fn) {
+		// If there was no path name then we only match the begining of the base path.
+		var end = pathname != null;
 		// Check to see if the app is mounted, and update the pathname.
-		pathname = join.pathname(app.base.pathname, pathname);
+		pathname = join.pathname(base.pathname, pathname);
 		// Here we attempt to avoid running the match every time.
 		if (!pathname) return fn;
 
 		var keys = [],
-			reg = toReg(pathname, keys);
+			reg = toReg(pathname, keys, { end: end });
 
 		return function matchPath (ctx, next) {		
 			var req     = ctx.req;
@@ -68,14 +73,14 @@ var matches = {
 	/**
 	 * Creates a function that will match a host name before executing a function.
 	 *
-	 * @param {Rill} app - The rill instance that this match will run against.
+	 * @param {Object} base - Information about where the route is mounted.
 	 * @param {String} hostname - The hostname (converted to regex) to match.
 	 * @param {Function} fn - The function that will run after the match passes.
 	 * @return {Function}
 	 */
-	hostname: function (app, hostname, fn) {
+	hostname: function (base, hostname, fn) {
 		// Check to see if the app is mounted, and update the hostname.
-		hostname = join.hostname(hostname, app.base.hostname);
+		hostname = join.hostname(hostname, base.hostname);
 		// Here we attempt to avoid running the match every time.
 		if (!hostname) return fn;
 
@@ -102,23 +107,23 @@ var matches = {
 	/**
 	 * Creates a function that will match a method before executing a function.
 	 *
-	 * @param {Rill} app - The rill instance that this match will run against.
+	 * @param {Object} base - Information about where the route is mounted.
 	 * @param {String} method - The http method to match.
 	 * @param {Function} fn - The function that will run after the match passes.
 	 * @return {Function}
 	 */
-	method: function (app, method, fn) {
+	method: function (base, method, fn) {
 		// We cant allow both an instance method, and a middleware method.
-		if (app.base.method && method) {
+		if (base.method && method) {
 			throw new Error(
 				"Rill: cannot attach with method " +
 				method + ". Function(" +
 				fn.name +
-				") is already mounted using " + app.base.method + "."
+				") is already mounted using " + base.method + "."
 			);
 		}
 
-		method = app.base.method || method;
+		method = base.method || method;
 		// Here we attempt to avoid running the match every time.
 		if (!method) return fn;
 		method = method.toUpperCase();
@@ -138,12 +143,12 @@ var mounts = {
 	 * Updates a rill instance to be mounted at a given pathname.
 	 * If the instance is already mounted it is extended.
 	 *
-	 * @param {Rill} root - The rill instance that is being mounted to.
+	 * @param {Object} base - Information about where the app is mounted.
 	 * @param {String} pathname - The pathname to match.
 	 * @param {Rill} app - The rill instance that is being mounted.
 	 */
-	pathname: function (root, pathname, app) {
-		pathname = join.pathname(root.base.pathname, pathname);
+	pathname: function (base, pathname, app) {
+		pathname = join.pathname(base.pathname, pathname);
 		if (pathname) app.base.pathname = pathname;
 		return app;
 	},
@@ -152,12 +157,12 @@ var mounts = {
 	 * Updates a rill instance to be mounted at a given hostname.
 	 * If the instance is already mounted it is extended.
 	 *
-	 * @param {Rill} root - The rill instance that is being mounted to.
+	 * @param {Object} base - Information about where the app is mounted.
 	 * @param {String} hostname - The hostname to match.
 	 * @param {Rill} app - The rill instance that is being mounted.
 	 */
-	hostname: function (root, hostname, app) {
-		hostname = join.hostname(hostname, root.base.hostname);
+	hostname: function (base, hostname, app) {
+		hostname = join.hostname(hostname, base.hostname);
 		if (hostname) app.base.hostname = hostname;
 		return app;
 	},
@@ -165,13 +170,13 @@ var mounts = {
 	/**
 	 * Updates a rill instance to be mounted at a given http method.
 	 *
-	 * @param {Rill} root - The rill instance that is being mounted to.
+	 * @param {Object} base - Information about where the app is mounted.
 	 * @param {String} method - The method to match.
 	 * @param {Rill} app - The rill instance that is being mounted.
 	 */
-	method: function (root, method, app) {
+	method: function (base, method, app) {
 		// An app cannot be mounted by method twice.
-		if (root.base.method) {		
+		if (base.method) {		
 			throw new Error(
 				"Rill: cannot mount with method " +
 				method + ". App is already mounted using " +
