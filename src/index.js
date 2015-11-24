@@ -105,7 +105,7 @@ rill.close = function close () {
  * @param {Function...} transformers - Functions that will modify the rill instance.
  */
 rill.setup = function setup () {
-	for (var fn, i = arguments.length; i--;) {
+	for (var fn, len = arguments.length, i = 0; i < len; i++) {
 		fn = arguments[i];
 
 		if (typeof fn === "function") {
