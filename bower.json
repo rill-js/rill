@@ -28,5 +28,13 @@
     "tusk",
     "universal",
     "web"
+  ],
+  "homepage": "https://github.com/rill-js/rill",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
   ]
 }
