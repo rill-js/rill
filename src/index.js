@@ -7,7 +7,6 @@ var match      = require("./match");
 var Context    = require("./context");
 var respond    = require("./respond");
 var rill       = Rill.prototype;
-Rill.version   = "0.2.05";
 module.exports = Rill;
 
 /**
@@ -58,6 +57,7 @@ rill.handler = function handler () {
 	var fn  = chain(this.stack());
 
 	return function handleIncommingMessage (req, res) {
+		res.statusCode = 404;
 		var ctx = new Context(req, res);
 
 		fn(ctx)

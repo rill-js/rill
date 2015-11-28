@@ -18,7 +18,7 @@ function Response (ctx, res) {
 	this.ctx      = ctx;
 	this.original = res;
 	this.headers  = res.headers = { "x-powered-by": "Rill" };
-	this.status   = 404;
+	this.status   = res.statusCode;
 	this.body     = undefined;
 
 	res.once("finish", function () { ctx.res.finished = true; });
