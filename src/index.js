@@ -7,7 +7,7 @@ var match      = require("./match");
 var Context    = require("./context");
 var respond    = require("./respond");
 var rill       = Rill.prototype;
-Rill.version   = "2.04";
+Rill.version   = "0.2.05";
 module.exports = Rill;
 
 /**
