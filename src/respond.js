@@ -15,6 +15,8 @@ function respond (ctx) {
 	var res      = ctx.res;
 	var body     = res.body;
 	var original = res.original;
+	var isStream = body && typeof body.pipe === "function";
+	var isBuffer = body instanceof buffer;
 
 	// Skip request ended externally.
 	if (original.headersSent) return;
@@ -37,17 +39,17 @@ function respond (ctx) {
 		res.remove("Content-Length");
 	} else {
 		// Stringify objects that are not buffers.
-		if (!isBuffer(body) && typeof body !== "string") body = JSON.stringify(body);
+		if (typeof body === "object" && !isStream && !isBuffer) body = JSON.stringify(body);
 		// Attempt to guess content type.
 		if (!res.get("Content-Type")) res.set("Content-Type", checkType(res.body));
 		// Attempt to guess content-length.
-		if (!res.get("Content-Length")) res.set("Content-Length", byteLength(body));
+		if (!res.get("Content-Length") && !isStream) res.set("Content-Length", byteLength(body));
 	}
 
 	// Send off headers.
 	original.writeHead(res.status, res.message, clean(res.headers));
 	// Finish response.
-	if (isStream(body)) body.pipe(original);
+	if (isStream) body.pipe(original);
 	else original.end(body);
 }
 
