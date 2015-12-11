@@ -12,7 +12,7 @@ module.exports = Rill;
 /**
  * Creates an isomorphic app that will run middleware for a incomming request.
  *
- * @constructor 
+ * @constructor
  */
 function Rill () {
 	if (!(this instanceof Rill)) return new Rill();
@@ -144,7 +144,7 @@ rill.use = function use () {
  */
 rill.at = function at (pathname) {
 	if (typeof pathname !== "string") throw new TypeError("Rill#at: Path name must be a string.");
-	
+
 	var config = { pathname: pathname };
 	var offset = 1;
 	var start  = this._stack.length;
@@ -162,7 +162,7 @@ rill.at = function at (pathname) {
  */
 rill.host = function host (hostname) {
 	if (typeof hostname !== "string") throw new TypeError("Rill#host: Host name must be a string.");
-	
+
 	var config = { hostname: hostname };
 	var offset = 1;
 	var start  = this._stack.length;
