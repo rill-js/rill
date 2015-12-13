@@ -30,24 +30,15 @@ const Rill = require('rill');
 const app = new Rill();
 ```
 
-## Settings
-
-  Application settings are properties on the `app` instance, currently
-  the following are supported:
-
-  - `app.name` optionally give your application a name
-  - `app.env` defaulting to the __NODE_ENV__ or "development"
-  - `app.subdomainOffset` offset of `.subdomains` to ignore [2]
-
 ## app.listen(...)
 
   A Rill application is not a 1-to-1 representation of a HTTP server.
   One or more Rill applications may be mounted together to form larger
   applications and you can even listen to multiple ports with a single HTTP server.
 
-  `listen` will return an HTTP server, passing the given arguments to [nodejs.org](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback).
+  `listen` will return an HTTP server, passing the given arguments to [`Server#listen()`](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback).
   All arguments provided are forwarded to `Server#listen()` and are simply ignored in the browser.
-  
+
   The following is a useless Rill application bound to port `3000`:
 
 ```js
@@ -90,13 +81,13 @@ app.listen(3003);
 ```
 
 ## app.stack()
-  
+
   Returns the current middleware stack for the application as an array.
 
 ## app.setup(function...)
-  
-  Simple syntactic sugar for middleware that wish to modify the current
-  application.
+
+  Simple syntactic sugar for middleware that wish do more than just add to the stack.
+  This is useful for modifying/extending Rill and for other complex plugins.
 
 ```js
 app.setup((myapp)=> {

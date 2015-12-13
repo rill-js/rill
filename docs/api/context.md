@@ -7,7 +7,7 @@
   A `Context` is created _per_ request, and is provided to middleware
   as the first argument. In an es6 capable environment it is easy to pull
   out parts of the context that you need (as seen in some examples) like so
-  `{ req, res, app, locals }`.
+  `{ req, res, locals }`.
 
 ```js
 app.use((ctx)=> {
@@ -54,7 +54,6 @@ throw err;
 
 ```js
 this.throw(401, 'access_denied', { user: user });
-this.throw('access_denied', { user: user });
 ```
 
 Rill uses [@rill/error](https://github.com/rill-js/error) to create errors.

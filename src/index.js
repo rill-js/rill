@@ -16,11 +16,9 @@ module.exports = Rill;
  */
 function Rill () {
 	if (!(this instanceof Rill)) return new Rill();
-	this.env             = process.env.NODE_ENV;
-	this.subdomainOffset = 2;
-	this.base            = {};
-	this.servers         = [];
-	this._stack          = [];
+	this.base    = {};
+	this.servers = [];
+	this._stack  = [];
 }
 
 /**

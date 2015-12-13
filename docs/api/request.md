@@ -6,7 +6,7 @@
 ## API
 
 ### req.original
- 
+
  Original nodejs request object.
 
 ### req.ctx
@@ -17,13 +17,18 @@
 
  Request header object.
 
+### req.cookies
+
+ Parsed cookies for the request.
+
 ### req.method
 
  Request method.
 
-### req.cookies
-
- Parsed cookies for the request.
+ ```js
+ctx.req.method
+// => GET
+```
 
 ### req.href
 
@@ -34,7 +39,7 @@ ctx.req.href
 // => http://example.com/foo/bar?q=1#section
 ```
 
-### req.href
+### req.origin
 
   Get the origin of the request (protocol, hostmame and port).
 
@@ -53,7 +58,7 @@ ctx.req.protocol;
 ```
 
 ### req.hostname
-  
+
  Host name for the request.
 
 ```js
@@ -62,7 +67,7 @@ ctx.req.hostname;
 ```
 
 ### req.port
-  
+
  Port number for the request.
 
 ```js
@@ -71,7 +76,7 @@ ctx.req.port;
 ```
 
 ### req.host
-  
+
  Host for the request, including port.
 
 ```js
@@ -88,15 +93,6 @@ ctx.req.pathname;
 // => /foo/bar
 ```
 
-### req.search
-
-  Get raw query string void of `?`.
-
-```js
-ctx.req.search;
-// => q=1
-```
-
 ### req.path
 
  The concatenated pathname and querystring of the URL.
@@ -104,6 +100,15 @@ ctx.req.search;
 ```js
 ctx.req.path;
 // => /foo/bar?q=1
+```
+
+### req.search
+
+  Get raw query string including `?`.
+
+```js
+ctx.req.search;
+// => "?q=1"
 ```
 
 ### req.query
@@ -117,11 +122,11 @@ ctx.req.query;
 
 ### req.hash
 
- The hash fragment of the URL (only in browser).
+ The hash fragment of the URL including the pound-sign (only in browser).
 
 ```js
 ctx.req.hash
-// => section
+// => "#section"
 ```
 
 ### req.params
