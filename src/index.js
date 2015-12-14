@@ -7,7 +7,7 @@ var match      = require("./match");
 var Context    = require("./context");
 var respond    = require("./respond");
 var rill       = Rill.prototype;
-module.exports = Rill;
+module.exports = Rill.default = Rill;
 
 /**
  * Creates an isomorphic app that will run middleware for a incomming request.
