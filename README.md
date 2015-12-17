@@ -7,6 +7,8 @@ Rill provides the minimum for abstractions over node and the browser enabling th
 
 # Installation
 
+[![Join the chat at https://gitter.im/rill-js/rill](https://badges.gitter.im/rill-js/rill.svg)](https://gitter.im/rill-js/rill?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 #### Npm
 ```console
 npm install rill
