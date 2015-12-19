@@ -82,7 +82,7 @@ rill.listen = function listen (opts, cb) {
 	var server;
 	var opts = opts || {};
 
-	if (opts.tls) server = http.createServer(opts.tls, this.handler());
+	if (opts.tls) server = https.createServer(opts.tls, this.handler());
 	else server = http.createServer(this.handler());
 
 	this._servers.push(server);
