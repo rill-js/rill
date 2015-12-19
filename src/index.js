@@ -17,9 +17,8 @@ module.exports = Rill.default = Rill;
  */
 function Rill () {
 	if (!(this instanceof Rill)) return new Rill();
-	this.base     = {};
-	this._servers = [];
-	this._stack   = [];
+	this.base   = {};
+	this._stack = [];
 }
 
 /**
@@ -81,30 +80,9 @@ rill.handler = function handler () {
 rill.listen = function listen (opts, cb) {
 	var server;
 	var opts = opts || {};
-
 	if (opts.tls) server = https.createServer(opts.tls, this.handler());
 	else server = http.createServer(this.handler());
-
-	this._servers.push(server);
 	return server.listen(opts.port, opts.ip, opts.backlog, cb);
-};
-
-/**
- * Close a node/rill server.
- *
- * @return {Server}
- */
-rill.close = function close () {
-	if (!this.server || !this.server.length) {
-		throw new Error("Rill: Unable to close. No servers started.")
-	}
-
-	for (var i = this._servers.length; i--;) {
-		this._servers[i].close();
-	}
-
-	this._servers = [];
-	return this;
 };
 
 /**

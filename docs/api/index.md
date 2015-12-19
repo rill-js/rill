@@ -57,16 +57,6 @@ var options = {
 app.listen({ port: 8000, tls: options });
 ```
 
-## app.close()
-
-  Closes any servers started with app.listen();
-  This is generally for test cleanup.
-
-```js
-// Stop all listening servers.
-app.close();
-```
-
 ## app.handler()
 
   Return a callback function suitable for the `http.createServer()`
@@ -78,12 +68,9 @@ app.close();
   or on multiple addresses:
 
 ```js
+// For isomorphic use you can use @rill/http(s) instead of nodes http module.
 http.createServer(app.handler()).listen(3000);
 http.createServer(app.handler()).listen(3001);
-
-// alternatively call listen multiple times.
-app.listen({ port: 3002 });
-app.listen({ port: 3003 });
 ```
 
 ## app.stack()
