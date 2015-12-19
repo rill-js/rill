@@ -1,6 +1,7 @@
 "use strict";
 
 var http       = require("@rill/http");
+var https      = require("@rill/https");
 var chain      = require("@rill/chain");
 var HttpError  = require("@rill/error");
 var match      = require("./match");
@@ -16,9 +17,9 @@ module.exports = Rill.default = Rill;
  */
 function Rill () {
 	if (!(this instanceof Rill)) return new Rill();
-	this.base    = {};
-	this.servers = [];
-	this._stack  = [];
+	this.base     = {};
+	this._servers = [];
+	this._stack   = [];
 }
 
 /**
@@ -70,13 +71,22 @@ rill.handler = function handler () {
 /**
  * Starts a node/rill server.
  *
+ * @param {Object} opts
+ * @param {String} opts.ip
+ * @param {Number} opts.port
+ * @param {Number} opts.backlog
+ * @param {Function} cb
  * @return {Server}
  */
-rill.listen = function listen () {
-	// todo: accept a url string and parse out protocol, port and ip.
-	var server = http.createServer(this.handler());
-	this.servers.push(server);
-	return server.listen.apply(server, arguments);
+rill.listen = function listen (opts, cb) {
+	var server;
+	var opts = opts || {};
+
+	if (opts.tls) server = http.createServer(opts.tls, this.handler());
+	else server = http.createServer(this.handler());
+
+	this._servers.push(server);
+	return server.listen(opts.port, opts.ip, opts.backlog, cb);
 };
 
 /**
@@ -89,11 +99,11 @@ rill.close = function close () {
 		throw new Error("Rill: Unable to close. No servers started.")
 	}
 
-	for (var i = this.servers.length; i--;) {
-		this.servers[i].close();
+	for (var i = this._servers.length; i--;) {
+		this._servers[i].close();
 	}
 
-	this.servers = [];
+	this._servers = [];
 	return this;
 };
 

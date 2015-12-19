@@ -1,6 +1,5 @@
 "use strict";
 
-var URL       = require("url");
 var HttpError = require("@rill/error");
 var Request   = require("./request");
 var Response  = require("./response");

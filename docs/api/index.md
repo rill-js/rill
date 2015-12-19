@@ -1,7 +1,6 @@
 # Installation
 
-  Rill is supported in all recent versions of [nodejs](https://nodejs.org) and modern browsers.
-  Rill can support IE9 and lower with a [History Location polyfill](https://github.com/devote/HTML5-History-API).
+  Rill is supported in all recent versions of [nodejs](https://nodejs.org) and modern browsers including ie10.
 
   You can quickly install a supported version of node/iojs with your favorite version manager:
 
@@ -30,25 +29,32 @@ const Rill = require('rill');
 const app = new Rill();
 ```
 
-## app.listen(...)
+## app.listen({ port, host, backlog, tls }, callback)
 
   A Rill application is not a 1-to-1 representation of a HTTP server.
   One or more Rill applications may be mounted together to form larger
   applications and you can even listen to multiple ports with a single HTTP server.
 
-  `listen` will return an HTTP server, passing the given arguments to [`Server#listen()`](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback).
-  All arguments provided are forwarded to `Server#listen()` and are simply ignored in the browser.
+  `listen` will start an HTTPS server if the `tls` option is provided.
+  The tls options are the same as nodes [TLS](https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener) module.
+
+  The `ip`, `port` and `backlog` options are optional and forwarded to `Server#listen()`. These are simply ignored in the browser.
 
   The following is a useless Rill application bound to port `3000`:
 
 ```js
-app.listen(3000);
+app.listen({ port: 3000 });
 ```
 
-  The `app.listen(...)` method is simply sugar for the following:
+  Or we can start a HTTPS server with the same API.
 
 ```js
-http.createServer(app.handler()).listen(3000);
+var options = {
+  key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+  cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
+};
+
+app.listen({ port: 8000, tls: options });
 ```
 
 ## app.close()
@@ -76,8 +82,8 @@ http.createServer(app.handler()).listen(3000);
 http.createServer(app.handler()).listen(3001);
 
 // alternatively call listen multiple times.
-app.listen(3002);
-app.listen(3003);
+app.listen({ port: 3002 });
+app.listen({ port: 3003 });
 ```
 
 ## app.stack()
