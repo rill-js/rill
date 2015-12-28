@@ -59,10 +59,12 @@ rill.handler = function handler () {
 		var ctx = new Context(req, res);
 
 		fn(ctx)
-			.catch(function handleError (err) { try {
-				if (Number(ctx.res.status) === 404) ctx.res.status = 500;
-				if (!(err instanceof HttpError)) console.error(err && err.stack || err);
-			} catch (_) {}})
+			.catch(function handleError (err) {
+				if (Number(ctx.res.status) === 404)
+					ctx.res.status = 500;
+				if (!(err instanceof HttpError) && console && console.error)
+					console.error(err);
+			})
 			.then(function () { respond(ctx) });
 	};
 }
@@ -74,6 +76,7 @@ rill.handler = function handler () {
  * @param {String} opts.ip
  * @param {Number} opts.port
  * @param {Number} opts.backlog
+ * @param {Object} opts.tls
  * @param {Function} cb
  * @return {Server}
  */
@@ -165,8 +168,7 @@ rill.host = function host (hostname) {
  * Use middleware for a specific method / pathname.
  */
 http.METHODS.forEach(function (method) {
-	var name = method.toLowerCase();
-
+	var name   = method.toLowerCase();
 	rill[name] = Object.defineProperty(function (pathname) {
 		var config = { method: method };
 		var offset = 0;

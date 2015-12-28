@@ -61,16 +61,8 @@ app.use(({ res })=> {
 });
 
 // Start a regular http server.
+// In the browser any form submissions or link clicks will intercepted by @rill/http.
 app.listen({ port: 80, ip: "0.0.0.0" });
-
-// Start an https server.
-app.listen({ port: 8000, ip: "0.0.0.0", tls: {
-	key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
-	cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
-}});
-
-// Close both servers.
-app.close();
 
 ```
 
