@@ -63,7 +63,7 @@ rill.handler = function handler () {
 				if (Number(ctx.res.status) === 404)
 					ctx.res.status = 500;
 				if (!(err instanceof HttpError) && console && console.error)
-					console.error(err);
+					console.error(err.stack || err);
 			})
 			.then(function () { respond(ctx) });
 	};

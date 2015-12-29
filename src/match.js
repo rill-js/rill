@@ -53,7 +53,7 @@ var matches = {
 		var keys = [],
 			reg = toReg(pathname, keys, { end: end });
 
-		return function matchPath (ctx, next) {		
+		return function matchPath (ctx, next) {
 			var req     = ctx.req;
 			var matches = req.pathname.match(reg);
 			if (!matches) return next();
@@ -129,7 +129,7 @@ var matches = {
 		method = method.toUpperCase();
 
 		return function matchMethod (ctx, next) {
-			var req = ctx.req;	
+			var req = ctx.req;
 			if (req.method !== method) return next();
 			return fn(ctx, next);
 
@@ -176,7 +176,7 @@ var mounts = {
 	 */
 	method: function (base, method, app) {
 		// An app cannot be mounted by method twice.
-		if (base.method) {		
+		if (base.method) {
 			throw new Error(
 				"Rill: cannot mount with method " +
 				method + ". App is already mounted using " +
@@ -187,3 +187,15 @@ var mounts = {
 		return app;
 	}
 };
+
+function flat (arr, acc) {
+	acc = acc || [];
+	if (!arr) return acc;
+	for (var cur, i = 0, len = arr.length; i < len; i++) {
+		cur = arr[i];
+		if (!cur) continue;
+		if (Array.isArray(cur)) flat(cur, acc);
+		else if (typeof cur.stack === "function") flat(cur.stack(), acc);
+		else acc.push(cur);
+	}
+}
