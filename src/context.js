@@ -17,6 +17,8 @@ function Context (req, res) {
 	this.req    = new Request(this, req);
 	this.res    = new Response(this, res);
 	this.locals = {};
+	this.throw  = this.throw.bind(this);
+	this.assert = this.assert.bind(this);
 }
 var context = Context.prototype;
 
