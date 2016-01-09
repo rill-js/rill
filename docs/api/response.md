@@ -6,7 +6,7 @@
 ## API
 
 ### res.original
- 
+
  Original nodejs response object.
 
 ### res.ctx
@@ -90,6 +90,14 @@
 ### res.message=
 
   Set response status message to the given value.
+
+### res.respond=
+
+  Set `res.respond = false` to skip the automatic response built into Rill.
+
+### res.end=
+
+  Set `res.end = false` to only send response headers, but not end the request.
 
 ### res.body
 

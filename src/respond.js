@@ -18,6 +18,8 @@ function respond (ctx) {
 	var isStream = body && typeof body.pipe === "function";
 	var isBuffer = body instanceof buffer;
 
+	// Allow skipping response.
+	if (res.respond === false) return;
 	// Skip request ended externally.
 	if (original.headersSent) return;
 
@@ -48,6 +50,8 @@ function respond (ctx) {
 
 	// Send off headers.
 	original.writeHead(res.status, res.message, clean(res.headers));
+	// Allow for requests to stay open.
+	if (res.end === false) return;
 	// Finish response.
 	if (isStream) body.pipe(original);
 	else original.end(body);
