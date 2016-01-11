@@ -1,6 +1,7 @@
 "use strict";
 
 var URL       = require("url");
+var statuses  = require("statuses");
 var toField   = require("header-field");
 var HttpError = require("@rill/error");
 var cookies   = require("@rill/cookies");
@@ -65,6 +66,8 @@ response.redirect = function redirect (url, alt) {
 
 	if (!url)
 		throw new TypeError("Rill#redirect: Cannot redirect, url not specified and alternative not provided.");
+
+	if (!statuses.redirect[this.status]) this.status = 302;
 
 	this.set("Location", URL.resolve(req.href, url));
 }
