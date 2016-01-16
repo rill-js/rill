@@ -1,6 +1,6 @@
 {
   "name": "rill",
-  "version": "0.4.16",
+  "version": "0.4.17",
   "description": "Isomorphic web application framework.",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "main": "src/index.js",
@@ -28,7 +28,7 @@
     "web"
   ],
   "devDependencies": {
-    "browserify": "^12.0.1",
+    "browserify": "^13.0.0",
     "bundle-collapser": "^1.2.1",
     "gulp": "^3.9.0",
     "gulp-mocha": "^2.2.0",
@@ -41,7 +41,7 @@
     "@rill/chain": "^0.2.2",
     "@rill/cookies": "^0.6.2",
     "@rill/error": "^0.1.1",
-    "@rill/http": "^0.9.2",
+    "@rill/http": "^0.9.4",
     "@rill/https": "^0.1.0",
     "byte-length": "^0.1.1",
     "content-check": "^0.1.2",
