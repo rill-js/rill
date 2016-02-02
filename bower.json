@@ -5,7 +5,7 @@
   "authors": [
     "pierceydylan@gmail.com <Dylan Piercey>"
   ],
-  "main": "bin/rill.js",
+  "main": "dist/rill.js",
   "license": "MIT",
   "repository": {
     "type": "git",
