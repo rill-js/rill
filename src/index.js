@@ -37,7 +37,7 @@ rill.stack = function stack () {
 	for (var fn, i = 0, len = fns.length; i < len; i++) {
 		fn = fns[i](base);
 		if (fn == null) continue;
-		if (fn.constructor === Rill) result = result.concat(fn.stack());
+		if (typeof fn.stack === "function") result = result.concat(fn.stack());
 		else result.push(fn);
 	}
 
