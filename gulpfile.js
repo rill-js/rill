@@ -50,5 +50,5 @@ gulp.task("build", function () {
 				screw_ie8:    true
 			}
 		}))
-		.pipe(gulp.dest("./bin"))
+		.pipe(gulp.dest("./dist"))
 });
