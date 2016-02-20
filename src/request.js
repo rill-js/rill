@@ -16,7 +16,7 @@ module.exports = Request;
  * @param {IncommingMessage} req - The original node request.
  */
 function Request (ctx, req) {
-	var host        = req.headers["x-forwarded-host"] || req.headers["host"];
+	var host        = req.headers["host"];
 	var protocol    = (req.connection.encrypted) ? "https" : "http";
 	var parsed      = URL.parse(protocol + "://" + host + req.url, true);
 	this.ctx        = ctx;
@@ -42,10 +42,9 @@ function Request (ctx, req) {
 		.reverse()
 		.slice(2);
 	this.ip = (
-		req.headers['x-forwarded-for'] ||
 		req.connection.remoteAddress ||
 		req.socket.remoteAddress ||
-		req.connection.socket.remoteAddress
+		(req.connection.socket && req.connection.socket.remoteAddress)
 	)
 
 	// Support nested querystrings.
