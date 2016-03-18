@@ -33,8 +33,8 @@ describe("Rill", function () {
 
 	it("should mount a pathname", function (done) {
 		var request = agent(Rill()
-			.at("/test", Rill()
-				.at("/1", Rill()
+			.at("/test/*", Rill()
+				.at("/1/*", Rill()
 					.at("/2", respond(200))
 				)
 			)
@@ -94,8 +94,8 @@ describe("Rill", function () {
 
 	it("should mount a subdomain/hostname", function (done) {
 		var request = agent(Rill()
-			.host("test.com", Rill()
-				.host("api", Rill()
+			.host("*.test.com", Rill()
+				.host("*.api", Rill()
 					.host("test", respond(200))
 				)
 			)
@@ -153,17 +153,6 @@ describe("Rill", function () {
 				.post("/")
 				.expect(200)
 		], done);
-	});
-
-	it("shouldn't mount methods twice", function () {
-		assert.throws(function () {
-			agent(Rill()
-				.post(Rill()
-					.get(respond(200))
-				)
-				.listen()
-			);
-		});
 	});
 
 	it("should parse cookies", function (done) {

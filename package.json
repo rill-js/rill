@@ -1,6 +1,6 @@
 {
   "name": "rill",
-  "version": "0.4.28",
+  "version": "0.5.0",
   "description": "Isomorphic web application framework.",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "main": "src/index.js",
@@ -32,13 +32,13 @@
     "bundle-collapser": "^1.2.1",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
-    "gulp-uglify": "^1.5.2",
+    "gulp-uglify": "^1.5.3",
     "supertest": "^1.2.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "@rill/chain": "^0.2.2",
+    "@rill/chain": "^1.0.0",
     "@rill/cookies": "^0.6.2",
     "@rill/error": "^0.1.1",
     "@rill/http": "^1.0.4",
@@ -46,9 +46,8 @@
     "byte-length": "^0.1.1",
     "content-check": "^0.1.2",
     "header-field": "^0.2.1",
-    "join-url": "^0.3.1",
     "path-to-regexp": "^1.2.1",
-    "q-set": "^1.4.3",
+    "q-set": "^1.4.4",
     "statuses": "^1.2.1"
   }
 }
