@@ -125,7 +125,7 @@ rill.at = function at (pathname) {
 			key = keys[i];
 			match = matches[i + 1];
 			if (!key.optional && match == null) return next();
-			if (key.repeat) match = match.split("/");
+			if (key.repeat && match != null) match = match.split("/");
 			ctx.req.params[key.name] = match;
 		}
 
@@ -165,7 +165,7 @@ rill.host = function host (hostname) {
 			key = keys[i];
 			match = matches[i + 1];
 			if (!key.optional && match == null) return next();
-			if (key.repeat) match = match.split(".");
+			if (key.repeat && match != null) match = match.split(".");
 			ctx.req.subdomains[key.name] = match;
 		}
 
