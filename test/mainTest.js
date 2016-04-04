@@ -67,6 +67,19 @@ describe("Rill", function () {
 			.end(done);
 	});
 
+	it("should attach repeating params", function (done) {
+		var request = agent(Rill()
+			.at("/test/:name*", respond(200, function (ctx) {
+				assert.deepEqual(ctx.req.params, { name: ["1", "2", "3"] });
+			}))
+			.listen()
+		);
+
+		request
+			.get("/test/1/2/3")
+			.end(done);
+	});
+
 	it("should match a hostname", function (done) {
 		var request = agent(Rill()
 			.host("*test.com", respond(200))
@@ -135,6 +148,26 @@ describe("Rill", function () {
 			request
 				.get("/")
 				.set("host", "hi.test.com")
+				.expect(200),
+		], done);
+	});
+
+	it("should attach a repeating subdomain", function (done) {
+		var request = agent(Rill()
+			.host(":name*.test.com", respond(200, function (ctx) {
+				assert.equal(ctx.req.subdomains.length, 3);
+				assert.equal(ctx.req.subdomains[2], "1");
+				assert.equal(ctx.req.subdomains[1], "2");
+				assert.equal(ctx.req.subdomains[0], "3");
+				assert.deepEqual(ctx.req.subdomains.name, ["1", "2", "3"]);
+			}))
+			.listen()
+		);
+
+		when([
+			request
+				.get("/")
+				.set("host", "1.2.3.test.com")
 				.expect(200),
 		], done);
 	});

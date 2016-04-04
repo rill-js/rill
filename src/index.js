@@ -8,6 +8,7 @@ var HttpError = require("@rill/error");
 var Context   = require("./context");
 var respond   = require("./respond");
 var slice     = Array.prototype.slice;
+var splice    = Array.prototype.splice;
 var rill      = Rill.prototype;
 
 module.exports = Rill.default = Rill;
@@ -116,7 +117,6 @@ rill.at = function at (pathname) {
 		if (ctx._pathname == null) ctx._pathname = ctx.req.pathname;
 		var _pathname = ctx._pathname;
 		var matches   = _pathname.match(reg);
-
 		// Check if we matched the whole path.
 		if (!matches || matches[0] !== _pathname) return next();
 
@@ -125,6 +125,7 @@ rill.at = function at (pathname) {
 			key = keys[i];
 			match = matches[i + 1];
 			if (!key.optional && match == null) return next();
+			if (key.repeat) match = match.split("/");
 			ctx.req.params[key.name] = match;
 		}
 
@@ -164,6 +165,7 @@ rill.host = function host (hostname) {
 			key = keys[i];
 			match = matches[i + 1];
 			if (!key.optional && match == null) return next();
+			if (key.repeat) match = match.split(".");
 			ctx.req.subdomains[key.name] = match;
 		}
 

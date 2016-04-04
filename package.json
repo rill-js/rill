@@ -1,6 +1,6 @@
 {
   "name": "rill",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Isomorphic web application framework.",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "main": "src/index.js",
@@ -23,7 +23,6 @@
     "restfull",
     "rill",
     "router",
-    "tusk",
     "universal",
     "web"
   ],
