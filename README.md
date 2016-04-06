@@ -24,7 +24,7 @@ bower install rill
 
 # Community
 
-* [API](https://github.com/rill-js/rill/blob/master/docs/api/index.md) documentation.
+* [API](https://github.com/rill-js/rill/blob/master/docs/api) documentation.
 * [Examples](https://github.com/rill-js/examples)
 * [Middleware](https://github.com/rill-js/rill/wiki) list
 * [Wiki](https://github.com/rill-js/rill/wiki)
@@ -58,7 +58,7 @@ app.use(async ({ req }, next)=> {
 
 app.use(({ res })=> {
 	// Here we render a string,
-	// check out middleware such as @rill/react
+	// check out middleware such as @rill/react or @rill/html
 	// for isomorphic dom rendering.
 	res.body = "Hello World";
 });

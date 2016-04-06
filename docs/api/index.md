@@ -136,6 +136,11 @@ app.get(...);
 
 // Match request for the route path and uses the GET method.
 app.get("/", ...);
+
+// Event mount routers for a more modular experience.
+app.get("/api/*",
+  rill().get("/v1", ...) // matches `/api/v1`
+)
 ```
 
 ## app.host(hostname, function|application...)
