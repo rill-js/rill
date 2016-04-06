@@ -1,14 +1,36 @@
 {
   "name": "rill",
-  "version": "0.5.3",
   "description": "Isomorphic web application framework.",
+  "version": "0.5.4",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
-  "main": "src/index.js",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rill-js/rill"
+  "bugs": "https://github.com/rill-js/rill/issues",
+  "dependencies": {
+    "@rill/chain": "^1.0.1",
+    "@rill/cookies": "^1.0.0",
+    "@rill/error": "^0.1.1",
+    "@rill/http": "^1.0.4",
+    "@rill/https": "^0.2.0",
+    "byte-length": "^0.1.1",
+    "content-check": "^0.1.2",
+    "header-field": "^0.2.1",
+    "is-typeof": "^1.0.1",
+    "path-to-regexp": "^1.2.1",
+    "q-set": "^1.4.4",
+    "statuses": "^1.2.1"
   },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "bundle-collapser": "^1.2.1",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "gulp-uglify": "^1.5.3",
+    "snazzy": "^3.0.0",
+    "standard": "^6.0.8",
+    "supertest": "^1.2.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "homepage": "https://github.com/rill-js/rill",
   "keywords": [
     "api",
     "app",
@@ -26,27 +48,20 @@
     "universal",
     "web"
   ],
-  "devDependencies": {
-    "browserify": "^13.0.0",
-    "bundle-collapser": "^1.2.1",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^2.2.0",
-    "gulp-uglify": "^1.5.3",
-    "supertest": "^1.2.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+  "license": "MIT",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rill-js/rill"
   },
-  "dependencies": {
-    "@rill/chain": "^1.0.0",
-    "@rill/cookies": "^0.6.2",
-    "@rill/error": "^0.1.1",
-    "@rill/http": "^1.0.4",
-    "@rill/https": "^0.2.0",
-    "byte-length": "^0.1.1",
-    "content-check": "^0.1.2",
-    "header-field": "^0.2.1",
-    "path-to-regexp": "^1.2.1",
-    "q-set": "^1.4.4",
-    "statuses": "^1.2.1"
+  "scripts": {
+    "build": "gulp build",
+    "test": "standard --verbose | snazzy && gulp test"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "it"
+    ]
   }
 }

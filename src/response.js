@@ -1,12 +1,11 @@
-"use strict";
+'use strict'
 
-var URL       = require("url");
-var statuses  = require("statuses");
-var toField   = require("header-field");
-var HttpError = require("@rill/error");
-var cookies   = require("@rill/cookies");
+var URL = require('url')
+var statuses = require('statuses')
+var toField = require('header-field')
+var cookies = require('@rill/cookies')
 
-module.exports = Response;
+module.exports = Response
 
 /**
  * Wrapper around nodejs `ServerResponse`.
@@ -16,15 +15,14 @@ module.exports = Response;
  * @param {ServerResponse} res - The original node response.
  */
 function Response (ctx, res) {
-	this.ctx      = ctx;
-	this.original = res;
-	this.headers  = res.headers = { "x-powered-by": "Rill" };
-	this.status   = res.statusCode;
-	this.body     = undefined;
-
-	res.once("finish", function () { ctx.res.finished = true; });
+  this.ctx = ctx
+  this.original = res
+  this.status = res.statusCode
+  this.body = undefined
+  this.headers = {}
+  res.once('finish', function () { ctx.res.finished = true })
 }
-var response = Response.prototype;
+var response = Response.prototype
 
 /**
  * Appends to the current set-cookie header, adding a new cookie with options.
@@ -34,8 +32,8 @@ var response = Response.prototype;
  * @param {Object} opts - options for the cookie.
  */
 response.cookie = function (key, val, opts) {
-	this.append("Set-Cookie", cookies.serialize(key, val, opts))
-};
+  this.append('Set-Cookie', cookies.serialize(key, val, opts))
+}
 
 /**
  * Deletes a cookie.
@@ -44,10 +42,10 @@ response.cookie = function (key, val, opts) {
  * @param {Object} opts - options for the cookie.
  */
 response.clearCookie = function (key, opts) {
-	opts = opts || {};
-	opts.expires = new Date();
-	this.append("Set-Cookie", cookies.serialize(key, "", opts));
-};
+  opts = opts || {}
+  opts.expires = new Date()
+  this.append('Set-Cookie', cookies.serialize(key, '', opts))
+}
 
 /**
  * Attaches relative location headers to perform a redirect.
@@ -57,19 +55,20 @@ response.clearCookie = function (key, opts) {
  * @param {String} alt - Used if the url is empty or "back" does not exist.
  */
 response.redirect = function redirect (url, alt) {
-	var req = this.ctx.req;
+  var req = this.ctx.req
 
-	url = (url === "back")
-		? req.get("Referrer")
-		: url;
-	url = url || alt;
+  // Back uses request referrer header as a url.
+  url = (url === 'back') ? req.get('Referrer') : url
+  // Default url to alternative.
+  url = url || alt
 
-	if (!url)
-		throw new TypeError("Rill#redirect: Cannot redirect, url not specified and alternative not provided.");
+  if (!url) {
+    throw new TypeError('Rill#redirect: Cannot redirect, url not specified and alternative not provided.')
+  }
 
-	if (!statuses.redirect[this.status]) this.status = 302;
+  if (!statuses.redirect[this.status]) this.status = 302
 
-	this.set("Location", URL.resolve(req.href, url));
+  this.set('Location', URL.resolve(req.href, url))
 }
 
 /**
@@ -81,16 +80,16 @@ response.redirect = function redirect (url, alt) {
  * @param {String} alt - Used if the url is empty or "back" does not exist.
  */
 response.refresh = function refresh (delay, url, alt) {
-	var req = this.ctx.req;
+  var req = this.ctx.req
 
-	delay = delay || 0;
-	url = (url === "back")
-		? req.get("Referrer")
-		: url;
-	url = url || alt || req.href;
+  delay = delay || 0
+  // Back uses request referrer header as a url.
+  url = (url === 'back') ? req.get('Referrer') : url
+  // Default url to alternative.
+  url = url || alt || req.href
 
-	this.set("Refresh", delay + "; url=" + URL.resolve(req.href, url));
-};
+  this.set('Refresh', delay + '; url=' + URL.resolve(req.href, url))
+}
 
 /**
  * Utility to retrieve a header for the response.
@@ -99,8 +98,8 @@ response.refresh = function refresh (delay, url, alt) {
  * @return {Array|String}
  */
 response.get = function get (field) {
-	return this.headers[toField(field)];
-};
+  return this.headers[toField(field)]
+}
 
 /**
  * Utility to set a header for the response.
@@ -109,8 +108,8 @@ response.get = function get (field) {
  * @param {Array|String} val
  */
 response.set = function set (field, val) {
-	this.headers[toField(field)] = val;
-};
+  this.headers[toField(field)] = val
+}
 
 /**
  * Utility to append to an existing header for the response.
@@ -119,15 +118,15 @@ response.set = function set (field, val) {
  * @param {Array|String} val
  */
 response.append = function append (field, val) {
-	field       = toField(field);
-	var headers = this.headers;
-	var cur     = this.headers[field];
+  field = toField(field)
+  var headers = this.headers
+  var cur = this.headers[field]
 
-	if (null == cur) cur = [];
-	else if (cur.constructor !== Array) cur = [cur];
+  if (cur == null) cur = []
+  else if (cur.constructor !== Array) cur = [cur]
 
-	headers[field] = cur.concat(val);
-};
+  headers[field] = cur.concat(val)
+}
 
 /**
  * Utility to delete an existing header on the response.
@@ -135,5 +134,5 @@ response.append = function append (field, val) {
  * @param {String} field
  */
 response.remove = function remove (field) {
-	delete this.headers[toField(field)];
-};
+  delete this.headers[toField(field)]
+}

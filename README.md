@@ -1,5 +1,7 @@
-![Rill](https://raw.githubusercontent.com/rill-js/rill/master/Rill-Logo.jpg)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![Join the chat at https://gitter.im/rill-js/rill](https://badges.gitter.im/rill-js/rill.svg)](https://gitter.im/rill-js/rill?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+![Rill](https://raw.githubusercontent.com/rill-js/rill/master/Rill-Logo.jpg)
 
 Expressive HTTP middleware for node.js and the browser.
 Rill brings cascading middleware to the browser and enables truly isomorphic web applications. It makes apps enjoyable to write with a simpler top down mental model of your app and free progressive enhancement.
