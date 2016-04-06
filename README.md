@@ -1,6 +1,6 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![Join the chat at https://gitter.im/rill-js/rill](https://badges.gitter.im/rill-js/rill.svg)](https://gitter.im/rill-js/rill?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![npm](https://img.shields.io/npm/dm/rill.svg)]
+![npm](https://img.shields.io/npm/dm/rill.svg)
 
 ![Rill](https://raw.githubusercontent.com/rill-js/rill/master/Rill-Logo.jpg)
 
