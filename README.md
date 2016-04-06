@@ -71,6 +71,6 @@ app.listen({ port: 80, ip: "0.0.0.0" });
 
 ### Contributions
 
-* Use gulp to run tests.
+* Use `npm test` to run tests.
 
 Please feel free to create a PR!
