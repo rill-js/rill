@@ -40,10 +40,10 @@ function respond (ctx) {
     res.remove('Content-Type')
     res.remove('Content-Length')
   } else {
-    // Stringify objects that are not buffers.
-    if (typeof body === 'object' && !isStream && !isBuffer) body = JSON.stringify(body)
     // Attempt to guess content type.
     if (!res.get('Content-Type')) res.set('Content-Type', checkType(body))
+    // Stringify objects that are not buffers.
+    if (typeof body === 'object' && !isStream && !isBuffer) body = JSON.stringify(body)
     // Attempt to guess content-length.
     if (!res.get('Content-Length') && !isStream) res.set('Content-Length', byteLength(body))
   }

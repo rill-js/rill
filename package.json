@@ -1,7 +1,7 @@
 {
   "name": "rill",
   "description": "Isomorphic web application framework.",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
@@ -61,7 +61,14 @@
   "standard": {
     "globals": [
       "describe",
-      "it"
+      "it",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach"
+    ],
+    "ignore": [
+      "dist/"
     ]
   }
 }
