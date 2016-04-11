@@ -1,7 +1,7 @@
 {
   "name": "rill",
   "description": "Isomorphic web application framework.",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
