@@ -8,7 +8,7 @@
     "@rill/chain": "^1.0.2",
     "@rill/cookies": "^1.0.0",
     "@rill/error": "^0.1.1",
-    "@rill/http": "^1.1.0",
+    "@rill/http": "^1.1.1",
     "@rill/https": "^0.2.0",
     "byte-length": "^0.1.1",
     "content-check": "^0.1.2",
