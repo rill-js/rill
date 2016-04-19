@@ -1,7 +1,7 @@
 {
   "name": "rill",
   "description": "Isomorphic web application framework.",
-  "version": "0.5.10",
+  "version": "0.5.11",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
@@ -13,7 +13,7 @@
     "byte-length": "^0.1.1",
     "content-check": "^0.1.2",
     "header-field": "^0.2.1",
-    "is-typeof": "^1.0.1",
+    "is-typeof": "^1.0.2",
     "path-to-regexp": "^1.2.1",
     "q-set": "^1.4.4",
     "statuses": "^1.2.1"

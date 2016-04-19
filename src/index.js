@@ -190,7 +190,7 @@ rill.host = function host (hostname) {
  */
 http.METHODS.forEach(function (method) {
   var name = method.toLowerCase()
-  rill[name] = Object.defineProperty(function (pathname) {
+  rill[name] = function (pathname) {
     var offset = typeof pathname === 'string' ? 1 : 0
     var fn = chain(slice.call(arguments, offset))
     if (offset === 1) return this.at(pathname, matchMethod)
@@ -200,5 +200,5 @@ http.METHODS.forEach(function (method) {
       if (ctx.req.method !== method) return next()
       return fn(ctx, next)
     }
-  }, 'name', { value: name })
+  }
 })
