@@ -155,7 +155,7 @@ describe('Rill', function () {
 
   it('should be able to throw an http error', function (done) {
     var request = agent(Rill()
-      .use(respond(200, function (ctx) { ctx.throw(400) }))
+      .use(respond(200, function (ctx) { ctx.fail(400) }))
       .listen())
 
     request.get('/').expect(400).end(done)

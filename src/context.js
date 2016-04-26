@@ -17,7 +17,7 @@ function Context (req, res) {
   this.req = new Request(this, req)
   this.res = new Response(this, res)
   this.locals = {}
-  this.throw = this.throw.bind(this)
+  this.fail = this.fail.bind(this)
   this.assert = this.assert.bind(this)
 }
 var context = Context.prototype
@@ -30,7 +30,7 @@ var context = Context.prototype
  * @param {Object} [meta] - Optional object to merge onto the error.
  * @throws HttpError
  */
-context.throw = function throwHttp (code, message, meta) {
+context.fail = function throwHttp (code, message, meta) {
   var error = new HttpError(code, message, meta)
   this.res.status = error.code
   this.res.message = error.message
@@ -47,5 +47,5 @@ context.throw = function throwHttp (code, message, meta) {
  * @throws HttpError
  */
 context.assert = function assertHttp (val, code, message, meta) {
-  if (!val) this.throw(code, message, meta)
+  if (!val) this.fail(code, message, meta)
 }

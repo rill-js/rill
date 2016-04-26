@@ -33,16 +33,16 @@ app.use((ctx)=> {
 
   An object created during each incomming request that allows passing data between each middleware function.
 
-### ctx.throw(status, [message], [properties])
+### ctx.fail(status, [message], [properties])
 
   Helper method to throw an error with a `.status` property.
 
 ```js
-this.throw(403);
-this.throw(400, 'name required');
+this.fail(403);
+this.fail(400, 'name required');
 ```
 
-  For example `this.throw(400, 'name required')` is equivalent to:
+  For example `this.fail(400, 'name required')` is equivalent to:
 
 ```js
 const err = new Error('name required');
@@ -53,14 +53,14 @@ throw err;
   You may optionally pass a `properties` object which is merged into the error as-is, useful for decorating machine-friendly errors which are reported to the requester upstream.
 
 ```js
-this.throw(401, 'access_denied', { user: user });
+this.fail(401, 'access_denied', { user: user });
 ```
 
 Rill uses [@rill/error](https://github.com/rill-js/error) to create errors.
 
 ### ctx.assert(value, status, [msg], [properties])
 
-  Helper method to throw an error similar to `.throw()`
+  Helper method to throw an error similar to `.fail()`
   when `!value`. Similar to node's [assert()](http://nodejs.org/api/assert.html)
   method.
 
