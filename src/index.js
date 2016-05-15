@@ -35,6 +35,7 @@ function Rill () {
  */
 rill.listen = function listen (opts, cb) {
   opts = opts || {}
+  opts.port = opts.port != null ? opts.port : null
   var server = (opts.tls)
     ? https.createServer(opts.tls, this.handler())
     : http.createServer(this.handler())

@@ -1,7 +1,7 @@
 {
   "name": "rill",
   "description": "Isomorphic web application framework.",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
@@ -14,18 +14,18 @@
     "content-check": "^0.1.2",
     "header-field": "^0.2.1",
     "is-typeof": "^1.0.2",
-    "path-to-regexp": "^1.2.1",
+    "path-to-regexp": "^1.3.0",
     "q-set": "^1.4.4",
     "statuses": "^1.2.1"
   },
   "devDependencies": {
-    "browserify": "^13.0.0",
+    "browserify": "^13.0.1",
     "bundle-collapser": "^1.2.1",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
     "gulp-uglify": "^1.5.3",
-    "snazzy": "^3.0.1",
-    "standard": "^6.0.8",
+    "snazzy": "^4.0.0",
+    "standard": "^7.0.1",
     "supertest": "^1.2.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
