@@ -7,7 +7,7 @@
 
 ### req.original
 
- Original nodejs request object.
+ Original nodejs/rill-http request object.
 
 ### req.ctx
 
@@ -15,19 +15,26 @@
 
 ### req.headers
 
- Request header object.
+ Original request header object.
+
+```js
+ctx.req.headers // => { ... }
+```
 
 ### req.cookies
 
  Parsed cookies for the request.
+
+```js
+ctx.req.cookies // => { ... }
+```
 
 ### req.method
 
  Request method.
 
  ```js
-ctx.req.method
-// => GET
+ctx.req.method // => GET
 ```
 
 ### req.href
@@ -35,8 +42,7 @@ ctx.req.method
   Get full request URL, include `protocol`, `host` and `url`.
 
 ```js
-ctx.req.href
-// => http://example.com/foo/bar?q=1#section
+ctx.req.href // => http://www.example.com/foo/bar?q=1#section
 ```
 
 ### req.origin
@@ -44,8 +50,7 @@ ctx.req.href
   Get the origin of the request (protocol, hostmame and port).
 
 ```js
-ctx.req.origin
-// => http://example.com
+ctx.req.origin // => http://www.example.com
 ```
 
 ### req.protocol
@@ -53,8 +58,7 @@ ctx.req.origin
  Protocol for the request.
 
 ```js
-ctx.req.protocol;
-// => http
+ctx.req.protocol // => http
 ```
 
 ### req.hostname
@@ -62,8 +66,7 @@ ctx.req.protocol;
  Host name for the request.
 
 ```js
-ctx.req.hostname;
-// => example.com
+ctx.req.hostname // => www.example.com
 ```
 
 ### req.port
@@ -71,8 +74,7 @@ ctx.req.hostname;
  Port number for the request.
 
 ```js
-ctx.req.port;
-// => 80
+ctx.req.port // => 80
 ```
 
 ### req.host
@@ -80,8 +82,7 @@ ctx.req.port;
  Host for the request, including port.
 
 ```js
-ctx.req.host;
-// => example.com:80
+ctx.req.host // => www.example.com:80
 ```
 
 ### req.pathname
@@ -89,8 +90,7 @@ ctx.req.host;
  The path section of the URL.
 
 ```js
-ctx.req.pathname;
-// => /foo/bar
+ctx.req.pathname // => /foo/bar
 ```
 
 ### req.path
@@ -98,8 +98,7 @@ ctx.req.pathname;
  The concatenated pathname and querystring of the URL.
 
 ```js
-ctx.req.path;
-// => /foo/bar?q=1
+ctx.req.path // => /foo/bar?q=1
 ```
 
 ### req.search
@@ -107,8 +106,7 @@ ctx.req.path;
   Get raw query string including `?`.
 
 ```js
-ctx.req.search;
-// => "?q=1"
+ctx.req.search // => "?q=1"
 ```
 
 ### req.query
@@ -116,8 +114,7 @@ ctx.req.search;
  A parsed querstring object.
 
  ```js
-ctx.req.query;
-// => { q: "1" }
+ctx.req.query // => { q: "1" }
 ```
 
 ### req.hash
@@ -125,22 +122,33 @@ ctx.req.query;
  The hash fragment of the URL including the pound-sign (only in browser).
 
 ```js
-ctx.req.hash
-// => "#section"
+ctx.req.hash // => "#section"
 ```
 
 ### req.params
 
  An object containing the matches during a path middleware.
 
+```js
+ctx.req.params // => {}
+```
+
 ### req.secure
 
   Shorthand for `ctx.req.protocol == "https"` to check if a request was
   issued via TLS.
 
+```js
+ctx.req.secure // => false
+```
+
 ### req.ip
 
   Request remote address. Supports `X-Forwarded-For`.
+
+```js
+ctx.req.ip // => "127.0.0.1"
+```
 
 ### req.subdomains
 
@@ -148,12 +156,16 @@ ctx.req.hash
 
   Subdomains are the dot-separated parts of the host before the main domain of
   the app. By default, the domain of the app is assumed to be the last two
-  parts of the host. This can be changed by setting `app.subdomainOffset`.
+  parts of the host.
 
-  For example, if the domain is "tobi.ferrets.example.com":
-  If `app.subdomainOffset` is not set, this.subdomains is `["ferrets", "tobi"]`.
-  If `app.subdomainOffset` is 3, this.subdomains is `["tobi"]`.
+```js
+ctx.req.subdomains // => ["www"]
+```
 
 ### req.get(field)
 
-  Return request header.
+  Return specific request header (case insensitive).
+
+```js
+ctx.req.get("Cookie") // => "..."
+```

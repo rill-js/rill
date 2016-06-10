@@ -7,7 +7,7 @@
 
 ### res.original
 
- Original nodejs response object.
+ Original nodejs/rill-http response object.
 
 ### res.ctx
 
@@ -15,11 +15,19 @@
 
 ### res.headers
 
-  Response header object.
+  Original response header object.
+
+```js
+ctx.res.headers // => { ... }
+```
 
 ### res.status
 
   Get response status. By default, `ctx.res.status` is `404` unlike node's `res.statusCode` which defaults to `200`.
+
+```js
+ctx.res.status // => 200
+```
 
 ### res.status=
 
@@ -87,6 +95,10 @@
   Get response status message. By default, `res.message` is
   associated with `res.status`.
 
+```js
+ctx.res.message // => "success"
+```
+
 ### res.message=
 
   Set response status message to the given value.
@@ -102,6 +114,10 @@
 ### res.body
 
   Get response body.
+
+```js
+ctx.res.body // => "<div>hello world</div>"
+```
 
 ### res.body=
 
