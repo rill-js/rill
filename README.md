@@ -5,7 +5,7 @@
 ![Rill](https://raw.githubusercontent.com/rill-js/rill/master/Rill-Logo.jpg)
 
 Expressive HTTP middleware for node.js and the browser.
-Rill brings cascading middleware to the browser and enables truly isomorphic web applications. It makes apps enjoyable to write with a simpler top down mental model of your app and free progressive enhancement.
+Rill brings cascading middleware to the browser and enables fully universal web applications. It makes apps enjoyable to write with a simpler top down mental model of your app and free progressive enhancement.
 
 Rill provides the minimum for abstractions over node and the browser enabling things like routing (with redirecting, refreshes and more), cookies, and middleware with the same api.
 
