@@ -59,7 +59,7 @@ app.use(async ({ req }, next)=> {
 app.use(({ res })=> {
 	// Here we render a string,
 	// check out middleware such as @rill/react or @rill/html
-	// for isomorphic dom rendering.
+	// for universal rendering.
 	res.body = "Hello World";
 });
 

@@ -18,7 +18,7 @@ $ node my-rill-app.js
   one important distinction; It can run in the browser.
 
   Rill comes with many essential utilities for building modern web applications.
-  This includes: Routing, redirection, cookies, and more. Typically an isomorphic
+  This includes: Routing, redirection, cookies, and more. Typically a universal
   rendering solution will also be used such as [@rill/react](https://github.com/rill-js/react)
   which allows full page react applications to work seamlessly on the server and
   in the browser.
@@ -68,7 +68,7 @@ app.listen({ port: 8000, tls: options });
   or on multiple addresses:
 
 ```js
-// For isomorphic use you can use @rill/http(s) instead of nodes http module.
+// For universal use you can use @rill/http(s) instead of nodes http module.
 http.createServer(app.handler()).listen(3000);
 http.createServer(app.handler()).listen(3001);
 ```

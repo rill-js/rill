@@ -13,7 +13,7 @@ var rill = Rill.prototype
 module.exports = Rill.default = Rill
 
 /**
- * Creates an isomorphic app that will run middleware for a incomming request.
+ * Creates a universal app that will run middleware for a incomming request.
  *
  * @constructor
  */

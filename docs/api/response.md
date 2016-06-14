@@ -1,7 +1,7 @@
 # Response
 
   A Rill `Response` object is an abstraction on top of node's vanilla response object, or [@rill/http](https://github.com/rill-js/http) in the browser.
-  It provides additional functionality that is useful for every day isomorphic development.
+  It provides additional functionality that is useful for every day development.
 
 ## API
 
