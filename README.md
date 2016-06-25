@@ -30,7 +30,13 @@ bower install rill
 * [Wiki](https://github.com/rill-js/rill/wiki)
 * [Reddit Community](https://www.reddit.com/r/Rill)
 
+# Articles
+
+* [Isomorphic Javascript, let’s make it easier.](https://medium.com/@pierceydylan/isomorphic-javascript-it-just-has-to-work-b9da5b0c8035)
+
 # Example
+
+### Create an app
 
 ```javascript
 /**
@@ -40,9 +46,12 @@ bower install rill
 
 const Rill = require("rill");
 const app  = Rill();
+```
 
+### Setup middleware
+
+```javascript
 // Logger
-
 app.use(async ({ req }, next)=> {
 	const start = new Date;
 
@@ -54,19 +63,38 @@ app.use(async ({ req }, next)=> {
 	console.log(`${req.method} ${req.url} - ${ms}`);
 });
 
-// Response
+// Isomorphic react rendering middleware.
+app.use(require("@rill/react")())
+```
 
-app.use(({ res })=> {
-	// Here we render a string,
-	// check out middleware such as @rill/react or @rill/html
-	// for universal rendering.
-	res.body = "Hello World";
+### Setup routes
+
+```javascript
+// Respond to a GET request.
+app.get("/todos", ({ locals, res })=> {
+	// Directly set React virtual dom to the body thanks to @rill/react.
+	// (Checkout @rill/html for isomorphic html diffing).
+	res.body = (
+		<html>
+			<head>
+				<title>My App</title>
+				<meta name="description" content="Rill Application">
+			</head>
+			<body>
+				{{locals.todos.map(renderTodo)}}
+				<script src="/app.js"/>
+			</body>
+		</html>
+	);
 });
+```
 
+### Start app
+
+```javascript
 // Start a regular http server.
 // In the browser any form submissions or link clicks will intercepted by @rill/http.
 app.listen({ port: 80, ip: "0.0.0.0" });
-
 ```
 
 ### Contributions
