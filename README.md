@@ -22,6 +22,15 @@ npm install rill
 bower install rill
 ```
 
+#### [Download](https://raw.githubusercontent.com/rill-js/rill/master/dist/rill.js)
+```html
+<script type="text/javascript" src="rill.js"></script>
+<script>
+    define(['rill'], function (rill) {...}); // AMD
+    window.rill; // Global rill if no module system in place.
+</script>
+```
+
 # Community
 
 * [API](https://github.com/rill-js/rill/blob/master/docs/api) documentation.
