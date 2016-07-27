@@ -63,7 +63,7 @@ response.redirect = function redirect (url, alt) {
   url = url || alt
 
   if (!url) {
-    throw new TypeError('Rill#redirect: Cannot redirect, url not specified and alternative not provided.')
+    throw new TypeError('Rill#ctx.res.redirect: Cannot redirect, url not specified and alternative not provided.')
   }
 
   if (!statuses.redirect[this.status]) this.status = 302

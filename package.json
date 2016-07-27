@@ -1,7 +1,7 @@
 {
   "name": "rill",
   "description": "Universal web application framework.",
-  "version": "0.6.8",
+  "version": "0.7.0",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
@@ -19,7 +19,7 @@
     "statuses": "^1.3.0"
   },
   "devDependencies": {
-    "browserify": "^13.0.1",
+    "browserify": "^13.1.0",
     "bundle-collapser": "^1.2.1",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",

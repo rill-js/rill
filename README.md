@@ -72,7 +72,7 @@ app.use(async ({ req }, next)=> {
 	console.log(`${req.method} ${req.url} - ${ms}`);
 });
 
-// Isomorphic react rendering middleware.
+// Universal react rendering middleware.
 app.use(require("@rill/react")())
 ```
 
@@ -82,7 +82,7 @@ app.use(require("@rill/react")())
 // Respond to a GET request.
 app.get("/todos", ({ locals, res })=> {
 	// Directly set React virtual dom to the body thanks to @rill/react.
-	// (Checkout @rill/html for isomorphic html diffing).
+	// (Checkout @rill/html for universal html diffing).
 	res.body = (
 		<html>
 			<head>

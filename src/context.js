@@ -16,9 +16,9 @@ module.exports = Context
 function Context (req, res) {
   this.req = new Request(this, req)
   this.res = new Response(this, res)
-  this.locals = {}
   this.fail = this.fail.bind(this)
   this.assert = this.assert.bind(this)
+  this.locals = {}
 }
 var context = Context.prototype
 
@@ -31,6 +31,7 @@ var context = Context.prototype
  * @throws HttpError
  */
 context.fail = function throwHttp (code, message, meta) {
+  if (typeof code !== 'number') throw new TypeError('Rill#ctx.fail: Status code must be a number.')
   var error = new HttpError(code, message, meta)
   this.res.status = error.code
   this.res.message = error.message
@@ -47,5 +48,6 @@ context.fail = function throwHttp (code, message, meta) {
  * @throws HttpError
  */
 context.assert = function assertHttp (val, code, message, meta) {
+  if (typeof code !== 'number') throw new TypeError('Rill#ctx.assert: Status code must be a number.')
   if (!val) this.fail(code, message, meta)
 }
