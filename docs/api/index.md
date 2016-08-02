@@ -35,6 +35,8 @@ const app = new Rill();
   One or more Rill applications may be mounted together to form larger
   applications and you can even listen to multiple ports with a single HTTP server.
 
+  All arguments to `listen` are optional and will work similarily to the native [http#listen](https://nodejs.org/api/http.html#http_server_listen_handle_callback).
+
   `listen` will start an HTTPS server if the `tls` option is provided.
   The tls options are the same as nodes [TLS](https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener) module.
 

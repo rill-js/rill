@@ -25,7 +25,7 @@ function Rill () {
 /**
  * Starts a node/rill server.
  *
- * @param {Object} opts
+ * @param {Object} [opts]
  * @param {String} opts.ip
  * @param {Number} opts.port
  * @param {Number} opts.backlog
@@ -34,11 +34,19 @@ function Rill () {
  * @return {Server}
  */
 rill.listen = function listen (opts, cb) {
+  // Make options optional.
+  if (typeof opts === 'function') {
+    cb = opts
+    opts = null
+  }
+
   opts = opts || {}
   opts.port = opts.port != null ? opts.port : null
+
   var server = (opts.tls)
     ? https.createServer(opts.tls, this.handler())
     : http.createServer(this.handler())
+
   return server.listen(opts.port, opts.ip, opts.backlog, cb)
 }
 
