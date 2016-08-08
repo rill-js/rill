@@ -7,7 +7,7 @@
 
 ### req.original
 
- Original nodejs/rill-http request object.
+ Original nodejs/[@rill/http](https://github.com/rill-js/http) request object.
 
 ### req.ctx
 
@@ -47,7 +47,7 @@ ctx.req.href // => http://www.example.com/foo/bar?q=1#section
 
 ### req.origin
 
-  Get the origin of the request (protocol, hostmame and port).
+  Get the origin of the request (protocol, hostname and port).
 
 ```js
 ctx.req.origin // => http://www.example.com
@@ -106,7 +106,7 @@ ctx.req.path // => /foo/bar?q=1
   Get raw query string including `?`.
 
 ```js
-ctx.req.search // => "?q=1"
+ctx.req.search // => '?q=1'
 ```
 
 ### req.query
@@ -114,7 +114,7 @@ ctx.req.search // => "?q=1"
  A parsed querstring object.
 
  ```js
-ctx.req.query // => { q: "1" }
+ctx.req.query // => { q: '1' }
 ```
 
 ### req.hash
@@ -122,7 +122,7 @@ ctx.req.query // => { q: "1" }
  The hash fragment of the URL including the pound-sign (only in browser).
 
 ```js
-ctx.req.hash // => "#section"
+ctx.req.hash // => '#section'
 ```
 
 ### req.params
@@ -135,7 +135,7 @@ ctx.req.params // => {}
 
 ### req.secure
 
-  Shorthand for `ctx.req.protocol == "https"` to check if a request was
+  Shorthand for `ctx.req.protocol === 'https'` to check if a request was
   issued via TLS.
 
 ```js
@@ -147,7 +147,7 @@ ctx.req.secure // => false
   Request remote address. Supports `X-Forwarded-For`.
 
 ```js
-ctx.req.ip // => "127.0.0.1"
+ctx.req.ip // => '127.0.0.1'
 ```
 
 ### req.subdomains
@@ -159,7 +159,7 @@ ctx.req.ip // => "127.0.0.1"
   parts of the host.
 
 ```js
-ctx.req.subdomains // => ["www"]
+ctx.req.subdomains // => ['www']
 ```
 
 ### req.get(field)
@@ -167,5 +167,5 @@ ctx.req.subdomains // => ["www"]
   Return specific request header (case insensitive).
 
 ```js
-ctx.req.get("Cookie") // => "..."
+ctx.req.get('Cookie') // => '...'
 ```

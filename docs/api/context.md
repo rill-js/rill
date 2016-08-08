@@ -5,16 +5,16 @@
   web applications and APIs.
 
   A `Context` is created _per_ request, and is provided to middleware
-  as the first argument. In an es6 capable environment it is easy to pull
+  as the first argument. In an es2015 capable environment it is easy to pull
   out parts of the context that you need (as seen in some examples) like so
   `{ req, res, locals }`.
 
 ```js
 app.use((ctx)=> {
-  ctx.req; // is a Rill request.
-  ctx.res; // is a Rill response.
-  ctx.locals; // a place to store local variables.
-});
+  ctx.req // is a Rill request.
+  ctx.res // is a Rill response.
+  ctx.locals // a place to store local variables.
+})
 ```
 
 ## API
@@ -31,29 +31,30 @@ app.use((ctx)=> {
 
 ### ctx.locals
 
-  An object created during each incomming request that allows passing data between each middleware function.
+  An object created during each incoming request that allows passing data between each middleware function.
 
 ### ctx.fail(status, [message], [properties])
 
   Helper method to throw an error with a `.status` property.
 
 ```js
-this.fail(403);
-this.fail(400, 'name required');
+ctx.fail(403)
+ctx.fail(400, 'name required')
 ```
 
-  For example `this.fail(400, 'name required')` is equivalent to:
+  For example `ctx.fail(400, 'name required')` is equivalent to:
 
 ```js
-const err = new Error('name required');
-err.status = 400;
-throw err;
+const err = new Error('name required')
+err.status = 400
+throw err
 ```
 
-  You may optionally pass a `properties` object which is merged into the error as-is, useful for decorating machine-friendly errors which are reported to the requester upstream.
+  You may optionally pass a `properties` object which is merged into the error as-is,
+  useful for decorating machine-friendly errors which are reported to the requester upstream.
 
 ```js
-this.fail(401, 'access_denied', { user: user });
+ctx.fail(401, 'access_denied', { user: user })
 ```
 
 Rill uses [@rill/error](https://github.com/rill-js/error) to create errors.
@@ -65,5 +66,5 @@ Rill uses [@rill/error](https://github.com/rill-js/error) to create errors.
   method.
 
 ```js
-this.assert(this.state.user, 401, 'User not found. Please login!');
+ctx.assert(ctx.state.user, 401, 'User not found. Please login!')
 ```

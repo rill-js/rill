@@ -1,8 +1,8 @@
 # Installation
 
-  Rill is supported in all recent versions of [nodejs](https://nodejs.org) and modern browsers including ie10.
+  Rill is supported in all recent versions of [nodejs](https://nodejs.org) and modern browsers including IE10.
 
-  You can quickly install a supported version of node/iojs with your favorite version manager:
+  You can quickly install a supported version of [nodejs](https://nodejs.org) with your favourite version manager:
 
 ```bash
 $ nvm install stable
@@ -14,19 +14,26 @@ $ node my-rill-app.js
 
   A Rill application is an object containing an array of middleware functions
   which are composed and executed in a stack-like manner upon request.
-  Rill is similar to other nodejs frameworks such as Express, Hapi and Koa with
-  one important distinction; It can run in the browser.
+  Rill is similar to other [nodejs](https://nodejs.org) frameworks such as
+  [Express](https://github.com/expressjs/express), [Hapi](https://github.com/hapijs/hapi)
+  and [Koa](https://github.com/koajs/koa) with one important distinction;
+  It can run in the browser.
 
   Rill comes with many essential utilities for building modern web applications.
   This includes: Routing, redirection, cookies, and more. Typically a universal
   rendering solution will also be used such as [@rill/react](https://github.com/rill-js/react)
-  which allows full page react applications to work seamlessly on the server and
-  in the browser.
+  or [@rill/html](https://github.com/rill-js/html) which allow full page
+  applications to work seamlessly on the server and in the browser.
 
 ```js
+// Modules
+import Rill from 'rill'
+
+// CommonJS
+const Rill = require('rill')
+
 // Creating an application (new optional).
-const Rill = require('rill');
-const app = new Rill();
+const app = new Rill()
 ```
 
 ## app.listen({ port, host, backlog, tls }, callback)
@@ -35,17 +42,17 @@ const app = new Rill();
   One or more Rill applications may be mounted together to form larger
   applications and you can even listen to multiple ports with a single HTTP server.
 
-  All arguments to `listen` are optional and will work similarily to the native [http#listen](https://nodejs.org/api/http.html#http_server_listen_handle_callback).
+  All arguments to `listen` are optional and will work similarly to the native [http#listen](https://nodejs.org/api/http.html#http_server_listen_handle_callback).
 
   `listen` will start an HTTPS server if the `tls` option is provided.
   The tls options are the same as nodes [TLS](https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener) module.
 
-  The `ip`, `port` and `backlog` options are optional and forwarded to `Server#listen()`. These are simply ignored in the browser.
+  The `ip`, `port` and `backlog` options are forwarded to `Server#listen()`. These are simply ignored in the browser.
 
   The following is a useless Rill application bound to port `3000`:
 
 ```js
-app.listen({ port: 3000 });
+app.listen({ port: 3000 })
 ```
 
   Or we can start a HTTPS server with the same API.
@@ -54,9 +61,9 @@ app.listen({ port: 3000 });
 var options = {
   key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
   cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
-};
+}
 
-app.listen({ port: 8000, tls: options });
+app.listen({ port: 8000, tls: options })
 ```
 
 ## app.handler()
@@ -71,13 +78,13 @@ app.listen({ port: 8000, tls: options });
 
 ```js
 // For universal use you can use @rill/http(s) instead of nodes http module.
-http.createServer(app.handler()).listen(3000);
-http.createServer(app.handler()).listen(3001);
+http.createServer(app.handler()).listen(3000)
+http.createServer(app.handler()).listen(3001)
 ```
 
-## app.stack()
+## app.stack
 
-  Returns the current middleware stack for the application as an array.
+  The current middleware stack for the application as an array.
 
 ## app.setup(function...)
 
@@ -86,29 +93,30 @@ http.createServer(app.handler()).listen(3001);
 
 ```js
 app.setup((myapp)=> {
-  myapp === app; // true
-  myapp.customMethod = ...;
-  myapp.use(customMiddleware);
-});
+  myapp === app // myapp is just a reference to the existing app.
+  myapp.customMethod = ... // Set custom methods on the rill instance.
+  myapp.use(customMiddleware) // Setup extra middleware/routes/etc.
+})
 ```
 
 ## app.use(function|application...)
 
-  Add the given middleware function to this application. See [Middleware](https://github.com/rill-js/rill/wiki#middleware) for
-  more information. In Rill you can also mount other applications.
+  Add the given middleware function to this application.
+  See [Middleware](https://github.com/rill-js/rill/wiki#middleware) for more information.
+  In Rill you can also mount other applications.
 
 ```js
 // Simple logging middleware.
 app.use(async ({ req, res }, next)=> {
-  const start = new Date;
+  const start = new Date
 
   // Rill uses promises for control flow.
   // ES2016 async functions work great as well!
-  await next();
+  await next()
 
-  const ms = new Date - start;
-  console.log(`${req.method} ${req.url} - ${ms}`);
-});
+  const ms = new Date - start
+  console.log(`${req.method} ${req.url} - ${ms}`)
+})
 ```
 
 ## app.at(function|application...)
@@ -118,13 +126,13 @@ app.use(async ({ req, res }, next)=> {
 
 ```js
 // Match request for the route path.
-app.at("/", ...);
+app.at('/', ...)
 
 // Params will also be provided under req.params
 // For example using /api/user
-app.at("/api/:resource", ({ req })=>
-  req.params.resource === "user";
-);
+app.at('/api/:resource', ({ req })=>
+  req.params.resource === 'user'
+)
 ```
 
 ## app|METHOD|([path], function|application...)`
@@ -134,14 +142,14 @@ app.at("/api/:resource", ({ req })=>
 
 ```js
 // Match all get requests.
-app.get(...);
+app.get(...)
 
 // Match request for the route path and uses the GET method.
-app.get("/", ...);
+app.get('/', ...)
 
 // Event mount routers for a more modular experience.
-app.get("/api/*",
-  rill().get("/v1", ...) // matches `/api/v1`
+app.get('/api/*',
+  rill().get('/v1', ...) // matches `/api/v1`
 )
 ```
 
@@ -151,14 +159,14 @@ app.get("/api/*",
 
 ```js
 // Match request for a specific host.
-app.host("test.com", ...);
+app.host('test.com', ...)
 
 // Subdomain matches will also be provided under req.subdomains
 // For example using api.user.test.com
-app.host("api.:resource.test.com", { req })=>
-  res.subdomains.resource === "user";
-  res.subdomains == ["api", "user"];
-);
+app.host('api.:resource.test.com', { req })=>
+  res.subdomains.resource === 'user'
+  res.subdomains == ['api', 'user']
+)
 ```
 
 ## Error Handling
@@ -167,10 +175,13 @@ app.host("api.:resource.test.com", { req })=>
   In rill the `next` middleware will always return a promise.
 
 ```js
-app.use(function (ctx, next) {
-  // Catch errors later on in the stack.
-  return next().catch(function (err) {
-    log.error('server error', err);
-  });
-});
+// async functions not required.
+app.use(async (ctx, next)=> {
+  try {
+    await next()
+  } catch (error) {
+    // Catch errors later on in the stack.
+    log.error('server error', err)
+  }
+})
 ```

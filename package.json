@@ -1,7 +1,7 @@
 {
   "name": "rill",
   "description": "Universal web application framework.",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
@@ -22,9 +22,9 @@
     "browserify": "^13.1.0",
     "bundle-collapser": "^1.2.1",
     "gulp": "^3.9.1",
-    "gulp-mocha": "^2.2.0",
+    "gulp-mocha": "^3.0.0",
     "gulp-uglify": "^2.0.0",
-    "snazzy": "^4.0.0",
+    "snazzy": "^4.0.1",
     "standard": "^7.1.2",
     "supertest": "^2.0.0",
     "vinyl-buffer": "^1.0.0",

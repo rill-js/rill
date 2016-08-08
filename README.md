@@ -4,8 +4,9 @@
 
 ![Rill](https://raw.githubusercontent.com/rill-js/rill/master/Rill-Logo.jpg)
 
-Expressive HTTP middleware for node.js and the browser.
-Rill brings cascading middleware to the browser and enables fully universal web applications. It makes apps enjoyable to write with a simpler top down mental model of your app and free progressive enhancement.
+Expressive HTTP middleware for nodejs and the browser.
+Rill brings cascading middleware to the browser and enables fully universal web applications.
+It makes apps enjoyable to write with a simpler top down mental model of your app and free progressive enhancement.
 
 Rill provides the minimum for abstractions over node and the browser enabling things like routing (with redirecting, refreshes and more), cookies, and middleware with the same api.
 
@@ -26,8 +27,8 @@ bower install rill
 ```html
 <script type="text/javascript" src="rill.js"></script>
 <script>
-    define(['rill'], function (rill) {...}); // AMD
-    window.rill; // Global rill if no module system in place.
+    define(['rill'], function (rill) {...}) // AMD
+    window.rill // Global rill if no module system in place.
 </script>
 ```
 
@@ -49,12 +50,12 @@ bower install rill
 
 ```javascript
 /**
- * The following code can run 100% in the browser or in node js.
- * Examples use es6/7 with Babel but this is optional.
+ * The following code can run 100% in the browser or in nodejs.
+ * Examples use es2015/2016 with Babel but this is optional.
  */
 
-const Rill = require("rill");
-const app  = Rill();
+import Rill from 'rill'
+const app = Rill()
 ```
 
 ### Setup middleware
@@ -62,25 +63,25 @@ const app  = Rill();
 ```javascript
 // Logger
 app.use(async ({ req }, next)=> {
-	const start = new Date;
+	const start = new Date
 
 	// Rill uses promises for control flow.
 	// ES2016 async functions work great as well!
-	await next();
+	await next()
 
-	const ms = new Date - start;
-	console.log(`${req.method} ${req.url} - ${ms}`);
-});
+	const ms = new Date - start
+	console.log(`${req.method} ${req.url} - ${ms}`)
+})
 
 // Universal react rendering middleware.
-app.use(require("@rill/react")())
+app.use(require('@rill/react')())
 ```
 
 ### Setup routes
 
 ```javascript
 // Respond to a GET request.
-app.get("/todos", ({ locals, res })=> {
+app.get('/todos', ({ locals, res })=> {
 	// Directly set React virtual dom to the body thanks to @rill/react.
 	// (Checkout @rill/html for universal html diffing).
 	res.body = (
@@ -94,8 +95,8 @@ app.get("/todos", ({ locals, res })=> {
 				<script src="/app.js"/>
 			</body>
 		</html>
-	);
-});
+	)
+})
 ```
 
 ### Start app
@@ -103,7 +104,7 @@ app.get("/todos", ({ locals, res })=> {
 ```javascript
 // Start a regular http server.
 // In the browser any form submissions or link clicks will intercepted by @rill/http.
-app.listen({ port: 80, ip: "0.0.0.0" });
+app.listen({ port: 80 })
 ```
 
 ### Contributions
