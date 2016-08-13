@@ -87,7 +87,7 @@ app.use(async ({ req }, next)=> {
 ```javascript
 // Respond to a GET request.
 app.get('/todos', async ({ res })=> {
-  // Fetch a todolist from some service.
+	// Fetch a todolist from some service.
 	const todolist = await MyTodoListService.getAllTodos()
 
 	// Directly set React virtual dom to the body thanks to @rill/react.
@@ -121,10 +121,10 @@ app.get('/todos', async ({ res })=> {
 // Respond to a POST request.
 app.post('/add-todo', async ({ req, res })=> {
 	// We handle form submissions with Rill the same way one would with any other node framework.
-  // Here we are simply adding the todo via some service.
+	// Here we are simply adding the todo via some service.
 	await MyTodoListService.addTodo({ text: req.body.todo })
-  // And then we redirect back (same as res.redirect('/todos'))
-  res.redirect('back')
+	// And then we redirect back (same as res.redirect('/todos'))
+	res.redirect('back')
 })
 ```
 
