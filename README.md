@@ -51,17 +51,24 @@ bower install rill
 ```javascript
 /**
  * The following code can run 100% in the browser or in nodejs.
- * Examples use es2015/2016 with Babel but this is optional.
+ * Examples use es2015/2016 with Babel and JSX but this is optional.
  */
 
 import Rill from 'rill'
-const app = Rill()
 ```
 
 ### Setup middleware
 
 ```javascript
-// Logger
+// Universal form data parsing middleware.
+import bodyParser from '@rill/body'
+app.use(bodyParser())
+
+// Universal react rendering middleware.
+import reactRenderer from '@rill/react'
+app.use(reactRenderer())
+
+// Example Logger
 app.use(async ({ req }, next)=> {
 	const start = new Date
 
@@ -72,16 +79,16 @@ app.use(async ({ req }, next)=> {
 	const ms = new Date - start
 	console.log(`${req.method} ${req.url} - ${ms}`)
 })
-
-// Universal react rendering middleware.
-app.use(require('@rill/react')())
 ```
 
-### Setup routes
+### Setup a page
 
 ```javascript
 // Respond to a GET request.
-app.get('/todos', ({ locals, res })=> {
+app.get('/todos', async ({ res })=> {
+  // Fetch a todolist from some service.
+	const todolist = await MyTodoListService.getAllTodos()
+
 	// Directly set React virtual dom to the body thanks to @rill/react.
 	// (Checkout @rill/html for universal html diffing).
 	res.body = (
@@ -91,11 +98,32 @@ app.get('/todos', ({ locals, res })=> {
 				<meta name="description" content="Rill Application">
 			</head>
 			<body>
-				{{locals.todos.map(renderTodo)}}
+				<form action="/add-todo" method="POST">
+          <h1>Just a plain old form</h1>
+					<input type="text" name="todo"/>
+          <button type="submit">Add Todo</button>
+				</form>
+
+				{todolist.length
+					? todolist.map(renderTodo)
+          : 'No todos to display.'
+        }
 				<script src="/app.js"/>
 			</body>
 		</html>
 	)
+})
+```
+
+### Handle a form submission
+```javascript
+// Respond to a POST request.
+app.post('/add-todo', async ({ req, res })=> {
+	// We handle form submissions with Rill the same way one would with any other node framework.
+  // Here we are simply adding the todo via some service.
+	await MyTodoListService.addTodo({ text: req.body.todo })
+  // And then we redirect back (same as res.redirect('/todos'))
+  res.redirect('back')
 })
 ```
 
