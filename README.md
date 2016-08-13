@@ -153,6 +153,7 @@ app.listen({ port: 80 })
 ## See Also
 
 * [koa-client](https://github.com/kentjs/koa-client) - Koa clone that runs in the browser, inspired this package.
+* [monorouter](https://github.com/matthewwithanm/monorouter) - Another isomorphic router that partially inspired this package.
 * [submit-form](https://github.com/DylanPiercey/submit-form) - Manually trigger Rill navigation in the browser.
 * [isbrowser](https://github.com/DylanPiercey/isbrowser) - A browserify transform to remove server-side code.
 
