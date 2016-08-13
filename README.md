@@ -44,12 +44,12 @@ bower install rill
 
 * [Isomorphic Javascript, let’s make it easier.](https://medium.com/@pierceydylan/isomorphic-javascript-it-just-has-to-work-b9da5b0c8035)
 
-# Why Rill
+# Why Rill?
 Rill is the answer to a simple question; Can I run my [Express](https://github.com/expressjs/express) style router in the browser? Turns out you can and it works awesome.
 
-It brings a common interface to many typical app like features in both the browser and NodeJS. Many isomorphic frameworks have crazy abstractions and learning curves but with Rill, if you understand [Express](https://github.com/expressjs/express) or [Koa](https://github.com/koajs/koa) you already know how the routing works! In Rill you get to program much of your application logic using the same api (client or server) including routing, rendering, data fetching and more can be easily shared.
+It brings a common interface to many typical app like features in both the browser and [nodejs](https://nodejs.org). Many isomorphic frameworks have crazy abstractions and learning curves but with Rill, if you understand [Express](https://github.com/expressjs/express) or [Koa](https://github.com/koajs/koa), you already know how the routing works! In Rill you get to program much of your application logic using the same api (client or server) including routing, rendering, data fetching and more can be easily shared.
 
-Rill also works perfectly as a stand alone NodeJS server or a stand alone browser framework. This allows for easy progressive enhancement. If all is well the browser can handle much of your application logic and if JavaScript fails for any reason your server knows exactly what to do.
+Rill also works perfectly as a stand alone [nodejs](https://nodejs.org) server or a stand alone browser framework. This allows for easy progressive enhancement. If all is well the browser can handle much of your application logic and if JavaScript fails for any reason your server knows exactly what to do.
 
 # How does this thing work?
 If you look at the source for Rill [here](https://github.com/rill-js/rill/tree/master/src) you will quickly notice there is ZERO browser specific code. This is all thanks to [@rill/http](https://github.com/rill-js/http) which is node's [HTTP.createServer](https://nodejs.org/api/http.html#http_http_createserver_requestlistener) ported to the browser.
@@ -150,8 +150,16 @@ app.post('/add-todo', async ({ req, res })=> {
 app.listen({ port: 80 })
 ```
 
-### Contributions
+## See Also
+
+* [koa-client](https://github.com/kentjs/koa-client) - Koa clone that runs in the browser, inspired this package.
+* [submit-form](https://github.com/DylanPiercey/submit-form) - Manually trigger Rill navigation in the browser.
+* [isbrowser](https://github.com/DylanPiercey/isbrowser) - A browserify transform to remove server-side code.
+
+## Contributions
 
 * Use `npm test` to run tests.
 
-Please feel free to create a PR!
+## License
+
+[MIT](https://tldrlegal.com/license/mit-license)
