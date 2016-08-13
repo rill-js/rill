@@ -4,7 +4,7 @@
 
 ![Rill](https://raw.githubusercontent.com/rill-js/rill/master/Rill-Logo.jpg)
 
-Expressive HTTP middleware for nodejs and the browser.
+Expressive HTTP middleware for [nodejs](https://nodejs.org) and the browser.
 Rill brings cascading middleware to the browser and enables fully universal web applications.
 It makes apps enjoyable to write with a simpler top down mental model of your app and free progressive enhancement.
 
@@ -43,6 +43,20 @@ bower install rill
 # Articles
 
 * [Isomorphic Javascript, let’s make it easier.](https://medium.com/@pierceydylan/isomorphic-javascript-it-just-has-to-work-b9da5b0c8035)
+
+# Why Rill
+Rill is the answer to a simple question; Can I run my [Express](https://github.com/expressjs/express) style router in the browser? Turns out you can and it works awesome.
+
+It brings a common interface to many typical app like features in both the browser and NodeJS. Many isomorphic frameworks have crazy abstractions and learning curves but with Rill, if you understand [Express](https://github.com/expressjs/express) or [Koa](https://github.com/koajs/koa) you already know how the routing works! In Rill you get to program much of your application logic using the same api (client or server) including routing, rendering, data fetching and more can be easily shared.
+
+Rill also works perfectly as a stand alone NodeJS server or a stand alone browser framework. This allows for easy progressive enhancement. If all is well the browser can handle much of your application logic and if JavaScript fails for any reason your server knows exactly what to do.
+
+# How does this thing work?
+If you look at the source for Rill [here](https://github.com/rill-js/rill/tree/master/src) you will quickly notice there is ZERO browser specific code. This is all thanks to [@rill/http](https://github.com/rill-js/http) which is node's [HTTP.createServer](https://nodejs.org/api/http.html#http_http_createserver_requestlistener) ported to the browser.
+
+In the browser it works by listening for internal link clicks, form submissions and browser history changes. It will then create a [Rill Context](https://github.com/rill-js/rill/blob/master/docs/api/context.md) for each of these events and emit it through the router, similar to how receiving a request works in node.
+
+It supports everything you'd expect from a client side node server. This includes redirects, refreshes, cookies, scrolling and url updates using the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History).
 
 # Example
 
