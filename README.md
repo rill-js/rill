@@ -100,15 +100,15 @@ app.get('/todos', async ({ res })=> {
 			</head>
 			<body>
 				<form action="/add-todo" method="POST">
-          <h1>Just a plain old form</h1>
+					<h1>Just a plain old form</h1>
 					<input type="text" name="todo"/>
-          <button type="submit">Add Todo</button>
+					<button type="submit">Add Todo</button>
 				</form>
 
 				{todolist.length
 					? todolist.map(renderTodo)
-          : 'No todos to display.'
-        }
+					: 'No todos to display.'
+				}
 				<script src="/app.js"/>
 			</body>
 		</html>
