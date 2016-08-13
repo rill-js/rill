@@ -1,7 +1,7 @@
 {
   "name": "rill",
   "description": "Universal web application framework.",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {

@@ -54,7 +54,8 @@ bower install rill
  * Examples use es2015/2016 with Babel and JSX but this is optional.
  */
 
-import Rill from 'rill'
+import rill from 'rill'
+const app = rill()
 ```
 
 ### Setup middleware
