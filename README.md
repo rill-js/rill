@@ -8,6 +8,10 @@
   <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
     <img src="https://img.shields.io/badge/stability-stable-brightgreen.svg?style=flat-square" alt="API stability"/>
   </a>
+  <!-- Standard -->
+  <a href="https://github.com/feross/standard">
+    <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square" alt="Standard"/>
+  </a>
   <!-- NPM version -->
   <a href="https://npmjs.org/package/rill">
     <img src="https://img.shields.io/npm/v/rill.svg?style=flat-square" alt="NPM version"/>
@@ -15,10 +19,6 @@
   <!-- Downloads -->
   <a href="https://npmjs.org/package/rill">
     <img src="https://img.shields.io/npm/dm/rill.svg?style=flat-square" alt="Downloads"/>
-  </a>
-  <!-- Standard -->
-  <a href="https://github.com/feross/standard">
-    <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square" alt="Standard"/>
   </a>
   <!-- Gitter Chat -->
   <a href="https://gitter.im/rill-js/rill">
