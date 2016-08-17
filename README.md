@@ -174,10 +174,16 @@ app.listen({ port: 80 })
 
 ## See Also
 
+* [isbrowser](https://github.com/DylanPiercey/isbrowser) - A browserify transform to remove server-side code.
+* [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) - Universal http requests using WHATWG fetch.
+* [isomorphic-form-data](https://github.com/form-data/isomorphic-form-data) - Send multipart form data universally (able to send files and works with fetch).
+* [scroll-behavior](https://github.com/DylanPiercey/scroll-behaviour) - @rill/http will automatically try to use the "smooth" [scroll-behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior) when scrolling to targets on link clicks. This will polyfill that across modernish browsers.
+* [submit-form](https://github.com/DylanPiercey/submit-form) - Manually trigger Rill navigation in the browser.
+
+## Prior Art
+
 * [koa-client](https://github.com/kentjs/koa-client) - Koa clone that runs in the browser, inspired this package.
 * [monorouter](https://github.com/matthewwithanm/monorouter) - Another isomorphic router that partially inspired this package.
-* [submit-form](https://github.com/DylanPiercey/submit-form) - Manually trigger Rill navigation in the browser.
-* [isbrowser](https://github.com/DylanPiercey/isbrowser) - A browserify transform to remove server-side code.
 
 ## Contributions
 
