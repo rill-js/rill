@@ -16,6 +16,14 @@
   <a href="https://npmjs.org/package/rill">
     <img src="https://img.shields.io/npm/v/rill.svg?style=flat-square" alt="NPM version"/>
   </a>
+  <!-- Travis build -->
+  <a href="https://travis-ci.org/rill-js/rill">
+  <img src="https://img.shields.io/travis/rill-js/rill.svg?style=flat-square" alt="Build status"/>
+  </a>
+  <!-- Coveralls coverage -->
+  <a href="https://coveralls.io/github/rill-js/rill">
+    <img src="https://img.shields.io/coveralls/rill-js/rill.svg?style=flat-square" alt="Test Coverage"/>
+  </a>
   <!-- File size -->
   <a href="https://github.com/rill-js/rill/blob/master/dist/rill.js">
     <img src="https://badge-size.herokuapp.com/rill-js/rill/master/dist/rill.js?style=flat-square" alt="File size"/>
