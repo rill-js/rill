@@ -71,7 +71,8 @@ rill.handler = function handler () {
         ctx.res.status = 500
       }
       if (!(err instanceof HttpError)) {
-        console && console.error && console.error(err.stack || err)
+        /* istanbul ignore next */
+        console && console.error && console.error(err)
       }
     }
 
@@ -137,7 +138,6 @@ rill.at = function at (pathname) {
     for (var key, match, i = keys.length; i--;) {
       key = keys[i]
       match = matches[i + 1]
-      if (!key.optional && match == null) return next()
       if (key.repeat) match = match == null ? [] : match.split('/')
       ctx.req.params[key.name] = match
     }
@@ -177,7 +177,6 @@ rill.host = function host (hostname) {
     for (var key, match, i = keys.length; i--;) {
       key = keys[i]
       match = matches[i + 1]
-      if (!key.optional && match == null) return next()
       if (key.repeat) match = match == null ? [] : match.split('.')
       ctx.req.subdomains[key.name] = match
     }

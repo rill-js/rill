@@ -21,8 +21,8 @@ function Request (ctx, req) {
   var parsed = URL.parse(protocol + '://' + host + req.url, true)
   this.ctx = ctx
   this.original = req
-  this.method = req.method || 'GET'
-  this.headers = req.headers || {}
+  this.method = req.method
+  this.headers = req.headers
   this.cookies = cookies.parse(this.headers['cookie'])
   this.params = {}
   this.href = parsed.href
@@ -37,10 +37,8 @@ function Request (ctx, req) {
   this.query = {}
   this.origin = this.protocol + '://' + this.host
   this.secure = this.protocol === 'https'
-  this.subdomains = (this.hostname || '')
-    .split('.')
-    .reverse()
-    .slice(2)
+  this.subdomains = String(this.hostname).split('.').reverse().slice(2)
+  /* istanbul ignore next */
   this.ip = (
     req.connection.remoteAddress ||
     req.socket.remoteAddress ||

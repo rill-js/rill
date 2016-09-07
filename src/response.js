@@ -123,7 +123,7 @@ response.append = function append (field, val) {
   var cur = this.headers[field]
 
   if (cur == null) cur = []
-  else if (cur.constructor !== Array) cur = [cur]
+  else if (!Array.isArray(cur)) cur = [cur]
 
   headers[field] = cur.concat(val)
 }

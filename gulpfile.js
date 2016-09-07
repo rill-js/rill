@@ -1,17 +1,31 @@
 var gulp = require('gulp')
 var mocha = require('gulp-mocha')
+var istanbul = require('gulp-istanbul')
 var uglify = require('gulp-uglify')
 var buffer = require('vinyl-buffer')
 var source = require('vinyl-source-stream')
 var browserify = require('browserify')
 var tests = './test'
+var dist = './dist'
+var src = './src'
 
 /*
-* Run tests.
-*/
-gulp.task('test', function () {
-  return gulp.src(tests + '/*Test.js', { read: false })
+ * Setup istanbul instrumented files.
+ */
+gulp.task('instrument', function () {
+  return gulp.src(src + '/*.js')
+    .pipe(istanbul())
+    .pipe(istanbul.hookRequire())
+})
+
+/*
+ * Run tests.
+ */
+gulp.task('test', ['instrument'], function () {
+  return gulp.src(tests + '/*.test.js', { read: false })
     .pipe(mocha())
+    .pipe(istanbul.writeReports())
+    .pipe(istanbul.enforceThresholds({ thresholds: { global: 100 } }))
     .once('end', process.exit)
 })
 
@@ -21,7 +35,7 @@ gulp.task('test', function () {
 
 gulp.task('build', function () {
   return browserify({
-    entries: './src/index.js',
+    entries: src + '/index.js',
     extensions: ['.js'],
     standalone: 'rill'
   })
@@ -48,5 +62,5 @@ gulp.task('build', function () {
         screw_ie8: true
       }
     }))
-    .pipe(gulp.dest('./dist'))
+    .pipe(gulp.dest(dist))
 })
