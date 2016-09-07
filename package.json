@@ -58,6 +58,7 @@
   },
   "scripts": {
     "build": "gulp build",
+    "cover": "cat coverage/lcov.info && coveralls",
     "test": "standard --verbose | snazzy && gulp test"
   },
   "standard": {
