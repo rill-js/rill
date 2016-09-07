@@ -21,6 +21,7 @@
   "devDependencies": {
     "browserify": "^13.1.0",
     "bundle-collapser": "^1.2.1",
+    "coveralls": "^2.11.12",
     "gulp": "^3.9.1",
     "gulp-istanbul": "^1.1.1",
     "gulp-mocha": "^3.0.1",

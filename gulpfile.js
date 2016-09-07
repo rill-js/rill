@@ -24,7 +24,7 @@ gulp.task('instrument', function () {
 gulp.task('test', ['instrument'], function () {
   return gulp.src(tests + '/*.test.js', { read: false })
     .pipe(mocha())
-    .pipe(istanbul.writeReports())
+    .pipe(istanbul.writeReports({ reporters: ['lcov', 'html'] }))
     .pipe(istanbul.enforceThresholds({ thresholds: { global: 100 } }))
     .once('end', process.exit)
 })
