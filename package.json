@@ -22,15 +22,13 @@
     "browserify": "^13.1.0",
     "bundle-collapser": "^1.2.1",
     "coveralls": "^2.11.12",
-    "gulp": "^3.9.1",
-    "gulp-istanbul": "^1.1.1",
-    "gulp-mocha": "^3.0.1",
-    "gulp-uglify": "^2.0.0",
+    "exorcist": "^0.4.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
     "snazzy": "^5.0.0",
     "standard": "^8.0.0",
     "supertest": "^2.0.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "uglifyjs": "^2.4.10"
   },
   "files": [
     "src"
@@ -60,9 +58,11 @@
     "url": "https://github.com/rill-js/rill"
   },
   "scripts": {
-    "build": "gulp build",
-    "cover": "cat coverage/lcov.info | coveralls",
-    "test": "standard --verbose | snazzy && gulp test"
+    "build": "make build",
+    "coveralls": "cat coverage/lcov.info | coveralls",
+    "lint": "standard --verbose | snazzy",
+    "test": "npm run lint && make test",
+    "test-ci": "npm run lint && make test-ci"
   },
   "standard": {
     "globals": [

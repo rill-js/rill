@@ -1,7 +1,19 @@
+# Faster builds on setup when not using sudo.
 sudo: false
+
+# Cache nodemodules for faster builds
+cache:
+  directories:
+    - node_modules
+
 language: node_js
+
 node_js:
-  - "6"
-  - "5"
-  - "4"
-after_success: npm run cover
+- '6'
+- '5'
+- '4'
+
+script:
+  - npm run test-ci
+
+after_success: npm run coveralls
