@@ -4,10 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.1.0 - 2016-09-14
+### Changed
+- Added "files" field to package json and now only "src" files are uploaded to npm.
+
 ## 2.0.1 - 2016-09-13
 ### Changed
 - Added new [article](https://medium.com/@iamjohnhenry/browsers-servers-and-apis-2f7b10523f39) to readme.
-
 
 ## 2.0.0 - 2016-09-9
 ### Changed
