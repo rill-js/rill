@@ -1,6 +1,6 @@
 <h1 align="center">
   <!-- Logo -->
-  <img src="https://raw.githubusercontent.com/rill-js/rill/master/Rill-Logo.jpg" alt="Rill"/>
+  <img src="https://rill.site/logo.svg" width="300" alt="Rill"/>
 
   <br/>
 
