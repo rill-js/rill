@@ -1,14 +1,8 @@
-# Installation
+# Introduction
 
   Rill is supported in all recent versions of [nodejs](https://nodejs.org) and modern browsers including IE10.
-
-  You can quickly install a supported version of [nodejs](https://nodejs.org) with your favourite version manager:
-
-```bash
-$ nvm install stable
-$ npm i rill
-$ node my-rill-app.js
-```
+  It allows you to create an isomorphic/universal web application that will share the majority of your apps code between the client and the server.
+  This means quick page loads with server side rendering and a blazing fast client side experience with JavaScript enhancement.
 
 # Application
 

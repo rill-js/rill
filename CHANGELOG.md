@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.1.2 - 2016-09-17
+### Changed
+- Move some npm scripts to makefile.
+- Remove duplicate info in docs.
+- Remove some unneeded files when installing with bower.
+### Added
+- Added docs back to package.json files for use on the docs website.
+
 ## 2.1.1 - 2016-09-14
 ### Changed
 - Added node_modules caching to travis.

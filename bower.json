@@ -1,6 +1,6 @@
 {
   "name": "rill",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "homepage": "https://github.com/rill-js/rill",
   "authors": [
     "pierceydylan@gmail.com <Dylan Piercey>"
@@ -32,9 +32,8 @@
   "homepage": "https://github.com/rill-js/rill",
   "ignore": [
     "**/.*",
+    "*.jpg",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "test"
   ]
 }

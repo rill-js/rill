@@ -1,7 +1,7 @@
 {
   "name": "rill",
   "description": "Universal web application framework.",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
@@ -21,17 +21,18 @@
   "devDependencies": {
     "browserify": "^13.1.0",
     "bundle-collapser": "^1.2.1",
-    "coveralls": "^2.11.12",
+    "coveralls": "^2.11.13",
     "exorcist": "^0.4.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "snazzy": "^5.0.0",
-    "standard": "^8.0.0",
+    "standard": "^8.1.0",
     "supertest": "^2.0.0",
     "uglifyjs": "^2.4.10"
   },
   "files": [
-    "src"
+    "src",
+    "docs"
   ],
   "homepage": "https://github.com/rill-js/rill",
   "keywords": [
@@ -59,8 +60,8 @@
   },
   "scripts": {
     "build": "make build",
-    "coveralls": "cat coverage/lcov.info | coveralls",
-    "lint": "standard --verbose | snazzy",
+    "coveralls": "make coveralls",
+    "lint": "make lint",
     "test": "npm run lint && make test",
     "test-ci": "npm run lint && make test-ci"
   },

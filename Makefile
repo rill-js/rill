@@ -7,12 +7,36 @@ TESTS_IN = test/*.test.js
 TESTS_OUT = test/run.js
 
 # Tools
+standard = $(BIN)/standard
+snazzy = $(BIN)/snazzy
+coveralls = $(BIN)/coveralls
+istanbul = $(BIN)/istanbul
+mocha = $(BIN)/_mocha
 browserify = $(BIN)/browserify
 exorcist = $(BIN)/exorcist
 uglifyjs = $(BIN)/uglifyjs
-istanbul = $(BIN)/istanbul
-mocha = $(BIN)/_mocha
 
+# Run standard linter.
+lint:
+	$(standard) --verbose | $(snazzy)
+
+# Save code coverage to coveralls
+coveralls:
+	cat coverage/lcov.info | $(coveralls)
+
+# Run standard linter, mocha tests and istanbul coverage.
+test:
+	@NODE_ENV=test \
+		$(istanbul) cover \
+		$(mocha) --report html -- -u exports $(TESTS_IN)
+
+# Run standard linter, mocha tests and istanbul coverage but bail early and only save lcov coverage report.
+test-ci:
+	@NODE_ENV=test \
+		${istanbul} cover \
+		$(mocha) --report lcovonly -- -u exports $(TESTS_IN) --bail
+
+# Build dist file for downloads.
 build:
 	@NODE_ENV=test \
 		$(browserify) -p bundle-collapser/plugin --standalone rill --debug $(SRC_IN) | \
@@ -23,15 +47,5 @@ build:
 			--compress \
 				warnings=false,unused,sequences,properties,dead_code,drop_debugger,conditionals,comparisons,evaluate,booleans,loops,hoist_funs,if_return,join_vars,cascade,drop_console,keep_fargs=false\
 			--mangle
-
-test:
-	@NODE_ENV=test \
-		$(istanbul) cover \
-		$(mocha) --report html -- -u exports $(TESTS_IN) --bail
-
-test-ci:
-	@NODE_ENV=test \
-		${istanbul} cover \
-		$(mocha) --report lcovonly -- -u exports $(TESTS_IN) --bail
 
 .PHONY: test
