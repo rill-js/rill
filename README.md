@@ -68,7 +68,7 @@ bower install rill
 
 # Community
 
-* [API](https://github.com/rill-js/rill/blob/master/docs/api) documentation.
+* [API](https://rill.site/application#docs) documentation.
 * [Examples](https://github.com/rill-js/todomvc)
 * [Middleware](https://github.com/rill-js/rill/wiki) list
 * [Wiki](https://github.com/rill-js/rill/wiki)
