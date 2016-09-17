@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.1.2, 2.1.3, 2.1.4, 2.1.5 - 2016-09-17
+## 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6 - 2016-09-17
 ### Changed
+- Link rill logo to [rill website](https://rill.site).
 - Changed readme logo to use svg from [rill website](https://rill.site).
 - Updated any references to docs to the [rill website](https://rill.site).
 - Move some npm scripts to makefile.

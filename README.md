@@ -1,6 +1,8 @@
 <h1 align="center">
   <!-- Logo -->
-  <img src="https://rill.site/logo.svg" width="300" alt="Rill"/>
+  <a href="https://rill.site" alt="Rill">
+    <img src="https://rill.site/logo.svg" width="300" alt="Rill Logo"/>
+  </a>
 
   <br/>
 
