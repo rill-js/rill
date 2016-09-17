@@ -11,7 +11,7 @@
 
 ### res.ctx
 
- The current [context](https://github.com/rill-js/rill/blob/master/docs/api/context.md).
+ The current [context](https://rill.site/context#docs).
 
 ### res.headers
 

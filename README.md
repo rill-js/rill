@@ -57,7 +57,7 @@ npm install rill
 bower install rill
 ```
 
-#### [Download](https://raw.githubusercontent.com/rill-js/rill/master/dist/rill.js)
+<h4><a href="https://raw.githubusercontent.com/rill-js/rill/master/dist/rill.js" download>Download</a></h4>
 ```html
 <script type="text/javascript" src="rill.js"></script>
 <script>
@@ -72,6 +72,7 @@ bower install rill
 * [Examples](https://github.com/rill-js/todomvc)
 * [Middleware](https://github.com/rill-js/rill/wiki) list
 * [Wiki](https://github.com/rill-js/rill/wiki)
+* [Gitter Community](https://gitter.im/rill-js/rill)
 * [Reddit Community](https://www.reddit.com/r/Rill)
 
 # Articles
@@ -89,7 +90,7 @@ Rill also works perfectly as a stand alone [nodejs](https://nodejs.org) server o
 # How does this thing work?
 If you look at the source for Rill [here](https://github.com/rill-js/rill/tree/master/src) you will quickly notice there is ZERO browser specific code. This is all thanks to [@rill/http](https://github.com/rill-js/http) which is node's [HTTP.createServer](https://nodejs.org/api/http.html#http_http_createserver_requestlistener) ported to the browser.
 
-In the browser it works by listening for internal link clicks, form submissions and browser history changes. It will then create a [Rill Context](https://github.com/rill-js/rill/blob/master/docs/api/context.md) for each of these events and emit it through the router, similar to how receiving a request works in [nodejs](https://nodejs.org).
+In the browser it works by listening for internal link clicks, form submissions and browser history changes. It will then create a [Rill Context](https://rill.site/context#docs) for each of these events and emit it through the router, similar to how receiving a request works in [nodejs](https://nodejs.org).
 
 It supports everything you'd expect from a client side [nodejs](https://nodejs.org) server. This includes redirects, refreshes, cookies, scrolling and url updates using the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History).
 

@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.1.2, 2.1.3 - 2016-09-17
+## 2.1.2, 2.1.3, 2.1.4 - 2016-09-17
 ### Changed
-- Changed api docs link to the [rill website](https://rill.site).
+- Updated any references to docs to the [rill website](https://rill.site).
 - Move some npm scripts to makefile.
 - Remove duplicate info in docs.
 - Remove some unneeded files when installing with bower.
