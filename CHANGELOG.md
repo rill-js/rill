@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.1.7
+### Changed
+- Added another isomorphic article to README.
+- Updated dev dependencies.
+
 ## 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6 - 2016-09-17
 ### Changed
 - Link rill logo to [rill website](https://rill.site).
