@@ -7,7 +7,7 @@
   "dependencies": {
     "@rill/chain": "^1.0.3",
     "@rill/cookies": "^1.0.1",
-    "@rill/error": "^1.0.1",
+    "@rill/error": "^1.1.0",
     "@rill/http": "^2.0.0",
     "@rill/https": "^1.0.0",
     "byte-length": "^0.1.1",
@@ -24,9 +24,9 @@
     "coveralls": "^2.11.14",
     "exorcist": "^0.4.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.0.2",
+    "mocha": "^3.1.0",
     "snazzy": "^5.0.0",
-    "standard": "^8.1.0",
+    "standard": "^8.2.0",
     "supertest": "^2.0.0",
     "uglifyjs": "^2.4.10"
   },
