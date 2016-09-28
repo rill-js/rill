@@ -4,12 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.1.8
+## 2.1.8 - 2016-09-28
 ### Changed
-- Updated @rill/error which ensures that HttpErrors now have a `name` property.
-- Updated dev dependencies.
+- Updated @rill/error which now has two new methods (fail and assert).
 
-## 2.1.7
+## 2.1.7 - 2016-09-24
 ### Changed
 - Added another isomorphic article to README.
 - Updated dev dependencies.

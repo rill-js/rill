@@ -7,7 +7,7 @@
   "dependencies": {
     "@rill/chain": "^1.0.3",
     "@rill/cookies": "^1.0.1",
-    "@rill/error": "^1.1.0",
+    "@rill/error": "^1.2.0",
     "@rill/http": "^2.0.0",
     "@rill/https": "^1.0.0",
     "byte-length": "^0.1.1",
