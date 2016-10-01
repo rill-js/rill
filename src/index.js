@@ -145,7 +145,7 @@ rill.at = function at (pathname) {
 
     // Update path for nested routes.
     var matched = matches[matches.length - 1] || ''
-    ctx.req.matchPath = '/' + matched
+    if (ctx.req.matchPath !== matched) ctx.req.matchPath = '/' + matched
 
     // Run middleware.
     return fn(ctx, function () {
@@ -184,7 +184,7 @@ rill.host = function host (hostname) {
 
     // Update hostname for nested routes.
     var matched = matches[matches.length - 1] || ''
-    ctx.req.matchHost = matched
+    if (ctx.req.matchHost !== matched) ctx.req.matchHost = matched
 
     // Run middleware.
     return fn(ctx, function () {
