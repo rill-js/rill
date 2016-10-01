@@ -64,9 +64,11 @@ ctx.req.protocol // => http
 ### req.hostname
 
  Host name for the request.
+ Use `ctx.req.matchHost` for the hostname being matched in a mounted app.
 
 ```js
 ctx.req.hostname // => www.example.com
+ctx.req.matchHost // => www.example.com
 ```
 
 ### req.port
@@ -88,9 +90,11 @@ ctx.req.host // => www.example.com:80
 ### req.pathname
 
  The path section of the URL.
+ Use `ctx.req.matchPath` for the pathname being matched in a mounted app.
 
 ```js
 ctx.req.pathname // => /foo/bar
+ctx.req.matchPath // => /foo/bar
 ```
 
 ### req.path

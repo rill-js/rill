@@ -101,12 +101,14 @@ describe('Router', function () {
       var request = agent(Rill()
       .at('/test/*', Rill()
       .at('/1/*', Rill()
-      .at('/2', respond(200)))).listen())
+      .at('/2', respond(200))))
+      .at('/test2/*', respond(200)).listen())
 
       when([
         request.get('/test').expect(404),
         request.get('/test/1').expect(404),
-        request.get('/test/1/2').expect(200)
+        request.get('/test/1/2').expect(200),
+        request.get('/test2').expect(200)
       ], done)
     })
 

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.2.0 - 2016-10-01
+### Changed
+- Exposes `ctx.req.matchPath` and `ctx.req.matchHost` which allow users to check what the current `path` and `host` being matched are.
+- Splat paths (such as `/test/*`) will now properly make trailing slashes optional. In this case `/test` is now treated as valid where before only `/test/` would have been valid.
+
 ## 2.1.8 - 2016-09-28
 ### Changed
 - Updated @rill/error which now has two new methods (fail and assert).

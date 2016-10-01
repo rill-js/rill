@@ -1,12 +1,14 @@
 'use strict'
 
-var toReg = require('path-to-regexp')
+var pathToRegExp = require('path-to-regexp')
 var http = require('@rill/http')
 var https = require('@rill/https')
 var chain = require('@rill/chain')
 var HttpError = require('@rill/error')
 var Context = require('./context')
 var respond = require('./respond')
+var parse = pathToRegExp.parse
+var tokensToRegExp = pathToRegExp.tokensToRegExp
 var slice = Array.prototype.slice
 var rill = Rill.prototype
 
@@ -127,12 +129,11 @@ rill.at = function at (pathname) {
   var reg = toReg(pathname, keys, { end: false })
   var fn = chain(slice.call(arguments, 1))
 
-  return this.use(function matchPath (ctx, next) {
-    if (ctx._pathname == null) ctx._pathname = ctx.req.pathname
-    var _pathname = ctx._pathname
-    var matches = _pathname.match(reg)
+  return this.use(function matchPathname (ctx, next) {
+    var pathname = ctx.req.matchPath
+    var matches = pathname.match(reg)
     // Check if we matched the whole path.
-    if (!matches || matches[0] !== _pathname) return next()
+    if (!matches || matches[0] !== pathname) return next()
 
     // Check if params match.
     for (var key, match, i = keys.length; i--;) {
@@ -143,13 +144,14 @@ rill.at = function at (pathname) {
     }
 
     // Update path for nested routes.
-    var updated = matches[matches.length - 1]
-    if (updated !== _pathname) ctx._pathname = '/' + updated
+    var matched = matches[matches.length - 1] || ''
+    ctx.req.matchPath = '/' + matched
 
     // Run middleware.
     return fn(ctx, function () {
-      // Reset nested path.
-      ctx._pathname = _pathname
+      // Reset nested pathname before calling later middleware.
+      ctx.req.matchPath = pathname
+      // Run sibling middleware.
       return next()
     })
   })
@@ -166,12 +168,11 @@ rill.host = function host (hostname) {
   var fn = chain(slice.call(arguments, 1))
 
   return this.use(function matchHost (ctx, next) {
-    if (ctx._hostname == null) ctx._hostname = ctx.req.hostname
-    var _hostname = ctx._hostname
-    var matches = _hostname.match(reg)
+    var hostname = ctx.req.matchHost
+    var matches = hostname.match(reg)
 
     // Check if we matched the whole hostname.
-    if (!matches || matches[0] !== _hostname) return next()
+    if (!matches || matches[0] !== hostname) return next()
 
     // Here we check for the dynamically matched subdomains.
     for (var key, match, i = keys.length; i--;) {
@@ -182,12 +183,14 @@ rill.host = function host (hostname) {
     }
 
     // Update hostname for nested routes.
-    ctx._hostname = matches[matches.length - 1]
+    var matched = matches[matches.length - 1] || ''
+    ctx.req.matchHost = matched
 
     // Run middleware.
     return fn(ctx, function () {
       // Reset nested hostname.
-      ctx._hostname = _hostname
+      ctx.req.matchHost = hostname
+      // Run sibling middleware.
       return next()
     })
   })
@@ -210,3 +213,34 @@ http.METHODS.forEach(function (method) {
     }
   }
 })
+
+/**
+ * Small wrapper around path to regexp that treats a splat param "/*" as optional.
+ * This makes mounting easier since typically when you do a path like "/test/*" you also want to treat "/test" as valid.
+ *
+ * @param {String} pathname - the path to convert to a regexp.
+ * @param {Array} [keys] - a place to store matched param keys.
+ * @param {Object} [opts] - options passed to pathToRegExp.
+ * @return {RegExp}
+ */
+function toReg (pathname, keys, opts) {
+  // First parse path into tokens.
+  var tokens = parse(pathname)
+
+  // Find the last token (checking for splat params).
+  var splat = tokens[tokens.length - 1]
+
+  // Check if the last token is a splat and make it optional.
+  if (splat && splat.asterisk) splat.optional = true
+
+  // Convert the tokens to a regexp.
+  var re = tokensToRegExp(tokens, opts)
+
+  // Assign keys to from regexp.
+  re.keys = keys
+  for (var i = 0, len = tokens.length; i < len; i++) {
+    if (typeof tokens[i] === 'object') keys.push(tokens[i])
+  }
+
+  return re
+}

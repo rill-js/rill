@@ -29,9 +29,9 @@ function Request (ctx, req) {
   this.protocol = protocol
   this.port = parsed.port
   this.host = parsed.host
-  this.hostname = parsed.hostname
+  this.hostname = this.matchHost = parsed.hostname
   this.path = parsed.path
-  this.pathname = parsed.pathname
+  this.pathname = this.matchPath = parsed.pathname
   this.search = parsed.search
   this.hash = parsed.hash
   this.query = {}
