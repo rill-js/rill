@@ -126,7 +126,7 @@ rill.at = function at (pathname) {
   if (typeof pathname !== 'string') throw new TypeError('Rill#at: Path name must be a string.')
 
   var keys = []
-  var reg = toReg(pathname, keys, { end: false })
+  var reg = toReg(pathname, keys, { end: false, delimiter: '/' })
   var fn = chain(slice.call(arguments, 1))
 
   return this.use(function matchPathname (ctx, next) {
@@ -164,7 +164,7 @@ rill.host = function host (hostname) {
   if (typeof hostname !== 'string') throw new TypeError('Rill#host: Host name must be a string.')
 
   var keys = []
-  var reg = toReg(hostname, keys, { strict: true })
+  var reg = toReg(hostname, keys, { strict: true, delimiter: '.' })
   var fn = chain(slice.call(arguments, 1))
 
   return this.use(function matchHost (ctx, next) {

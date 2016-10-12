@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.4.0 - 2016-10-12
+### Changed
+- Updated @rill/http. This fixes an issue in safari where named submit buttons were not being parsed on form submissions.
+- Updated pathToRegexp. This allows for better hostname matching support (previously some issues existed for splat host names such as 'mysite.:something+.com'), this should now be fixed.
+
 ## 2.3.0 - 2016-10-01
 ### Changed
 - Exposes `ctx.req.matchPath` and `ctx.req.matchHost` which allow users to check what the current `path` and `host` being matched are.
