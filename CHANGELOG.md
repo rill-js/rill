@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.5.0 - 2016-11-08
+### Changed
+- Fix for breaking change in HttpServer#listen in node 7.0.0.
+
 ## 2.4.0 - 2016-10-12
 ### Changed
 - Updated @rill/http. This fixes an issue in safari where named submit buttons were not being parsed on form submissions.
