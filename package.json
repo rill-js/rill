@@ -1,32 +1,32 @@
 {
   "name": "rill",
   "description": "Universal web application framework.",
-  "version": "2.5.1",
+  "version": "3.0.0",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
     "@rill/chain": "^1.0.3",
-    "@rill/cookies": "^1.0.1",
     "@rill/error": "^1.2.0",
     "@rill/http": "^2.1.0",
     "@rill/https": "^2.0.0",
     "byte-length": "^0.1.1",
     "content-check": "^0.1.2",
+    "cookie": "^0.3.1",
     "header-field": "^0.2.1",
     "is-typeof": "^1.0.2",
     "path-to-regexp": "^1.7.0",
     "q-set": "^1.4.4",
-    "statuses": "^1.3.0"
+    "statuses": "^1.3.1"
   },
   "devDependencies": {
     "browserify": "^13.1.1",
     "bundle-collapser": "^1.2.1",
-    "coveralls": "^2.11.14",
+    "coveralls": "^2.11.15",
     "exorcist": "^0.4.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.1.2",
+    "mocha": "^3.2.0",
     "snazzy": "^5.0.0",
-    "standard": "^8.5.0",
+    "standard": "^8.6.0",
     "supertest": "^2.0.1",
     "uglifyjs": "^2.4.10"
   },

@@ -12,7 +12,7 @@ describe('Response', function () {
         ctx.res.cookie('a', 1, { httpOnly: true })
       })).listen())
 
-      request.get('/').expect(200).expect('set-cookie', 'a=1; httponly').end(done)
+      request.get('/').expect(200).expect('set-cookie', 'a=1; HttpOnly').end(done)
     })
   })
 

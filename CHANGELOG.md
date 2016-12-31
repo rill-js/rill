@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.0 - 2016-11-01
+### Changed
+- Updated to majorly refactored and fully tested @rill/http.
+  * Added Rill#createServer method to get a node server from the rill app.
+  * Switch to [https://github.com/jshttp/cookie](cookie) for cookie parsing.
+  * Other non breaking changes to [@rill/http changelogs](https://github.com/rill-js/http/blob/master/CHANGELOG.md#user-content-300---2016-10-31).
+
 ## 2.5.2 - 2016-11-08
 ### Changed
 - Add node 7.0.0 to travis build.

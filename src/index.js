@@ -7,6 +7,8 @@ var chain = require('@rill/chain')
 var HttpError = require('@rill/error')
 var Context = require('./context')
 var respond = require('./respond')
+/* istanbul ignore next */
+var adaptBrowser = process.browser && require('@rill/http/adapter/browser')
 var parse = pathToRegExp.parse
 var tokensToRegExp = pathToRegExp.tokensToRegExp
 var slice = Array.prototype.slice
@@ -22,34 +24,6 @@ module.exports = Rill.default = Rill
 function Rill () {
   if (!(this instanceof Rill)) return new Rill()
   this.stack = []
-}
-
-/**
- * Starts a node/rill server.
- *
- * @param {Object} [opts]
- * @param {String} opts.ip
- * @param {Number} opts.port
- * @param {Number} opts.backlog
- * @param {Object} opts.tls
- * @param {Function} cb
- * @return {Server}
- */
-rill.listen = function listen (opts, cb) {
-  // Make options optional.
-  if (typeof opts === 'function') {
-    cb = opts
-    opts = null
-  }
-
-  opts = opts || {}
-  opts.port = opts.port != null ? opts.port : 0
-
-  var server = (opts.tls)
-    ? https.createServer(opts.tls, this.handler())
-    : http.createServer(this.handler())
-
-  return server.listen(opts.port, opts.ip, opts.backlog, cb)
 }
 
 /**
@@ -80,6 +54,43 @@ rill.handler = function handler () {
 
     function finish () { respond(ctx) }
   }
+}
+
+/**
+ * Creates a node server from the rill server.
+ *
+ * @param {Object} [opts] - TLS Options.
+ */
+rill.createServer = function createServer (tls) {
+  var handler = this.handler()
+  var server = tls ? https.createServer(tls, handler) : http.createServer(handler)
+  // Setup link hijacking in the browser.
+  /* istanbul ignore next */
+  if (process.browser) adaptBrowser(server)
+  return server
+}
+
+/**
+ * Starts a node/rill server.
+ *
+ * @param {Object} [opts]
+ * @param {String} opts.ip
+ * @param {Number} opts.port
+ * @param {Number} opts.backlog
+ * @param {Object} opts.tls
+ * @param {Function} cb
+ * @return {Server}
+ */
+rill.listen = function listen (opts, cb) {
+  // Make options optional.
+  if (typeof opts === 'function') {
+    cb = opts
+    opts = null
+  }
+
+  opts = opts || {}
+  opts.port = opts.port != null ? opts.port : 0
+  return this.createServer(opts.tls).listen(opts.port, opts.ip, opts.backlog, cb)
 }
 
 /**
