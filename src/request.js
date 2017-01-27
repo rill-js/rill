@@ -1,9 +1,10 @@
 'use strict'
 
 var URL = require('url')
+var QS = require('querystring')
 var qSet = require('q-set')
+var cookie = require('cookie')
 var toField = require('header-field')
-var cookies = require('@rill/cookies')
 
 module.exports = Request
 
@@ -16,14 +17,17 @@ module.exports = Request
  * @param {IncommingMessage} req - The original node request.
  */
 function Request (ctx, req) {
-  var host = req.headers['host']
   var protocol = (req.connection.encrypted) ? 'https' : 'http'
-  var parsed = URL.parse(protocol + '://' + host + req.url, true)
+  /* istanbul ignore next */
+  var parsed = process.browser
+    ? req._request.parsed
+    : URL.parse(protocol + '://' + req.headers.host + req.url)
+  var origin = protocol + '://' + parsed.host
   this.ctx = ctx
   this.original = req
   this.method = req.method
   this.headers = req.headers
-  this.cookies = cookies.parse(this.headers['cookie'])
+  this.cookies = this.headers['cookie'] ? cookie.parse(this.headers['cookie']) : {}
   this.params = {}
   this.href = parsed.href
   this.protocol = protocol
@@ -35,8 +39,8 @@ function Request (ctx, req) {
   this.search = parsed.search
   this.hash = parsed.hash
   this.query = {}
-  this.origin = this.protocol + '://' + this.host
-  this.secure = this.protocol === 'https'
+  this.origin = origin
+  this.secure = protocol === 'https'
   this.subdomains = String(this.hostname).split('.').reverse().slice(2)
   /* istanbul ignore next */
   this.ip = (
@@ -46,7 +50,7 @@ function Request (ctx, req) {
   )
 
   // Support nested querystrings.
-  var query = parsed.query
+  var query = parsed.query = QS.parse(parsed.query)
   for (var key in query) qSet(this.query, key, query[key])
 }
 var request = Request.prototype

@@ -1,9 +1,9 @@
 'use strict'
 
 var URL = require('url')
+var cookie = require('cookie')
 var statuses = require('statuses')
 var toField = require('header-field')
-var cookies = require('@rill/cookies')
 
 module.exports = Response
 
@@ -32,7 +32,7 @@ var response = Response.prototype
  * @param {Object} opts - options for the cookie.
  */
 response.cookie = function (key, val, opts) {
-  this.append('Set-Cookie', cookies.serialize(key, val, opts))
+  this.append('Set-Cookie', cookie.serialize(key, val, opts))
 }
 
 /**
@@ -44,7 +44,7 @@ response.cookie = function (key, val, opts) {
 response.clearCookie = function (key, opts) {
   opts = opts || {}
   opts.expires = new Date()
-  this.append('Set-Cookie', cookies.serialize(key, '', opts))
+  this.append('Set-Cookie', cookie.serialize(key, '', opts))
 }
 
 /**
