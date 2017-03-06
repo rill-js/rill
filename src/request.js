@@ -1,10 +1,10 @@
 'use strict'
 
-var URL = require('url')
-var QS = require('querystring')
-var qSet = require('q-set')
+var URL = require('mini-url')
+var QS = require('mini-querystring')
 var cookie = require('cookie')
 var toField = require('header-field')
+var URL_PARTS = URL.parts
 
 module.exports = Request
 
@@ -17,41 +17,34 @@ module.exports = Request
  * @param {IncommingMessage} req - The original node request.
  */
 function Request (ctx, req) {
-  var protocol = (req.connection.encrypted) ? 'https' : 'http'
+  var conn = req.connection
+  var secure = conn.encrypted
+  var protocol = secure ? 'https' : 'http'
+  var origin = protocol + '://' + req.headers.host
   /* istanbul ignore next */
-  var parsed = process.browser
-    ? req._request.parsed
-    : URL.parse(protocol + '://' + req.headers.host + req.url)
-  var origin = protocol + '://' + parsed.host
+  var parsed = process.browser ? req._request.parsed : URL.parse(req.url, origin)
   this.ctx = ctx
   this.original = req
   this.method = req.method
   this.headers = req.headers
   this.cookies = this.headers['cookie'] ? cookie.parse(this.headers['cookie']) : {}
   this.params = {}
-  this.href = parsed.href
-  this.protocol = protocol
-  this.port = parsed.port
-  this.host = parsed.host
-  this.hostname = this.matchHost = parsed.hostname
-  this.path = parsed.path
-  this.pathname = this.matchPath = parsed.pathname
-  this.search = parsed.search
-  this.hash = parsed.hash
-  this.query = {}
-  this.origin = origin
-  this.secure = protocol === 'https'
-  this.subdomains = String(this.hostname).split('.').reverse().slice(2)
-  /* istanbul ignore next */
-  this.ip = (
-    req.connection.remoteAddress ||
-    req.socket.remoteAddress ||
-    (req.connection.socket && req.connection.socket.remoteAddress)
-  )
 
-  // Support nested querystrings.
-  var query = parsed.query = QS.parse(parsed.query)
-  for (var key in query) qSet(this.query, key, query[key])
+  // Attach url parts.
+  for (var part, i = URL_PARTS.length; i--;) {
+    part = URL_PARTS[i]
+    this[part] = parsed[part]
+  }
+
+  this.path = req.url
+  this.secure = secure
+  this.origin = origin
+  this.matchPath = this.pathname
+  this.matchHost = this.hostname
+  this.subdomains = String(this.hostname).split('.').reverse().slice(2)
+  this.query = parsed.query = QS.parse(this.search, true)
+  /* istanbul ignore next */
+  this.ip = (conn.remoteAddress || req.socket.remoteAddress || (conn.socket && conn.socket.remoteAddress))
 }
 var request = Request.prototype
 
