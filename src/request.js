@@ -42,7 +42,7 @@ function Request (ctx, req) {
   this.matchPath = this.pathname
   this.matchHost = this.hostname
   this.subdomains = String(this.hostname).split('.').reverse().slice(2)
-  this.query = parsed.query = QS.parse(this.search, true)
+  this.query = QS.parse(this.search, true)
   /* istanbul ignore next */
   this.ip = (conn.remoteAddress || req.socket.remoteAddress || (conn.socket && conn.socket.remoteAddress))
 }
