@@ -7,15 +7,15 @@
   "dependencies": {
     "@rill/chain": "^1.0.3",
     "@rill/error": "^1.2.0",
-    "@rill/http": "rill-js/http#file-size",
-    "@rill/https": "^3.0.0",
+    "@rill/http": "^4.0.0",
+    "@rill/https": "^4.0.0",
     "byte-length": "^0.1.1",
     "content-check": "^0.1.2",
     "cookie": "^0.3.1",
     "header-field": "^0.2.1",
     "is-typeof": "^1.0.2",
     "mini-querystring": "^1.0.2",
-    "mini-url": "^1.0.4",
+    "mini-url": "^1.1.0",
     "path-to-regexp": "^1.7.0",
     "statuses": "^1.3.1"
   },
@@ -27,7 +27,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "snazzy": "^6.0.0",
-    "standard": "^9.0.0",
+    "standard": "^9.0.1",
     "supertest": "^3.0.0",
     "uglifyjs": "^2.4.10"
   },

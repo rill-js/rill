@@ -22,7 +22,7 @@ function Request (ctx, req) {
   var protocol = secure ? 'https' : 'http'
   var origin = protocol + '://' + req.headers.host
   /* istanbul ignore next */
-  var parsed = process.browser ? req._request.parsed : URL.parse(req.url, origin)
+  var parsed = process.browser ? req._options.parsed : URL.parse(req.url, origin)
   this.ctx = ctx
   this.original = req
   this.method = req.method
