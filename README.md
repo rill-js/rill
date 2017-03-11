@@ -52,7 +52,6 @@ Rill provides the minimum for abstractions over [nodejs](https://nodejs.org) and
 
 # Installation
 
-
 #### Npm
 ```console
 npm install rill
@@ -71,6 +70,11 @@ bower install rill
     window.rill // Global rill if no module system in place.
 </script>
 ```
+
+# Browser support
+All modern browsers are supported including IE10+. IE9 is also supported with a [History API polyfill](https://github.com/devote/HTML5-History-API).
+
+Older browsers will also need to polyfill the Promise API, checkout [es6-promise](https://github.com/stefanpenner/es6-promise) for a good polyfill, babel-polyfill also covers this.
 
 # Community
 
