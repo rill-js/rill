@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 4.0.0 - 2017-03-05
+## 4.1.0 - 2017-03-11
 ### Changed
+- Removed need for fetch api polyfill. (Promise polyfill still needed for older browsers).
 - Optimized Rill's file size in several ways.
   * Switched to [events-light](https://www.npmjs.com/package/events-light) from browserify events shim.
   * Switch to [mini-url](https://www.npmjs.com/package/mini-url) and [mini-querystring](https://www.npmjs.com/package/mini-querystring) from browserify url and querystring shims.
