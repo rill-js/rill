@@ -1,6 +1,6 @@
 'use strict'
 
-var URL = require('url')
+var URL = require('mini-url')
 var cookie = require('cookie')
 var statuses = require('statuses')
 var toField = require('header-field')
@@ -68,7 +68,7 @@ response.redirect = function redirect (url, alt) {
 
   if (!statuses.redirect[this.status]) this.status = 302
 
-  this.set('Location', URL.resolve(req.href, url))
+  this.set('Location', URL.parse(url, req.href).href)
 }
 
 /**
@@ -88,7 +88,7 @@ response.refresh = function refresh (delay, url, alt) {
   // Default url to alternative.
   url = url || alt || req.href
 
-  this.set('Refresh', delay + '; url=' + URL.resolve(req.href, url))
+  this.set('Refresh', delay + '; url=' + URL.parse(url, req.href).href)
 }
 
 /**

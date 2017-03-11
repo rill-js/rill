@@ -38,6 +38,10 @@
   <a href="https://gitter.im/rill-js/rill">
     <img src="https://img.shields.io/gitter/room/rill-js/rill.svg?style=flat-square" alt="Gitter Chat"/>
   </a>
+  <!-- Saucelabs -->
+  <a href="https://saucelabs.com/u/rill-js">
+    <img src="https://saucelabs.com/browser-matrix/rill-js.svg" alt="Sauce Test Status"/>
+  </a>
 </h1>
 
 Expressive HTTP middleware for [nodejs](https://nodejs.org) and the browser.
