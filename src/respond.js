@@ -8,7 +8,11 @@ var isType = require('is-typeof')
 module.exports = respond
 
 /**
- * Runs general clean up on a request and ends it.
+ * @private
+ * @description
+ * Runs general clean up on a request context and ends it with proper headers and status codes.
+ *
+ * @param {Context} ctx The context of the request.
  */
 function respond (ctx) {
   var req = ctx.req
@@ -58,10 +62,15 @@ function respond (ctx) {
 }
 
 /**
+ * @private
+ * @description
  * Utility to remove empty values from an object.
  *
- * @param {Object} obj
- * @return {Object}
+ * @example
+ * clean({ a: [], b: null, c: 0 }) // -> { c: 0 }
+ *
+ * @param {object} obj
+ * @return {object}
  */
 function clean (obj) {
   for (var key in obj) {

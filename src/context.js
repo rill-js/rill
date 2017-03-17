@@ -7,11 +7,12 @@ var Response = require('./response')
 module.exports = Context
 
 /**
+ * @constructor
+ * @description
  * Creates an incomming message context.
  *
- * @constructor
- * @param {IncommingMessage} req - A nodejs style request object.
- * @param {ServerResponse} res - A nodejs style response object.
+ * @param {http.IncommingMessage} req A nodejs style request object.
+ * @param {http.ServerResponse} res A nodejs style response object.
  */
 function Context (req, res) {
   this.req = new Request(this, req)
@@ -23,11 +24,15 @@ function Context (req, res) {
 var context = Context.prototype
 
 /**
- * Throw an http error.
+ * @description
+ * Throw an http error on the current request.
  *
- * @param {String|Number} code - The status code for the error.
- * @param {String} [message] - Optional status message.
- * @param {Object} [meta] - Optional object to merge onto the error.
+ * @example
+ * context.fail(400, 'Password is required')
+ *
+ * @param {string|number} code The status code for the error.
+ * @param {string} [message] The status message to set on the response.
+ * @param {object} [meta] An object to merge onto the error.
  * @throws HttpError
  */
 context.fail = function throwHttp (code, message, meta) {
@@ -39,12 +44,16 @@ context.fail = function throwHttp (code, message, meta) {
 }
 
 /**
+ * @description
  * Throw an http error if a value is not truthy.
  *
- * @param {*} val - The value to test for truthyness.
- * @param {String|Number} code - The status code for the error.
- * @param {String} [message] - Optional status message.
- * @param {Object} [meta] - Optional object to merge onto the error.
+ * @example
+ * context.assert(password.length > 5, 400, 'Password must be at least 5 characters long')
+ *
+ * @param {*} val The value to test for truthyness.
+ * @param {string|number} code The status code for the error.
+ * @param {string} [message] The status message to set on the response.
+ * @param {object} [meta] An object to merge onto the error.
  * @throws HttpError
  */
 context.assert = function assertHttp (val, code, message, meta) {

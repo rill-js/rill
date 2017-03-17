@@ -17,9 +17,12 @@ var rill = Rill.prototype
 module.exports = Rill.default = Rill
 
 /**
+ * @constructor
+ * @description
  * Creates a universal app that will run middleware for a incomming request.
  *
- * @constructor
+ * @example
+ * const app = Rill()
  */
 function Rill () {
   if (!(this instanceof Rill)) return new Rill()
@@ -27,10 +30,16 @@ function Rill () {
 }
 
 /**
+ * @description
  * Takes the current middleware stack, chains it together and
  * returns a valid handler for a node js style server request.
  *
- * @return {Function}
+ * @example
+ * const app = Rill()
+ * app.use(...)
+ * require('http').createServer(app.handler()).listen()
+ *
+ * @return {function}
  */
 rill.handler = function handler () {
   var fn = chain(this.stack)
@@ -57,9 +66,14 @@ rill.handler = function handler () {
 }
 
 /**
+ * @description
  * Creates a node server from the rill server.
  *
- * @param {Object} [opts] - TLS Options.
+ * @example
+ * app.createServer().listen(3000)
+ *
+ * @param {object} [tls] Node https TLS options.
+ * @return {http.Server}
  */
 rill.createServer = function createServer (tls) {
   var handler = this.handler()
@@ -71,36 +85,41 @@ rill.createServer = function createServer (tls) {
 }
 
 /**
- * Starts a node/rill server.
+ * @description
+ * Creates a node server from the current Rill server and starts listening for http requests.
  *
- * @param {Object} [opts]
- * @param {String} opts.ip
- * @param {Number} opts.port
- * @param {Number} opts.backlog
- * @param {Object} opts.tls
- * @param {Function} cb
- * @return {Server}
+ * @example
+ * rill().use(...).listen({ port: 3000 })
+ *
+ * @param {object} [options] Options to configure the node server.
+ * @param {string} options.ip
+ * @param {number} options.port
+ * @param {number} options.backlog
+ * @param {object} options.tls
+ * @param {function} [onListening] function to be called once the server is listening for requests.
+ * @returns {http.Server}
  */
-rill.listen = function listen (opts, cb) {
+rill.listen = function listen (options, onListening) {
   // Make options optional.
-  if (typeof opts === 'function') {
-    cb = opts
-    opts = null
+  if (typeof options === 'function') {
+    onListening = options
+    options = null
   }
 
-  opts = opts || {}
-  opts.port = opts.port != null ? opts.port : 0
-  return this.createServer(opts.tls).listen(opts.port, opts.ip, opts.backlog, cb)
+  options = options || {}
+  options.port = options.port != null ? options.port : 0
+  return this.createServer(options.tls).listen(options.port, options.ip, options.backlog, onListening)
 }
 
 /**
+ * @description
  * Append new middleware to the current rill application stack.
  *
  * @example
  * rill.use(fn1, fn2)
  *
- * @param {Object} [config] - Optional config that must be matched for the middleware to run.
- * @param {Function...} middleware - Functions to run during an incomming request.
+ * @param {...function|Rill} [middleware] Functions or apps to run during an incomming request.
+ * @return {Rill}
  */
 rill.use = function use () {
   var start = this.stack.length
@@ -114,10 +133,19 @@ rill.use = function use () {
 }
 
 /**
+ * @description
  * Simple syntactic sugar for functions that
  * wish to modify the current rill instance.
  *
- * @param {Function...} transformers - Functions that will modify the rill instance.
+ * @example
+ * app.setup(self => {
+ *  // Modify the current app.
+ *  self.use(...)
+ *  self.modified = true
+ * })
+ *
+ * @param {...function} transformer Function that will modify the rill instance.
+ * @return {Rill}
  */
 rill.setup = function setup () {
   for (var fn, len = arguments.length, i = 0; i < len; i++) {
@@ -131,7 +159,14 @@ rill.setup = function setup () {
 }
 
 /**
+ * @description
  * Use middleware at a specific pathname.
+ *
+ * @example
+ * app.at('/test', (ctx, next) => ...)
+ *
+ * @param {string} pathname the pathname to match.
+ * @param {...function|Rill} [middleware] a middleware to attach.
  */
 rill.at = function at (pathname) {
   if (typeof pathname !== 'string') throw new TypeError('Rill#at: Path name must be a string.')
@@ -169,7 +204,14 @@ rill.at = function at (pathname) {
 }
 
 /**
+ * @description
  * Use middleware at a specific hostname.
+ *
+ * @example
+ * app.host('test.com', (ctx, next) => ...)
+ *
+ * @param {string} hostname the hostname to match.
+ * @param {...function|Rill} [middleware] a middleware to attach.
  */
 rill.host = function host (hostname) {
   if (typeof hostname !== 'string') throw new TypeError('Rill#host: Host name must be a string.')
@@ -208,7 +250,16 @@ rill.host = function host (hostname) {
 }
 
 /**
+ * @description
  * Use middleware for a specific method / pathname.
+ *
+ * @example
+ * app.get('/test', ...)
+ * app.post('/test', ...)
+ *
+ * @param {string} [pathname] the pathname to match.
+ * @param {...function|Rill} [middleware] the middleware to run.
+ * @return {Rill}
  */
 http.METHODS.forEach(function (method) {
   var name = method.toLowerCase()
@@ -229,12 +280,12 @@ http.METHODS.forEach(function (method) {
  * Small wrapper around path to regexp that treats a splat param "/*" as optional.
  * This makes mounting easier since typically when you do a path like "/test/*" you also want to treat "/test" as valid.
  *
- * @param {String} pathname - the path to convert to a regexp.
- * @param {Array} [keys] - a place to store matched param keys.
- * @param {Object} [opts] - options passed to pathToRegExp.
+ * @param {string} pathname the path to convert to a regexp.
+ * @param {array} [keys] a place to store matched param keys.
+ * @param {object} [options] options passed to pathToRegExp.
  * @return {RegExp}
  */
-function toReg (pathname, keys, opts) {
+function toReg (pathname, keys, options) {
   // First parse path into tokens.
   var tokens = parse(pathname)
 
@@ -245,7 +296,7 @@ function toReg (pathname, keys, opts) {
   if (splat && splat.asterisk) splat.optional = true
 
   // Convert the tokens to a regexp.
-  var re = tokensToRegExp(tokens, opts)
+  var re = tokensToRegExp(tokens, options)
 
   // Assign keys to from regexp.
   re.keys = keys

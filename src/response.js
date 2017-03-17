@@ -8,11 +8,12 @@ var toField = require('header-field')
 module.exports = Response
 
 /**
+ * @constructor
+ * @description
  * Wrapper around nodejs `ServerResponse`.
  *
- * @constructor
- * @param {Context} ctx - The context for the request.
- * @param {ServerResponse} res - The original node response.
+ * @param {Context} ctx The context for the request.
+ * @param {http.ServerResponse} res The original node response.
  */
 function Response (ctx, res) {
   this.ctx = ctx
@@ -25,34 +26,46 @@ function Response (ctx, res) {
 var response = Response.prototype
 
 /**
+ * @description
  * Appends to the current set-cookie header, adding a new cookie with options.
  *
- * @param {String} key - the name of the cookie.
- * @param {*} val - the value for the cookie.
- * @param {Object} opts - options for the cookie.
- */
-response.cookie = function (key, val, opts) {
-  this.append('Set-Cookie', cookie.serialize(key, val, opts))
-}
-
-/**
- * Deletes a cookie.
+ * @example
+ * response.cookie('auth-token', 'abc123', { httoOnly: true })
  *
- * @param {String} key - the name of the cookie.
- * @param {Object} opts - options for the cookie.
+ * @param {string} name The name of the cookie.
+ * @param {*} value The value for the cookie.
+ * @param {object} options Options for the cookie.
  */
-response.clearCookie = function (key, opts) {
-  opts = opts || {}
-  opts.expires = new Date()
-  this.append('Set-Cookie', cookie.serialize(key, '', opts))
+response.cookie = function (name, value, options) {
+  this.append('Set-Cookie', cookie.serialize(name, value, options))
 }
 
 /**
- * Attaches relative location headers to perform a redirect.
+ * @description
+ * Deletes a cookie from the current set-cookie header.
+ *
+ * @example
+ * response.clearCookie('auth-token')
+ *
+ * @param {string} name The name of the cookie.
+ * @param {object} options Options for the cookie.
+ */
+response.clearCookie = function (name, options) {
+  options = options || {}
+  options.expires = new Date()
+  this.append('Set-Cookie', cookie.serialize(name, '', options))
+}
+
+/**
+ * @description
+ * Attaches location headers relative to the current request to perform a redirect.
  * Will redirect to the referrer if "back" is supplied as a url.
  *
- * @param {String} url - The url to redirect too or "back".
- * @param {String} alt - Used if the url is empty or "back" does not exist.
+ * @example
+ * response.redirect('/home') // redirect back to home page.
+ *
+ * @param {string} url The url to redirect too or "back".
+ * @param {string} alt Used if the url is empty or "back" does not exist.
  */
 response.redirect = function redirect (url, alt) {
   var req = this.ctx.req
@@ -72,12 +85,16 @@ response.redirect = function redirect (url, alt) {
 }
 
 /**
- * Attaches relative refresh headers to perform a timed refresh.
+ * @description
+ * Attaches refresh headers relative to the current request to perform a timed refresh of the page.
  * Will refresh to the referrer if "back" is supplied as a url.
  *
- * @param {String} delay - Delays the refresh by `delay` seconds.
- * @param {String} url - The url to refresh or "back".
- * @param {String} alt - Used if the url is empty or "back" does not exist.
+ * @example
+ * response.refresh(2, '/home') // redirect the user home after 2 seconds.
+ *
+ * @param {number|string} delay Delays the refresh by `delay` seconds.
+ * @param {string} url The url to refresh or "back".
+ * @param {string} alt Used if the url is empty or "back" does not exist.
  */
 response.refresh = function refresh (delay, url, alt) {
   var req = this.ctx.req
@@ -92,47 +109,65 @@ response.refresh = function refresh (delay, url, alt) {
 }
 
 /**
- * Utility to retrieve a header for the response.
+ * @description
+ * Utility to retrieve a header from the response headers.
  *
- * @param {String} field
- * @return {Array|String}
+ * @example
+ * response.get('Content-Type')
+ *
+ * @param {string} name The name of the header to get.
+ * @return {string|string[]}
  */
-response.get = function get (field) {
-  return this.headers[toField(field)]
+response.get = function get (name) {
+  return this.headers[toField(name)]
 }
 
 /**
- * Utility to set a header for the response.
+ * @description
+ * Utility to overwrite a header on the response headers.
  *
- * @param {String} field
- * @param {Array|String} val
+ * @example
+ * response.set('Content-Type', 'text/html')
+ *
+ * @param {string} name The name of the header to set.
+ * @param {string|string[]} value The value for the header.
  */
-response.set = function set (field, val) {
-  this.headers[toField(field)] = val
+response.set = function set (name, value) {
+  this.headers[toField(name)] = value
 }
 
 /**
- * Utility to append to an existing header for the response.
+ * @description
+ * Utility to add or set a header on the response headers.
  *
- * @param {String} field
- * @param {Array|String} val
+ * @example
+ * response.append('Set-Cookie', 'a=1')
+ * response.append('Set-Cookie', 'b=1')
+ * response.get('Set-Cookie') // -> ['a=1', 'b=1']
+ *
+ * @param {string} name The name of the header to append to.
+ * @param {string|string[]} value The value to append.
  */
-response.append = function append (field, val) {
-  field = toField(field)
+response.append = function append (name, value) {
+  name = toField(name)
   var headers = this.headers
-  var cur = this.headers[field]
+  var cur = this.headers[name]
 
   if (cur == null) cur = []
   else if (!Array.isArray(cur)) cur = [cur]
 
-  headers[field] = cur.concat(val)
+  headers[name] = cur.concat(value)
 }
 
 /**
- * Utility to delete an existing header on the response.
+ * @description
+ * Utility to remove a header from the response headers.
  *
- * @param {String} field
+ * @example
+ * response.remove('Content-Type')
+ *
+ * @param {string} name The name of the header to remove.
  */
-response.remove = function remove (field) {
-  delete this.headers[toField(field)]
+response.remove = function remove (name) {
+  delete this.headers[toField(name)]
 }
