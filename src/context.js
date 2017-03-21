@@ -9,8 +9,6 @@ module.exports =
 Context['default'] = Context
 
 /**
- * @constructor
- * @description
  * Creates an incomming message context.
  *
  * @example
@@ -20,6 +18,7 @@ Context['default'] = Context
  *
  * @param {http.IncommingMessage} req - A nodejs style request object.
  * @param {http.ServerResponse} res - A nodejs style response object.
+ * @constructor
  */
 function Context (req, res) {
   this.req = new Request(this, req)
