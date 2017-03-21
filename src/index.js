@@ -12,17 +12,18 @@ var adaptBrowser = process.browser && require('@rill/http/adapter/browser')
 var parse = pathToRegExp.parse
 var tokensToRegExp = pathToRegExp.tokensToRegExp
 var slice = Array.prototype.slice
-var rill = Rill.prototype
 
-module.exports = Rill.default = Rill
+// Expose module.
+module.exports =
+Rill['default'] = Rill
 
 /**
- * @constructor
- * @description
  * Creates a universal app that will run middleware for a incomming request.
  *
  * @example
  * const app = Rill()
+ *
+ * @constructor
  */
 function Rill () {
   if (!(this instanceof Rill)) return new Rill()
@@ -30,7 +31,6 @@ function Rill () {
 }
 
 /**
- * @description
  * Takes the current middleware stack, chains it together and
  * returns a valid handler for a node js style server request.
  *
@@ -39,10 +39,18 @@ function Rill () {
  * app.use(...)
  * require('http').createServer(app.handler()).listen()
  *
- * @return {function}
+ * @return {handleIncommingMessage}
  */
-rill.handler = function handler () {
+Rill.prototype.handler = function () {
   var fn = chain(this.stack)
+
+  /**
+   * Handles a node js server request and pushes it through a rill server.
+   *
+   * @param {http.IncomingMessage} req - The http request.
+   * @param {http.ServerResponse} res - The http response.
+   * @return {void}
+   */
   return function handleIncommingMessage (req, res) {
     res.statusCode = 404
     var ctx = new Context(req, res)
@@ -66,16 +74,15 @@ rill.handler = function handler () {
 }
 
 /**
- * @description
- * Creates a node server from the rill server.
+ * Creates a node server from the Rill server.
  *
  * @example
  * app.createServer().listen(3000)
  *
- * @param {object} [tls] Node https TLS options.
+ * @param {object} [tls] - Node https TLS options.
  * @return {http.Server}
  */
-rill.createServer = function createServer (tls) {
+Rill.prototype.createServer = function (tls) {
   var handler = this.handler()
   var server = tls ? https.createServer(tls, handler) : http.createServer(handler)
   // Setup link hijacking in the browser.
@@ -85,21 +92,20 @@ rill.createServer = function createServer (tls) {
 }
 
 /**
- * @description
  * Creates a node server from the current Rill server and starts listening for http requests.
  *
  * @example
  * rill().use(...).listen({ port: 3000 })
  *
- * @param {object} [options] Options to configure the node server.
+ * @param {object} [options] - Options to configure the node server.
  * @param {string} options.ip
  * @param {number} options.port
  * @param {number} options.backlog
  * @param {object} options.tls
- * @param {function} [onListening] function to be called once the server is listening for requests.
+ * @param {function} [onListening] - A function to be called once the server is listening for requests.
  * @returns {http.Server}
  */
-rill.listen = function listen (options, onListening) {
+Rill.prototype.listen = function (options, onListening) {
   // Make options optional.
   if (typeof options === 'function') {
     onListening = options
@@ -112,16 +118,15 @@ rill.listen = function listen (options, onListening) {
 }
 
 /**
- * @description
  * Append new middleware to the current rill application stack.
  *
  * @example
  * rill.use(fn1, fn2)
  *
- * @param {...function|Rill} [middleware] Functions or apps to run during an incomming request.
- * @return {Rill}
+ * @param {...function|Rill|false} [middleware] - A middleware to attach.
+ * @return {this}
  */
-rill.use = function use () {
+Rill.prototype.use = function () {
   var start = this.stack.length
   var end = this.stack.length += arguments.length
 
@@ -133,7 +138,6 @@ rill.use = function use () {
 }
 
 /**
- * @description
  * Simple syntactic sugar for functions that
  * wish to modify the current rill instance.
  *
@@ -144,10 +148,10 @@ rill.use = function use () {
  *  self.modified = true
  * })
  *
- * @param {...function} transformer Function that will modify the rill instance.
- * @return {Rill}
+ * @param {...function|false} [transformer] - A function that will modify the rill instance.
+ * @return {this}
  */
-rill.setup = function setup () {
+Rill.prototype.setup = function () {
   for (var fn, len = arguments.length, i = 0; i < len; i++) {
     fn = arguments[i]
     if (!fn) continue
@@ -159,16 +163,16 @@ rill.setup = function setup () {
 }
 
 /**
- * @description
  * Use middleware at a specific pathname.
  *
  * @example
  * app.at('/test', (ctx, next) => ...)
  *
- * @param {string} pathname the pathname to match.
- * @param {...function|Rill} [middleware] a middleware to attach.
+ * @param {string} pathname - The pathname to match.
+ * @param {...function|Rill|false} [middleware] - A middleware to attach.
+ * @return {this}
  */
-rill.at = function at (pathname) {
+Rill.prototype.at = function (pathname) {
   if (typeof pathname !== 'string') throw new TypeError('Rill#at: Path name must be a string.')
 
   var keys = []
@@ -204,16 +208,16 @@ rill.at = function at (pathname) {
 }
 
 /**
- * @description
  * Use middleware at a specific hostname.
  *
  * @example
  * app.host('test.com', (ctx, next) => ...)
  *
- * @param {string} hostname the hostname to match.
- * @param {...function|Rill} [middleware] a middleware to attach.
+ * @param {string} hostname - The hostname to match.
+ * @param {...function|Rill|false} [middleware] - A middleware to attach.
+ * @return {this}
  */
-rill.host = function host (hostname) {
+Rill.prototype.host = function host (hostname) {
   if (typeof hostname !== 'string') throw new TypeError('Rill#host: Host name must be a string.')
 
   var keys = []
@@ -249,21 +253,20 @@ rill.host = function host (hostname) {
   })
 }
 
-/**
- * @description
- * Use middleware for a specific method / pathname.
- *
- * @example
- * app.get('/test', ...)
- * app.post('/test', ...)
- *
- * @param {string} [pathname] the pathname to match.
- * @param {...function|Rill} [middleware] the middleware to run.
- * @return {Rill}
- */
+// Attach all http verbs as shortcut methods.
 http.METHODS.forEach(function (method) {
   var name = method.toLowerCase()
-  rill[name] = function (pathname) {
+  /**
+   * Use middleware on |method| requests at an (optional) pathname.
+   *
+   * @example
+   * app.|method|('/test', ...)
+   *
+   * @param {string} [pathname] - A pathname to match.
+   * @param {...function|Rill|false} [middleware] - A middleware to attach.
+   * @return {this}
+   */
+  Rill.prototype[name] = function (pathname) {
     var offset = typeof pathname === 'string' ? 1 : 0
     var fn = chain(slice.call(arguments, offset))
     if (offset === 1) return this.at(pathname, matchMethod)
@@ -280,9 +283,9 @@ http.METHODS.forEach(function (method) {
  * Small wrapper around path to regexp that treats a splat param "/*" as optional.
  * This makes mounting easier since typically when you do a path like "/test/*" you also want to treat "/test" as valid.
  *
- * @param {string} pathname the path to convert to a regexp.
- * @param {array} [keys] a place to store matched param keys.
- * @param {object} [options] options passed to pathToRegExp.
+ * @param {string} pathname - The path to convert to a regexp.
+ * @param {array} [keys] - A place to store matched param keys.
+ * @param {object} [options] - Options passed to pathToRegExp.
  * @return {RegExp}
  */
 function toReg (pathname, keys, options) {

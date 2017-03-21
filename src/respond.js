@@ -5,14 +5,16 @@ var checkType = require('content-check')
 var statuses = require('statuses')
 var isType = require('is-typeof')
 
-module.exports = respond
+// Expose module.
+module.exports =
+respond['default'] = respond
 
 /**
- * @private
- * @description
  * Runs general clean up on a request context and ends it with proper headers and status codes.
  *
- * @param {Context} ctx The context of the request.
+ * @param {Context} ctx - The context of the request.
+ * @return {void}
+ * @private
  */
 function respond (ctx) {
   var req = ctx.req
@@ -53,7 +55,7 @@ function respond (ctx) {
   }
 
   // Send off headers.
-  original.writeHead(res.status, res.message, clean(res.headers))
+  original.writeHead(res.status, res.message, removeEmptyHeaders(res.headers))
   // Allow for requests to stay open.
   if (res.end === false) return
   // Finish response.
@@ -62,17 +64,16 @@ function respond (ctx) {
 }
 
 /**
- * @private
- * @description
  * Utility to remove empty values from an object.
  *
  * @example
- * clean({ a: [], b: null, c: 0 }) // -> { c: 0 }
+ * removeEmptyHeaders({ a: [], b: null, c: 0 }) // -> { c: 0 }
  *
- * @param {object} obj
+ * @param {object} obj - The headers object to remove empties from.
  * @return {object}
+ * @private
  */
-function clean (obj) {
+function removeEmptyHeaders (obj) {
   for (var key in obj) {
     if (obj[key] == null || obj[key].length === 0) {
       delete obj[key]
