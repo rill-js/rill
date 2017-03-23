@@ -4,12 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 4.1.5 - 2017-03-21
+## 4.1.5 - 2017-03-23
 ### Changed
-- Update logo link for npmjs.com.
+- Fix regression with parsing querystrings on GET forms.
 
 ## 4.1.3, 4.1.4 - 2017-03-21
 ### Changed
+- Update logo link for npmjs.com.
 - More JSDoc improvements.
 
 ## 4.1.2 - 2017-03-17
