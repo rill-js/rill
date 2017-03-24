@@ -62,7 +62,7 @@ npm install rill
 bower install rill
 ```
 
-<h4><a href="https://raw.githubusercontent.com/rill-js/rill/master/dist/rill.js" download>Download</a></h4>
+#### [Download](https://raw.githubusercontent.com/rill-js/rill/master/dist/rill.js)
 ```html
 <script type="text/javascript" src="rill.js"></script>
 <script>
