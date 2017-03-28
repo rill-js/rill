@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.3.2 - 2017-03-28
+### Changed
+- Update dependencies. (Fixes issue in mini-url where baseurl was not optional in some browsers).
+
 ## 4.3.1 - 2017-03-23
 ### Changed
 - Fix download link in readme.
