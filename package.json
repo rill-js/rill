@@ -7,7 +7,7 @@
   "dependencies": {
     "@rill/chain": "^1.0.3",
     "@rill/error": "^1.2.0",
-    "@rill/http": "^4.3.2",
+    "@rill/http": "^4.3.3",
     "@rill/https": "^4.0.0",
     "byte-length": "^0.1.1",
     "content-check": "^0.1.2",
@@ -20,14 +20,14 @@
     "statuses": "^1.3.1"
   },
   "devDependencies": {
-    "browserify": "^14.1.0",
+    "browserify": "^14.3.0",
     "bundle-collapser": "^1.2.1",
-    "coveralls": "^2.12.0",
+    "coveralls": "^2.13.0",
     "exorcist": "^0.4.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
-    "snazzy": "^6.0.0",
-    "standard": "^9.0.2",
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.2",
     "supertest": "^3.0.0",
     "uglifyjs": "^2.4.10"
   },
