@@ -31,7 +31,7 @@ app.use((ctx)=> {
 
 ### ctx.locals
 
-  An object created during each incoming request that allows passing data between each middleware function.
+  Object created during each incoming request that allows passing data between each middleware function.
 
 ### ctx.fail(status, [message], [properties])
 

@@ -7,15 +7,15 @@
 
 ### req.original
 
- Original nodejs/[@rill/http](https://github.com/rill-js/http) request object.
+  Original nodejs/[@rill/http](https://github.com/rill-js/http) request object.
 
 ### req.ctx
 
- The current [context](https://rill.site/context#docs).
+  The current [context](https://rill.site/context#docs).
 
 ### req.headers
 
- Original request header object.
+  Original request header object.
 
 ```js
 ctx.req.headers // => { ... }
@@ -23,7 +23,7 @@ ctx.req.headers // => { ... }
 
 ### req.cookies
 
- Parsed cookies for the request.
+  Parsed cookies for the request.
 
 ```js
 ctx.req.cookies // => { ... }
@@ -31,7 +31,7 @@ ctx.req.cookies // => { ... }
 
 ### req.method
 
- Request method.
+  HTTP method for the request.
 
  ```js
 ctx.req.method // => GET
@@ -39,7 +39,7 @@ ctx.req.method // => GET
 
 ### req.href
 
-  Get full request URL, include `protocol`, `host` and `url`.
+  Full request URL. Includes `protocol`, `host` and `url`.
 
 ```js
 ctx.req.href // => http://www.example.com/foo/bar?q=1#section
@@ -47,7 +47,7 @@ ctx.req.href // => http://www.example.com/foo/bar?q=1#section
 
 ### req.origin
 
-  Get the origin of the request (protocol, hostname and port).
+  Origin of the request (protocol, hostname and port).
 
 ```js
 ctx.req.origin // => http://www.example.com
@@ -55,7 +55,7 @@ ctx.req.origin // => http://www.example.com
 
 ### req.protocol
 
- Protocol for the request.
+  Protocol for the request.
 
 ```js
 ctx.req.protocol // => http
@@ -63,8 +63,8 @@ ctx.req.protocol // => http
 
 ### req.hostname
 
- Host name for the request.
- Use `ctx.req.matchHost` for the hostname being matched in a mounted app.
+  Host name for the request.
+  Use `ctx.req.matchHost` for the hostname being matched in a mounted app.
 
 ```js
 ctx.req.hostname // => www.example.com
@@ -73,7 +73,7 @@ ctx.req.matchHost // => www.example.com
 
 ### req.port
 
- Port number for the request.
+  Port number for the request.
 
 ```js
 ctx.req.port // => 80
@@ -81,7 +81,7 @@ ctx.req.port // => 80
 
 ### req.host
 
- Host for the request, including port.
+  Host for the request, including port.
 
 ```js
 ctx.req.host // => www.example.com:80
@@ -89,8 +89,8 @@ ctx.req.host // => www.example.com:80
 
 ### req.pathname
 
- The path section of the URL.
- Use `ctx.req.matchPath` for the pathname being matched in a mounted app.
+  Path section of the URL.
+  Use `ctx.req.matchPath` for the pathname being matched in a mounted app.
 
 ```js
 ctx.req.pathname // => /foo/bar
@@ -99,7 +99,7 @@ ctx.req.matchPath // => /foo/bar
 
 ### req.path
 
- The concatenated pathname and querystring of the URL.
+  Concatenated pathname and querystring of the URL.
 
 ```js
 ctx.req.path // => /foo/bar?q=1
@@ -107,7 +107,7 @@ ctx.req.path // => /foo/bar?q=1
 
 ### req.search
 
-  Get raw query string including `?`.
+  Raw query as a string including `?`.
 
 ```js
 ctx.req.search // => '?q=1'
@@ -115,7 +115,7 @@ ctx.req.search // => '?q=1'
 
 ### req.query
 
- A parsed querstring object.
+  Parsed querystring object.
 
  ```js
 ctx.req.query // => { q: '1' }
@@ -123,7 +123,7 @@ ctx.req.query // => { q: '1' }
 
 ### req.hash
 
- The hash fragment of the URL including the pound-sign (only in browser).
+  Hash fragment of the URL including the pound-sign (only in browser).
 
 ```js
 ctx.req.hash // => '#section'
@@ -131,7 +131,7 @@ ctx.req.hash // => '#section'
 
 ### req.params
 
- An object containing the matches during a path middleware.
+  Object containing the matches during a path middleware (ie: /users/:id).
 
 ```js
 ctx.req.params // => {}
@@ -148,7 +148,7 @@ ctx.req.secure // => false
 
 ### req.ip
 
-  Request remote address. Supports `X-Forwarded-For`.
+  Remote ip address for the request. Supports `X-Forwarded-For`.
 
 ```js
 ctx.req.ip // => '127.0.0.1'
@@ -156,11 +156,10 @@ ctx.req.ip // => '127.0.0.1'
 
 ### req.subdomains
 
-  Return subdomains as an array.
+  Subdomains as an array.
 
   Subdomains are the dot-separated parts of the host before the main domain of
-  the app. By default, the domain of the app is assumed to be the last two
-  parts of the host.
+  the app. The domain of the app is assumed to be the last two parts of the host.
 
 ```js
 ctx.req.subdomains // => ['www']

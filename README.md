@@ -66,8 +66,8 @@ bower install rill
 ```html
 <script type="text/javascript" src="rill.js"></script>
 <script>
-    define(['rill'], function (rill) {...}) // AMD
-    window.rill // Global rill if no module system in place.
+  define(['rill'], function (rill) {...}) // AMD
+  window.rill // Global rill if no module system in place.
 </script>
 ```
 
@@ -132,14 +132,14 @@ app.use(reactRenderer())
 
 // Example Logger
 app.use(async ({ req }, next)=> {
-	const start = new Date
+  const start = new Date
 
-	// Rill uses promises for control flow.
-	// ES2016 async functions work great as well!
-	await next()
+  // Rill uses promises for control flow.
+  // ES2016 async functions work great as well!
+  await next()
 
-	const ms = new Date - start
-	console.log(`${req.method} ${req.url} - ${ms}`)
+  const ms = new Date - start
+  console.log(`${req.method} ${req.url} - ${ms}`)
 })
 ```
 
@@ -148,32 +148,32 @@ app.use(async ({ req }, next)=> {
 ```javascript
 // Respond to a GET request.
 app.get('/todos', async ({ res })=> {
-	// Fetch a todolist from some service.
-	const todolist = await MyTodoListService.getAllTodos()
+  // Fetch a todolist from some service.
+  const todolist = await MyTodoListService.getAllTodos()
 
-	// Directly set React virtual dom to the body thanks to @rill/react.
-	// (Checkout @rill/html for universal html diffing).
-	res.body = (
-		<html>
-			<head>
-				<title>My App</title>
-				<meta name="description" content="Rill Application">
-			</head>
-			<body>
-				<form action="/add-todo" method="POST">
-					<h1>Just a plain old form</h1>
-					<input type="text" name="todo"/>
-					<button type="submit">Add Todo</button>
-				</form>
+  // Directly set React virtual dom to the body thanks to @rill/react.
+  // (Checkout @rill/html for universal html diffing).
+  res.body = (
+    <html>
+      <head>
+        <title>My App</title>
+        <meta name="description" content="Rill Application">
+      </head>
+      <body>
+        <form action="/add-todo" method="POST">
+          <h1>Just a plain old form</h1>
+          <input type="text" name="todo"/>
+          <button type="submit">Add Todo</button>
+        </form>
 
-				{todolist.length
-					? todolist.map(renderTodo)
-					: 'No todos to display.'
-				}
-				<script src="/app.js"/>
-			</body>
-		</html>
-	)
+        {todolist.length
+          ? todolist.map(renderTodo)
+          : 'No todos to display.'
+        }
+        <script src="/app.js"/>
+      </body>
+    </html>
+  )
 })
 ```
 
@@ -181,11 +181,11 @@ app.get('/todos', async ({ res })=> {
 ```javascript
 // Respond to a POST request.
 app.post('/add-todo', async ({ req, res })=> {
-	// We handle form submissions with Rill the same way one would with any other node framework.
-	// Here we are simply adding the todo via some service.
-	await MyTodoListService.addTodo({ text: req.body.todo })
-	// And then we redirect back (same as res.redirect('/todos'))
-	res.redirect('back')
+  // We handle form submissions with Rill the same way one would with any other node framework.
+  // Here we are simply adding the todo via some service.
+  await MyTodoListService.addTodo({ text: req.body.todo })
+  // And then we redirect back (same as res.redirect('/todos'))
+  res.redirect('back')
 })
 ```
 
