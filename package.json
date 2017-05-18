@@ -7,8 +7,8 @@
   "dependencies": {
     "@rill/chain": "^1.0.3",
     "@rill/error": "^1.2.0",
-    "@rill/http": "^4.3.3",
-    "@rill/https": "^4.0.0",
+    "@rill/http": "^5.0.1",
+    "@rill/https": "^5.0.0",
     "byte-length": "^0.1.1",
     "content-check": "^0.1.2",
     "cookie": "^0.3.1",
@@ -25,11 +25,11 @@
     "coveralls": "^2.13.0",
     "exorcist": "^0.4.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
+    "mocha": "^3.4.1",
     "snazzy": "^7.0.0",
     "standard": "^10.0.2",
     "supertest": "^3.0.0",
-    "uglifyjs": "^2.4.10"
+    "uglifyjs": "^2.4.11"
   },
   "files": [
     "src",

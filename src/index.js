@@ -8,7 +8,7 @@ var HttpError = require('@rill/error')
 var Context = require('./context')
 var respond = require('./respond')
 /* istanbul ignore next */
-var adaptBrowser = process.browser && require('@rill/http/adapter/browser')
+var attachDocument = process.browser && require('@rill/http/adapter/document').attach
 var parse = pathToRegExp.parse
 var tokensToRegExp = pathToRegExp.tokensToRegExp
 var slice = Array.prototype.slice
@@ -87,7 +87,7 @@ Rill.prototype.createServer = function (tls) {
   var server = tls ? https.createServer(tls, handler) : http.createServer(handler)
   // Setup link hijacking in the browser.
   /* istanbul ignore next */
-  if (process.browser) adaptBrowser(server)
+  if (process.browser) attachDocument(server)
   return server
 }
 

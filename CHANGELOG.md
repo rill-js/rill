@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.0.0 - 2017-05-18
+### Changed
+- Upgraded @rill/http which has a [breaking change](https://github.com/rill-js/http/blob/master/CHANGELOG.md#500-501---2017-05-18). (This change will only be breaking for those who rely on @rill/http directly)
+
 ## 4.3.4, 4.3.5 - 2017-04-23
 ### Changed
 - Update dependencies.
