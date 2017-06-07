@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.0.1 - 2017-06-06
+### Changed
+- No longer relies on `process.browser`, instead uses browser field to attach to document.
+
 ## 5.0.0 - 2017-05-18
 ### Changed
 - Upgraded @rill/http which has a [breaking change](https://github.com/rill-js/http/blob/master/CHANGELOG.md#500-501---2017-05-18). (This change will only be breaking for those who rely on @rill/http directly)
