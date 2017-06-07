@@ -16,7 +16,7 @@
     "content-check": "^0.1.2",
     "cookie": "^0.3.1",
     "header-field": "^0.2.1",
-    "is-typeof": "^1.0.2",
+    "is-typeof": "^1.0.3",
     "mini-querystring": "^1.0.2",
     "mini-url": "^1.6.1",
     "path-to-regexp": "^1.7.0",

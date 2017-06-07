@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 5.0.1 - 2017-06-06
+## 5.0.1, 5.0.2 - 2017-06-06
 ### Changed
+- Update deps.
 - No longer relies on `process.browser`, instead uses browser field to attach to document.
 
 ## 5.0.0 - 2017-05-18
