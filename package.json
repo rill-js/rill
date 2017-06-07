@@ -13,7 +13,7 @@
     "@rill/http": "^5.0.1",
     "@rill/https": "^5.0.0",
     "byte-length": "^0.1.1",
-    "content-check": "^0.1.2",
+    "content-check": "^0.1.3",
     "cookie": "^0.3.1",
     "header-field": "^0.2.1",
     "is-typeof": "^1.0.3",
