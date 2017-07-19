@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 5.0.4 - 2017-06-13
+## 5.0.6 - 2017-07-19
 ### Changed
+- Swiched logo to svg.
+
+## 5.0.4, 5.0.5 - 2017-06-13
+### Changed
+- Added new article.
 - Switch mocha tests to use promises.
 
 ## 5.0.1, 5.0.2, 5.0.3 - 2017-06-06

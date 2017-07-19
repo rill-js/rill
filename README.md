@@ -1,7 +1,7 @@
 <h1 align="center">
   <!-- Logo -->
   <a href="https://rill.site" alt="Rill">
-    <img src="https://github.com/rill-js/rill/raw/master/Rill-Logo.jpg" width="300" alt="Rill Logo"/>
+    <img src="https://cdn.rawgit.com/rill-js/rill/master/Rill-Logo.svg" width="300" alt="Rill Logo"/>
   </a>
 
   <br/>
