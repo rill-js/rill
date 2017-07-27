@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.0.7 - 2017-07-27
+### Changed
+- Added bundle size analyzer script for future improvements.
+- Update dependencies.
+- Update license year.
+- Update bower version.
+
 ## 5.0.6 - 2017-07-19
 ### Changed
 - Swiched logo to svg.
