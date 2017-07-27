@@ -45,7 +45,6 @@ build:
 		$(exorcist) $(SRC_OUT_MAP) > $(SRC_OUT); \
 		$(uglifyjs) $(SRC_OUT) --output $(SRC_OUT) \
 			--in-source-map $(SRC_OUT_MAP) \
-			--screw_ie8 \
 			--mangle \
 			--compress \
 				warnings=false,unused,sequences,properties,dead_code,drop_debugger,conditionals,comparisons,evaluate,booleans,loops,hoist_funs,if_return,join_vars,cascade,drop_console,keep_fargs=false
@@ -55,7 +54,6 @@ analyze:
 	@NODE_ENV=test \
 		$(browserify) --full-paths --standalone rill --debug $(SRC_IN) | \
 		$(uglifyjs) \
-			--screw_ie8 \
 			--mangle \
 			--compress \
 				warnings=false,unused=false,sequences,properties,dead_code,drop_debugger,conditionals,comparisons,evaluate,booleans,loops,hoist_funs,if_return,join_vars,cascade,drop_console,keep_fargs=false | \
