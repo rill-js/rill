@@ -37,7 +37,7 @@
   },
   "files": [
     "src",
-    "docs"
+    "dist"
   ],
   "homepage": "https://rill.site",
   "keywords": [

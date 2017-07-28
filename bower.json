@@ -1,6 +1,6 @@
 {
   "name": "rill",
-  "version": "5.0.8",
+  "version": "5.0.9",
   "homepage": "https://rill.site",
   "authors": [
     "pierceydylan@gmail.com <Dylan Piercey>"
@@ -19,20 +19,16 @@
     "http",
     "isomorphic",
     "middleware",
-    "rack",
     "react",
     "rest",
     "restfull",
     "rill",
     "router",
-    "tusk",
     "universal",
     "web"
   ],
-  "ignore": [
-    "**/.*",
-    "*.jpg",
-    "node_modules",
-    "test"
+  "files": [
+    "src",
+    "dist"
   ]
 }

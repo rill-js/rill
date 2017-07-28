@@ -87,6 +87,7 @@ Older browsers will also need to polyfill the Promise API, checkout [es6-promise
 
 # Articles
 
+* [Universal web application framework - Interview with Dylan Piercey](https://survivejs.com/blog/rill-interview/)
 * [Isomorphic Javascript, let’s make it easier.](https://medium.com/@pierceydylan/isomorphic-javascript-it-just-has-to-work-b9da5b0c8035)
 * [How to make universal JavaScript applications — Part 1](https://medium.com/@pierceydylan/how-to-make-universal-javascript-applications-part-1-90e9032bc471)
 * [Browsers, Servers, and APIs](https://medium.com/@iamjohnhenry/browsers-servers-and-apis-2f7b10523f39)
