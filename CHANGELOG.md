@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 5.0.10
+## 5.0.10, 5.0.11
 - Add benchmarks folder for comparisions with Koa/Express.
+- Switch uglifyjs back to dev dependency.
 
 ## 5.0.7, 5.0.8, 5.0.9 - 2017-07-27
 - Switch to white listing files in package.json.
