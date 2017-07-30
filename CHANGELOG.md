@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.0.10
+- Add benchmarks folder for comparisions with Koa/Express.
+
 ## 5.0.7, 5.0.8, 5.0.9 - 2017-07-27
 - Switch to white listing files in package.json.
 - Added survivejs interview.

@@ -1,6 +1,6 @@
 {
   "name": "rill",
-  "version": "5.0.9",
+  "version": "5.0.10",
   "homepage": "https://rill.site",
   "authors": [
     "pierceydylan@gmail.com <Dylan Piercey>"
@@ -19,9 +19,6 @@
     "http",
     "isomorphic",
     "middleware",
-    "react",
-    "rest",
-    "restfull",
     "rill",
     "router",
     "universal",
