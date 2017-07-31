@@ -78,10 +78,10 @@ Older browsers will also need to polyfill the Promise API, checkout [es6-promise
 
 # Community
 
-* [API](https://rill.site/application#docs) documentation.
+* [API Documentation](https://rill.site/application#docs)
 * [Examples](https://github.com/rill-js/todomvc)
-* [Middleware](https://github.com/rill-js/rill/wiki) list
 * [Wiki](https://github.com/rill-js/rill/wiki)
+* [Middleware List](https://github.com/rill-js/rill/wiki/Middleware)
 * [Gitter Community](https://gitter.im/rill-js/rill)
 * [Reddit Community](https://www.reddit.com/r/Rill)
 
