@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# 5.0.13 - 2017-08-03
+- Add related airbnb article to readme.
+
 ## 5.0.10, 5.0.11, 5.0.12 - 2017-07-30
 - Updated `middleware list` url in readme.
 - Add benchmarks folder for comparisions with Koa/Express.

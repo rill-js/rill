@@ -92,6 +92,7 @@ Older browsers will also need to polyfill the Promise API, checkout [es6-promise
 * [How to make universal JavaScript applications — Part 1](https://medium.com/@pierceydylan/how-to-make-universal-javascript-applications-part-1-90e9032bc471)
 * [Browsers, Servers, and APIs](https://medium.com/@iamjohnhenry/browsers-servers-and-apis-2f7b10523f39)
 * [Why Everyone is Talking About Isomorphic](https://medium.com/capital-one-developers/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905#.mdd84j28m)
+* [Isomorphic JavaScript: The Future of Web Apps](https://medium.com/airbnb-engineering/isomorphic-javascript-the-future-of-web-apps-10882b7a2ebc)
 
 # Why Rill?
 Rill is the answer to a simple question; Can I run my [Express](https://github.com/expressjs/express) style router in the browser? Turns out you can and it works awesome.
