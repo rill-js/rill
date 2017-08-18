@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 5.0.10, 5.0.11, 5.0.12 - 2017-07-30
 - Updated `middleware list` url in readme.
-- Add benchmarks folder for comparisions with Koa/Express.
+- Add benchmarks folder for comparisons with Koa/Express.
 - Switch uglifyjs back to dev dependency.
 
 ## 5.0.7, 5.0.8, 5.0.9 - 2017-07-27
@@ -23,14 +23,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update bower version.
 
 ## 5.0.6 - 2017-07-19
-- Swiched logo to svg.
+- Switched logo to SVG.
 
 ## 5.0.4, 5.0.5 - 2017-06-13
 - Added new article.
 - Switch mocha tests to use promises.
 
 ## 5.0.1, 5.0.2, 5.0.3 - 2017-06-06
-- Update deps.
+- Update dependencies.
 - No longer relies on `process.browser`, instead uses browser field to attach to document.
 
 ## 5.0.0 - 2017-05-18
@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Misc documentation cleanup.
 
 ## 4.3.2, 4.3.3 - 2017-03-28
-- Update dependencies. (Fixes issue in mini-url where baseurl was not optional in some browsers).
+- Update dependencies. (Fixes issue in mini-url where the base URL was not optional in some browsers).
 
 ## 4.3.1 - 2017-03-23
 - Fix download link in readme.
@@ -103,9 +103,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6 - 2016-09-17
 - Link rill logo to [rill website](https://rill.site).
-- Changed readme logo to use svg from [rill website](https://rill.site).
+- Changed readme logo to use SVG from [rill website](https://rill.site).
 - Updated any references to docs to the [rill website](https://rill.site).
-- Move some npm scripts to makefile.
+- Move some NPM scripts to makefile.
 - Remove duplicate info in docs.
 - Remove some unneeded files when installing with bower.
 ### Added

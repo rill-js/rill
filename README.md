@@ -205,7 +205,7 @@ app.listen({ port: 80 })
 * [isbrowser](https://github.com/DylanPiercey/isbrowser) - A browserify transform to remove server-side code.
 * [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) - Universal http requests using WHATWG fetch.
 * [isomorphic-form-data](https://github.com/form-data/isomorphic-form-data) - Send multipart form data universally (able to send files and works with fetch).
-* [scroll-behavior](https://github.com/DylanPiercey/scroll-behaviour) - @rill/http will automatically try to use the "smooth" [scroll-behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior) when scrolling to targets on link clicks. This will polyfill that across modernish browsers.
+* [scroll-behavior](https://github.com/DylanPiercey/scroll-behaviour) - @rill/http will automatically try to use the "smooth" [scroll-behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior) when scrolling to targets on link clicks. This will polyfill that across modern browsers.
 * [submit-form](https://github.com/DylanPiercey/submit-form) - Manually trigger Rill navigation in the browser.
 
 ## Prior Art
