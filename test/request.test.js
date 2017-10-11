@@ -9,7 +9,7 @@ describe('Request', function () {
     var request = agent(Rill()
       .at('/test/:name', respond(200, function (ctx) {
         assert.deepEqual(ctx.req.params, { name: 'hi' })
-      })).listen())
+      })).listen().unref())
 
     return request.get('/test/hi')
   })
@@ -18,7 +18,7 @@ describe('Request', function () {
     var request = agent(Rill()
       .at('/test/:name*', respond(200, function (ctx) {
         assert.deepEqual(ctx.req.params.name, ['1', '2', '3'])
-      })).listen())
+      })).listen().unref())
 
     return request.get('/test/1/2/3')
   })
@@ -27,7 +27,7 @@ describe('Request', function () {
     var request = agent(Rill()
       .at('/test/:name*', respond(200, function (ctx) {
         assert.deepEqual(ctx.req.params, { name: [] })
-      })).listen())
+      })).listen().unref())
 
     return request.get('/test/')
   })
@@ -38,7 +38,7 @@ describe('Request', function () {
         assert.equal(ctx.req.subdomains.length, 1)
         assert.equal(ctx.req.subdomains[0], 'hi')
         assert.equal(ctx.req.subdomains.name, 'hi')
-      })).listen())
+      })).listen().unref())
 
     return Promise.all([
       request.get('/').set('host', 'hi.test.com').expect(200),
@@ -54,7 +54,7 @@ describe('Request', function () {
         assert.equal(ctx.req.subdomains[1], '2')
         assert.equal(ctx.req.subdomains[0], '3')
         assert.deepEqual(ctx.req.subdomains.name, ['1', '2', '3'])
-      })).listen())
+      })).listen().unref())
 
     return Promise.all([
       request.get('/').set('host', '1.2.3.test.com').expect(200),
@@ -66,7 +66,7 @@ describe('Request', function () {
     var request = agent(Rill()
       .host(':name*.test.com', respond(200, function (ctx) {
         assert.deepEqual(ctx.req.subdomains.name, [])
-      })).listen())
+      })).listen().unref())
 
     return request.get('/').set('host', '.test.com').expect(200)
   })
@@ -75,7 +75,7 @@ describe('Request', function () {
     var request = agent(Rill()
       .use(respond(200, function (ctx) {
         assert.deepEqual(ctx.req.cookies, { a: '1', b: '2' })
-      })).listen())
+      })).listen().unref())
 
     return request.get('/').set('cookie', 'a=1;b=2').expect(200)
   })
@@ -93,7 +93,7 @@ describe('Request', function () {
     var request = agent(Rill()
       .use(respond(200, function (ctx) {
         assert.deepEqual(ctx.req.query, query)
-      })).listen())
+      })).listen().unref())
 
     return request.get('/').query(query).expect(200)
   })
@@ -103,7 +103,7 @@ describe('Request', function () {
       var request = agent(Rill()
         .use(respond(200, function (ctx) {
           assert.equal(ctx.req.get('cookie'), 'a=1;b=2', 'should have cookie header')
-        })).listen())
+        })).listen().unref())
 
       return request.get('/').set('cookie', 'a=1;b=2').expect(200)
     })

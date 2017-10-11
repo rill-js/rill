@@ -1,28 +1,39 @@
+// @ts-check
+/** Type Definitions */
+/** @module rill/Response */
 'use strict'
 
 var URL = require('mini-url')
 var cookie = require('cookie')
 var statuses = require('statuses')
 var toField = require('header-field')
-
-// Expose module.
-module.exports =
-Response['default'] = Response
+module.exports = Response['default'] = Response
 
 /**
  * Wrapper around nodejs `ServerResponse`.
  *
- * @param {Context} ctx - The context for the request.
+ * @param {rill.Context} ctx - The context for the request.
  * @param {http.ServerResponse} res - The original node response.
  * @constructor
  */
-function Response (ctx, original) {
+function Response (ctx, res) {
   this.ctx = ctx
-  this.original = original
-  this.status = original.statusCode
+  this.original = res
+  /** @type {number} */
+  this.status = res.statusCode
+  /** @type {string?} */
+  this.message = undefined
+  /** @type {object} */
   this.headers = {}
+  /** @type {any} */
   this.body = undefined
-  original.once('finish', function () { ctx.res.finished = true })
+  /** @type {boolean} */
+  this.finished = false
+  /** @type {boolean} */
+  this.respond = true
+  /** @type {boolean} */
+  this.end = true
+  res.once('finish', setFinished)
 }
 
 /**
@@ -32,14 +43,13 @@ function Response (ctx, original) {
  * response.get('Content-Type')
  *
  * @param {string} name - The name of the header to get.
- * @return {string|string[]}
+ * @return {string|string[]|void}
  */
 Response.prototype.get = function (name) {
   return this.headers[toField(name)]
 }
 
 /**
- * @description
  * Utility to overwrite a header on the response headers.
  *
  * @example
@@ -169,4 +179,14 @@ Response.prototype.refresh = function (delay, url, alt) {
   url = url || alt || req.href
 
   this.set('Refresh', delay + '; url=' + URL.parse(url, req.href).href)
+}
+
+/**
+ * Marks a response as finished.
+ *
+ * @this Response
+ * @return {void}
+ */
+function setFinished () {
+  this.finished = true
 }

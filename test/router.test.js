@@ -15,11 +15,11 @@ describe('Router', function () {
           .get('/')
           .expect(404)
           .end(done)
-      })
+      }).unref()
     })
 
     it('should use provided port', function () {
-      Rill().listen({ port: 3000 })
+      Rill().listen({ port: 8081 }).unref()
 
       return agent('localhost:3000')
           .get('/')
@@ -31,7 +31,7 @@ describe('Router', function () {
       var server = Rill().listen({ tls: {
         key: fs.readFileSync(path.join(__dirname, '/cert/privkey.pem')),
         cert: fs.readFileSync(path.join(__dirname, '/cert/cert.pem'))
-      } })
+      } }).unref()
       var request = agent(server)
 
       assert.ok(server instanceof https.Server, 'should be an https server.')
@@ -68,7 +68,7 @@ describe('Router', function () {
     it('should run middleware', function () {
       var request = agent(Rill()
         .use(respond(200))
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -78,7 +78,7 @@ describe('Router', function () {
 
   describe('#at', function () {
     it('should match a pathname', function () {
-      var request = agent(Rill().at('/test', respond(200)).listen())
+      var request = agent(Rill().at('/test', respond(200)).listen().unref())
 
       return Promise.all([
         request.get('/').expect(404),
@@ -87,7 +87,7 @@ describe('Router', function () {
     })
 
     it('should match a pathname', function () {
-      var request = agent(Rill().at('/test', respond(200)).listen())
+      var request = agent(Rill().at('/test', respond(200)).listen().unref())
 
       return Promise.all([
         request.get('/').expect(404),
@@ -100,7 +100,7 @@ describe('Router', function () {
       .at('/test/*', Rill()
       .at('/1/*', Rill()
       .at('/2', respond(200))))
-      .at('/test2/*', respond(200)).listen())
+      .at('/test2/*', respond(200)).listen().unref())
 
       return Promise.all([
         request.get('/test').expect(404),
@@ -119,7 +119,7 @@ describe('Router', function () {
 
   describe('#host', function () {
     it('should match a hostname', function () {
-      var request = agent(Rill().host('*test.com', respond(200)).listen())
+      var request = agent(Rill().host('*test.com', respond(200)).listen().unref())
 
       return Promise.all([
         request.get('/').expect(404),
@@ -133,7 +133,7 @@ describe('Router', function () {
       var request = agent(Rill()
         .host('*.test.com', Rill()
           .host('*.api', Rill()
-            .host('test', respond(200)))).listen())
+            .host('test', respond(200)))).listen().unref())
 
       return Promise.all([
         request.get('/').expect(404),
@@ -152,7 +152,7 @@ describe('Router', function () {
 
   describe('#|METHOD|', function () {
     it('should match a method', function () {
-      var request = agent(Rill().post(respond(200)).listen())
+      var request = agent(Rill().post(respond(200)).listen().unref())
 
       return Promise.all([
         request.get('/').expect(404),
@@ -161,7 +161,7 @@ describe('Router', function () {
     })
 
     it('should match a method and a pathname', function () {
-      var request = agent(Rill().get('/test', respond(200)).listen())
+      var request = agent(Rill().get('/test', respond(200)).listen().unref())
 
       return Promise.all([
         request.get('/test').expect(200),
@@ -176,7 +176,7 @@ describe('Router', function () {
         .use(function () {
           throw new Error('Fail')
         })
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -188,7 +188,7 @@ describe('Router', function () {
         .use(function (ctx) {
           ctx.res.body = 'hello'
         })
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -203,7 +203,7 @@ describe('Router', function () {
         .use(function (ctx) {
           ctx.res.set('Location', 'localhost')
         })
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -215,7 +215,7 @@ describe('Router', function () {
         .use(function (ctx) {
           ctx.res.body = { hello: 'world' }
         })
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -229,7 +229,7 @@ describe('Router', function () {
         .use(function (ctx) {
           ctx.res.body = fs.createReadStream(__filename)
         })
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -244,7 +244,7 @@ describe('Router', function () {
           ctx.res.set('Content-Length', 20)
           ctx.res.body = { hello: 'world' }
         })
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -259,7 +259,7 @@ describe('Router', function () {
           ctx.res.set('X-Test-Header', null)
           ctx.res.status = 200
         })
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -276,7 +276,7 @@ describe('Router', function () {
           res.writeHead(200, { 'Content-Type': 'text/plain' })
           res.end('hello')
         })
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -298,7 +298,7 @@ describe('Router', function () {
             res.end('hello')
           }, 10)
         })
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -318,7 +318,7 @@ describe('Router', function () {
             res.end('hello')
           }, 10)
         }))
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')

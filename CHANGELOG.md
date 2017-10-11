@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# 6.0.0 - 2017-10-10
+- Upgraded @rill/http to 6.0.0
+- Better support for typescript with improved JSDoc.
+- Sets booleans by default instead of undefined for `res.finished`, `res.end` and `res.respond`.
+
 # 5.0.13, 5.0.14 - 2017-08-03
 - Remove [obsolete version field](https://github.com/bower/spec/blob/master/json.md#version) from bowser.json.
 - Add related airbnb article to readme.

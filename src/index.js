@@ -1,3 +1,17 @@
+// @ts-check
+/** Type Definitions */
+/** @module rill */
+/** @typedef {(app: Rill) => any} TransformFunction */
+/** @typedef {TransformFunction|false|void} TransformArg */
+/** @typedef {(ctx: Context, next: function?) => any} MiddlewareFunction */
+/** @typedef {MiddlewareFunction|Rill|false|void} MiddlewareArg */
+/**
+ * @typedef {object} listenOptions
+ * @property {string} [ip] - The interface to listen on.
+ * @property {number} [port] - The port to listen on.
+ * @property {number} [backlog] - The maximum length of the queue of pending connections.
+ * @property {object} [tls] - Accepts options from tls.createServer() and tls.createSecureContext().
+ */
 'use strict'
 
 var pathToRegExp = require('path-to-regexp')
@@ -12,13 +26,10 @@ var attachDocument = require('./attach')
 var parse = pathToRegExp.parse
 var tokensToRegExp = pathToRegExp.tokensToRegExp
 var slice = Array.prototype.slice
-
-// Expose module.
-module.exports =
-Rill['default'] = Rill
+module.exports = Rill['default'] = Rill
 
 /**
- * Creates a universal app that will run middleware for a incomming request.
+ * Creates a universal app that will run middleware for a incoming request.
  *
  * @example
  * const app = Rill()
@@ -27,6 +38,7 @@ Rill['default'] = Rill
  */
 function Rill () {
   if (!(this instanceof Rill)) return new Rill()
+  /** @type {MiddlewareArg[]} */
   this.stack = []
 }
 
@@ -39,7 +51,7 @@ function Rill () {
  * app.use(...)
  * require('http').createServer(app.handler()).listen()
  *
- * @return {handleIncommingMessage}
+ * @return {(req: http.IncomingMessage, res: http.ServerResponse) => void}
  */
 Rill.prototype.handler = function () {
   var fn = chain(this.stack)
@@ -51,7 +63,7 @@ Rill.prototype.handler = function () {
    * @param {http.ServerResponse} res - The http response.
    * @return {void}
    */
-  return function handleIncommingMessage (req, res) {
+  return function handleIncomingMessage (req, res) {
     res.statusCode = 404
     var ctx = new Context(req, res)
 
@@ -97,11 +109,7 @@ Rill.prototype.createServer = function (tls) {
  * @example
  * rill().use(...).listen({ port: 3000 })
  *
- * @param {object} [options] - Options to configure the node server.
- * @param {string} options.ip
- * @param {number} options.port
- * @param {number} options.backlog
- * @param {object} options.tls
+ * @param {listenOptions} [options] - Options to configure the node server.
  * @param {function} [onListening] - A function to be called once the server is listening for requests.
  * @returns {http.Server}
  */
@@ -123,10 +131,10 @@ Rill.prototype.listen = function (options, onListening) {
  * @example
  * rill.use(fn1, fn2)
  *
- * @param {...function|Rill|false} [middleware] - A middleware to attach.
- * @return {this}
+ * @param {...MiddlewareArg} [middleware] - A middleware to attach.
+ * @return {Rill}
  */
-Rill.prototype.use = function () {
+Rill.prototype.use = function (middleware) {
   var start = this.stack.length
   var end = this.stack.length += arguments.length
 
@@ -148,10 +156,10 @@ Rill.prototype.use = function () {
  *  self.modified = true
  * })
  *
- * @param {...function|false} [transformer] - A function that will modify the rill instance.
- * @return {this}
+ * @param {...TransformArg} transformer - A function that will modify the rill instance.
+ * @return {Rill}
  */
-Rill.prototype.setup = function () {
+Rill.prototype.setup = function (transformer) {
   for (var fn, len = arguments.length, i = 0; i < len; i++) {
     fn = arguments[i]
     if (!fn) continue
@@ -169,10 +177,10 @@ Rill.prototype.setup = function () {
  * app.at('/test', (ctx, next) => ...)
  *
  * @param {string} pathname - The pathname to match.
- * @param {...function|Rill|false} [middleware] - A middleware to attach.
- * @return {this}
+ * @param {...MiddlewareArg} [middleware] - A middleware to attach.
+ * @return {Rill}
  */
-Rill.prototype.at = function (pathname) {
+Rill.prototype.at = function (pathname, middleware) {
   if (typeof pathname !== 'string') throw new TypeError('Rill#at: Path name must be a string.')
 
   var keys = []
@@ -214,10 +222,10 @@ Rill.prototype.at = function (pathname) {
  * app.host('test.com', (ctx, next) => ...)
  *
  * @param {string} hostname - The hostname to match.
- * @param {...function|Rill|false} [middleware] - A middleware to attach.
- * @return {this}
+ * @param {...MiddlewareArg} [middleware] - A middleware to attach.
+ * @return {Rill}
  */
-Rill.prototype.host = function host (hostname) {
+Rill.prototype.host = function host (hostname, middleware) {
   if (typeof hostname !== 'string') throw new TypeError('Rill#host: Host name must be a string.')
 
   var keys = []
@@ -263,10 +271,10 @@ http.METHODS.forEach(function (method) {
    * app.|method|('/test', ...)
    *
    * @param {string} [pathname] - A pathname to match.
-   * @param {...function|Rill|false} [middleware] - A middleware to attach.
-   * @return {this}
+   * @param {...MiddlewareArg} [middleware] - A middleware to attach.
+   * @return {Rill}
    */
-  Rill.prototype[name] = function (pathname) {
+  Rill.prototype[name] = function (pathname, middleware) {
     var offset = typeof pathname === 'string' ? 1 : 0
     var fn = chain(slice.call(arguments, offset))
     if (offset === 1) return this.at(pathname, matchMethod)
@@ -293,6 +301,7 @@ function toReg (pathname, keys, options) {
   var tokens = parse(pathname)
 
   // Find the last token (checking for splat params).
+  /** @type {object} */
   var splat = tokens[tokens.length - 1]
 
   // Check if the last token is a splat and make it optional.

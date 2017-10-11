@@ -1,18 +1,18 @@
+// @ts-check
+/** Type Definitions */
+/** @module rill/respond */
 'use strict'
 
 var byteLength = require('byte-length')
 var checkType = require('content-check')
 var statuses = require('statuses')
 var isType = require('is-typeof')
-
-// Expose module.
-module.exports =
-respond['default'] = respond
+module.exports = respond['default'] = respond
 
 /**
  * Runs general clean up on a request context and ends it with proper headers and status codes.
  *
- * @param {Context} ctx - The context of the request.
+ * @param {rill.Context} ctx - The context of the request.
  * @return {void}
  * @private
  */

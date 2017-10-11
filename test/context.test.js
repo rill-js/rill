@@ -1,3 +1,4 @@
+// @ts-check
 var assert = require('assert')
 var agent = require('supertest')
 var util = require('./util')
@@ -9,7 +10,7 @@ describe('Context', function () {
     it('should throw an http error with provided code', function () {
       var request = agent(Rill()
         .use(respond(200, function (ctx) { ctx.fail(400) }))
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -23,7 +24,7 @@ describe('Context', function () {
             ctx.fail('hello')
           }, TypeError, 'Rill#ctx.fail: Status code must be a number.')
         }))
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -35,7 +36,7 @@ describe('Context', function () {
     it('should throw an http error with falsey values', function () {
       var request = agent(Rill()
         .use(respond(200, function (ctx) { ctx.assert(false, 400) }))
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -45,7 +46,7 @@ describe('Context', function () {
     it('should not throw an http error with truthy values', function () {
       var request = agent(Rill()
         .use(respond(200, function (ctx) { ctx.assert(true, 400) }))
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')
@@ -59,7 +60,7 @@ describe('Context', function () {
             ctx.assert(true, 'hello')
           }, TypeError, 'Rill#ctx.assert: Status code must be a number.')
         }))
-        .listen())
+        .listen().unref())
 
       return request
         .get('/')

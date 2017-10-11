@@ -1,15 +1,15 @@
+// @ts-check
+/** Type Definitions */
+/** @module rill/Context */
 'use strict'
 
 var HttpError = require('@rill/error')
 var Request = require('./request')
 var Response = require('./response')
-
-// Expose module.
-module.exports =
-Context['default'] = Context
+module.exports = Context['default'] = Context
 
 /**
- * Creates an incomming message context.
+ * Creates an incoming message context.
  *
  * @example
  * require('http').createServer((req, res) => {
@@ -23,8 +23,11 @@ Context['default'] = Context
 function Context (req, res) {
   this.req = new Request(this, req)
   this.res = new Response(this, res)
+  /** @type {(code: number, message: string?, meta: object?) => void} */
   this.fail = this.fail.bind(this)
+  /** @type {(value: object, code: number, message: string?, meta: object?) => void} */
   this.assert = this.assert.bind(this)
+  /** @type {object} */
   this.locals = {}
 }
 
