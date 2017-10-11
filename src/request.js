@@ -46,6 +46,10 @@ function Request (ctx, req) {
   /* istanbul ignore next */
   /** @type {string} */
   this.ip = (conn.remoteAddress || req.socket.remoteAddress || (conn.socket && conn.socket.remoteAddress))
+  /** @type {object?} */
+  this.body = undefined
+  /** @type {object?} */
+  this.files = undefined
 
   // Attach url parts.
   for (var part, i = URL_PARTS.length; i--;) {
