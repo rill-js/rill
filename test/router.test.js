@@ -3,6 +3,7 @@ var path = require('path')
 var assert = require('assert')
 var agent = require('supertest')
 var https = require('@rill/https')
+var getPort = require('get-port')
 var util = require('./util')
 var Rill = require('../src')
 var respond = util.respond
@@ -19,11 +20,12 @@ describe('Router', function () {
     })
 
     it('should use provided port', function () {
-      Rill().listen({ port: 8081 }).unref()
-
-      return agent('localhost:3000')
-          .get('/')
-          .expect(404)
+      return getPort().then(function (port) {
+        Rill().listen({ port: port }).unref()
+        return agent('localhost:' + port)
+            .get('/')
+            .expect(404)
+      })
     })
 
     it('should use https server with tls option', function () {
