@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+      "pretty": true,
+      "outDir": "./dist",
+      "target": "es5",
+      "sourceMap": true,
+      "declaration": true,
+      "importHelpers": true,
+      "stripInternal": true
+  },
+  "include": [
+      "./src/**/*"
+  ]
+}

@@ -4,40 +4,45 @@
   "version": "6.0.2",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "browser": {
-    "./src/attach/index.js": "./src/attach/browser.js"
+    "./dist/attach/index.js": "./dist/attach/browser.js"
   },
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
-    "@rill/chain": "^1.0.4",
-    "@rill/error": "^1.2.0",
-    "@rill/http": "^6.0.0",
+    "@rill/chain": "^1.0.7",
+    "@rill/error": "^1.3.1",
+    "@rill/http": "^7.0.0-rc.2",
     "@rill/https": "^6.0.0",
-    "byte-length": "^0.1.1",
-    "content-check": "^0.1.4",
+    "byte-length": "^1.0.2",
+    "content-check": "^1.0.4",
     "cookie": "^0.3.1",
-    "header-field": "^0.2.2",
-    "is-typeof": "^1.0.3",
-    "mini-querystring": "^1.0.2",
-    "mini-url": "^1.6.1",
+    "header-field": "^1.0.5",
+    "is-typeof": "^2.0.2",
+    "just-extend": "^1.1.22",
+    "mini-querystring": "^2.0.6",
+    "mini-url": "^2.1.8",
     "path-to-regexp": "^1.7.0",
-    "statuses": "^1.3.1"
+    "statuses": "^1.3.1",
+    "tslib": "^1.8.0"
   },
   "devDependencies": {
-    "browserify": "^14.3.0",
-    "bundle-collapser": "^1.3.0",
+    "@types/es6-promise": "0.0.33",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.41",
     "coveralls": "^3.0.0",
-    "disc": "^1.3.3",
-    "exorcist": "^1.0.0",
     "get-port": "^3.2.0",
-    "istanbul": "^0.4.5",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.2.3",
     "mocha": "^4.0.1",
-    "snazzy": "^7.0.0",
-    "standard": "^10.0.3",
+    "nyc": "^11.2.1",
+    "prettier": "^1.7.4",
+    "source-map-support": "^0.5.0",
     "supertest": "^3.0.0",
-    "uglify-js": "^3.1.3"
+    "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
+    "tslint-config-prettier": "^1.5.0",
+    "typescript": "^2.5.3"
   },
   "files": [
-    "src",
     "dist"
   ],
   "homepage": "https://rill.site",
@@ -55,30 +60,26 @@
     "web"
   ],
   "license": "MIT",
-  "main": "src/index.js",
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "tslint -t codeFrame -c tslint.json",
+      "git add"
+    ]
+  },
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/rill-js/rill"
   },
   "scripts": {
-    "analyze": "make analyze",
-    "build": "make build",
-    "coveralls": "make coveralls",
-    "lint": "make lint",
-    "test": "npm run lint && make test",
-    "test-ci": "npm run lint && make test-ci"
+    "build": "tsc",
+    "coveralls": "cat coverage/lcov.info | coveralls",
+    "format-all": "find {src,test} -name '*.ts' | xargs prettier --write",
+    "mocha": "mocha -r ts-node/register ./test/**/*.test.ts",
+    "precommit": "lint-staged && npm test && npm run build",
+    "test": "nyc --extension=.ts --include=src/**/*.ts --reporter=lcov --reporter=text-summary npm run mocha",
+    "test-ci": "nyc --extension=.ts --include=src/**/*.ts --reporter=lcovonly --reporter=text npm run mocha"
   },
-  "standard": {
-    "globals": [
-      "describe",
-      "it",
-      "before",
-      "beforeEach",
-      "after",
-      "afterEach"
-    ],
-    "ignore": [
-      "dist/"
-    ]
-  }
+  "types": "dist/index.d.ts"
 }

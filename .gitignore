@@ -1,12 +1,18 @@
-# Sublime
+# Editor
 *.sublime*
+.vscode
 
 # OSX
 *.DS_Store
 
-# Code Coverage
-coverage
-
 # NPM
 node_modules
 npm-debug.log
+
+# Testing
+.nyc_output
+test/_run.js
+coverage
+
+# Build
+dist

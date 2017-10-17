@@ -9,12 +9,8 @@ cache:
 language: node_js
 
 node_js:
-- '7'
-- '6'
-- '5'
-- '4'
+  - '8'
+  - '4'
 
-script:
-  - npm run test-ci
-
+script: npm run test-ci
 after_success: npm run coveralls
