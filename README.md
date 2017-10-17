@@ -26,13 +26,13 @@
   <a href="https://coveralls.io/github/rill-js/rill">
     <img src="https://img.shields.io/coveralls/rill-js/rill.svg?style=flat-square" alt="Test Coverage"/>
   </a>
-  <!-- File size -->
-  <a href="https://github.com/rill-js/rill/blob/master/dist/rill.js">
-    <img src="https://badge-size.herokuapp.com/rill-js/rill/master/dist/rill.js?style=flat-square" alt="File size"/>
-  </a>
   <!-- Downloads -->
   <a href="https://npmjs.org/package/rill">
     <img src="https://img.shields.io/npm/dm/rill.svg?style=flat-square" alt="Downloads"/>
+  </a>
+  <!-- Size -->
+  <a href="https://npmjs.org/package/header-field">
+    <img src="https://img.shields.io/badge/gzipped-12.4kb-green.svg" alt="Browser Bundle Size (Gzipped)"/>
   </a>
   <!-- Gitter chat -->
   <a href="https://gitter.im/rill-js/rill">
