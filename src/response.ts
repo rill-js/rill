@@ -21,6 +21,8 @@ export class Response {
   public respond: boolean;
   /** Set this to false to disabled ending the request after sending headers. */
   public end: boolean;
+  /** Allow tools to attach methods/properties. */
+  [x: string]: any;
 
   /**
    * @description

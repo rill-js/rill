@@ -10,6 +10,8 @@ export class Context {
   public res: Response;
   /** Local data/state for rendering the request. */
   public locals: any = {};
+  /** Allow tools to attach methods/properties. */
+  [x: string]: any;
 
   /**
    * @description

@@ -55,6 +55,8 @@ export class Request {
   public matchPath: string;
   // @internal
   public matchHost: string;
+  /** Allow tools to attach methods/properties. */
+  [x: string]: any;
 
   /**
    * @description
