@@ -19,7 +19,7 @@ export class Response {
   public finished: boolean;
   /** Set this to false to disable sending any response. */
   public respond: boolean;
-  /** Set this to false to disabled ending the request after sending headers. */
+  /** Set this to false to disable ending the request after sending headers. */
   public end: boolean;
   /** Allow tools to attach methods/properties. */
   [x: string]: any;
@@ -28,7 +28,7 @@ export class Response {
    * @description
    * Wrapper around nodejs `ServerResponse`.
    *
-   * @param ctx The related Rill Context for the request.
+   * @param ctx The related Rill Context for the response.
    * @param original The original ServerResponse from rill/http.
    */
   constructor(public ctx: Context, public original: ServerResponse) {

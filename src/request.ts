@@ -7,10 +7,6 @@ import * as T from "./_types";
 import { Context } from "./context";
 
 export class Request {
-  /** The context for the request. */
-  public ctx: Context;
-  /** The original IncomingMessage */
-  public original: IncomingMessage;
   /** The path part of the url (eg: /a/b?c=d#e). */
   public path: string;
   /** The method for the request (eg: /a/b?c=d#e). */
@@ -66,7 +62,7 @@ export class Request {
    * @param ctx The related Rill Context for the request.
    * @param original The original IncomingMessage from rill/http.
    */
-  constructor(ctx: Context, original: IncomingMessage) {
+  constructor(public ctx: Context, public original: IncomingMessage) {
     const { connection: conn, headers } = original;
     const secure = conn.encrypted;
     const protocol = secure ? "https" : "http";
