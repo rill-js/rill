@@ -18,7 +18,7 @@ import { respond } from "./respond";
 export { T as Types };
 export default class Rill {
   /** The current middleware stack. */
-  public stack: T.MiddlewareArg[] = [];
+  public stack: T.MiddlewareArg[];
   /** Attaches middleware that only run on OPTION requests. */
   public options: T.MethodShortcut;
   /** Attaches middleware that only run on HEAD requests. */
@@ -46,6 +46,8 @@ export default class Rill {
     if (!(this instanceof Rill)) {
       return new Rill();
     }
+
+    this.stack = [];
   }
 
   /**

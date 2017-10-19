@@ -103,8 +103,8 @@ It supports everything you'd expect from a client side [nodejs](https://nodejs.o
  * Examples use es2015/2016 with Babel and JSX but this is optional.
  */
 
-import rill from 'rill'
-const app = rill()
+import Rill from 'rill'
+const app = new Rill() // You can call Rill without new, but autocomplete will not work.
 ```
 
 ### Setup middleware
@@ -120,13 +120,13 @@ app.use(reactRenderer())
 
 // Example Logger
 app.use(async ({ req }, next)=> {
-  const start = new Date
+  const start = Date.now()
 
   // Rill uses promises for control flow.
   // ES2016 async functions work great as well!
   await next()
 
-  const ms = new Date - start
+  const ms = Date.now() - start
   console.log(`${req.method} ${req.url} - ${ms}`)
 })
 ```
