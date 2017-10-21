@@ -1,7 +1,7 @@
 {
   "name": "rill",
   "description": "Universal web application framework.",
-  "version": "7.0.0-rc.6",
+  "version": "7.0.0-rc.7",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "browser": {
     "./dist/attach/index.js": "./dist/attach/browser.js"
