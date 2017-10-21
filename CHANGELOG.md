@@ -5,11 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # 7.0.0 - 2017-10-13
+- Changes to handling URLS with a `hash` in @rill/http.
+  * No longer intercept `hash` changes (allows for default browser action).
+  * No longer add `hash` to `req.url` or `req.headers.referer` for consistency with server side http.
+  * Removes built in smooth scrolling on urls with a `hash`.
+- Drop official support for IE9.
+- Remove official bower support.
+- No longer provide prebuilt bundle.
 - Fully convert project to typescript. (Autocomplete for VSCode!)
 - Setup tslint and prettier for formatting.
-- Remove official bower support.
-- Travis testing on node 8.
-- No longer provide prebuilt bundle.
 
 # 6.0.0, 6.0.1, 6.0.2 - 2017-10-10
 - Upgraded @rill/http to 6.0.0

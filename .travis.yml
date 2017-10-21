@@ -10,7 +10,7 @@ language: node_js
 
 node_js:
   - '8'
-  - '4'
+  - '6'
 
 script: npm run test-ci
 after_success: npm run coveralls

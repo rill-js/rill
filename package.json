@@ -10,7 +10,7 @@
   "dependencies": {
     "@rill/chain": "^1.0.7",
     "@rill/error": "^1.3.1",
-    "@rill/http": "^7.0.0-rc.3",
+    "@rill/http": "^7.0.0-rc.5",
     "@rill/https": "^7.0.0-rc.1",
     "byte-length": "^1.0.2",
     "content-check": "^1.0.4",
@@ -21,13 +21,13 @@
     "mini-querystring": "^2.0.6",
     "mini-url": "^2.1.8",
     "path-to-regexp": "^1.7.0",
-    "statuses": "^1.3.1",
+    "statuses": "^1.4.0",
     "tslib": "^1.8.0"
   },
   "devDependencies": {
     "@types/es6-promise": "0.0.33",
     "@types/mocha": "^2.2.43",
-    "@types/node": "^8.0.41",
+    "@types/node": "^8.0.46",
     "coveralls": "^3.0.0",
     "get-port": "^3.2.0",
     "husky": "^0.14.3",
@@ -38,7 +38,7 @@
     "source-map-support": "^0.5.0",
     "supertest": "^3.0.0",
     "ts-node": "^3.3.0",
-    "tslint": "^5.7.0",
+    "tslint": "^5.8.0",
     "tslint-config-prettier": "^1.5.0",
     "typescript": "^2.5.3"
   },
