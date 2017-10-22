@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   * No longer intercept `hash` changes (allows for default browser action).
   * No longer add `hash` to `req.url` or `req.headers.referer` for consistency with server side http.
   * Removes built in smooth scrolling on urls with a `hash`.
+- `res.status` now starts as `undefined` instead of `404`. (Will still default to 404 if no body set during response).
+- `ctx.fail` and `ctx.assert` no longer set `res.status` or `res.message` if the error was caught.
 - Drop official support for IE9.
 - Remove official bower support.
 - No longer provide prebuilt bundle.

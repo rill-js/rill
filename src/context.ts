@@ -52,12 +52,9 @@ export class Context {
   ): void {
     if (typeof statusCode !== "number") {
       throw new TypeError("Rill#ctx.fail: Status code must be a number.");
+    } else {
+      throw new HttpError(statusCode, statusMessage, metaData);
     }
-
-    const error = new HttpError(statusCode, statusMessage, metaData);
-    this.res.status = error.code;
-    this.res.message = error.message;
-    throw error;
   }
 
   /**

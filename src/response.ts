@@ -8,7 +8,7 @@ import { Context } from "./context";
 
 export class Response {
   /** The status code for the response (eg: 404) */
-  public status: number;
+  public status?: number;
   /** The status message for the response (eg: Not Found) */
   public message?: string;
   /** An object with all of the http headers for the response. */
@@ -32,7 +32,6 @@ export class Response {
    * @param original The original ServerResponse from rill/http.
    */
   constructor(public ctx: Context, public original: ServerResponse) {
-    this.status = original.statusCode;
     this.headers = {};
     this.finished = false;
     this.respond = this.end = true;

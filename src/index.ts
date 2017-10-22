@@ -71,16 +71,17 @@ export default class Rill {
      * @return {void}
      */
     return (req: IncomingMessage, res: ServerResponse): void => {
-      res.statusCode = 404;
       const ctx = new Context(req, res);
 
       fn(ctx)
         .catch(err => {
-          if (Number(ctx.res.status) === 404) {
+          if (err instanceof HttpError) {
+            // Set status and message from known server errors.
+            ctx.res.status = err.code;
+            ctx.res.message = err.message;
+          } else {
+            // Default to 500 status on unknown errors.
             ctx.res.status = 500;
-          }
-          /* istanbul ignore next */
-          if (!(err instanceof HttpError)) {
             // tslint:disable-next-line
             console && console.error && console.error(err);
           }

@@ -28,15 +28,16 @@ export function respond({ req, res }: Context): void {
   }
 
   // Apply default statuses.
-  if (Number(res.status) === 404) {
-    if (res.get("Location")) {
-      // Ensure redirect status.
-      res.status = 302;
-    } else if (body) {
-      // Default the status to 200 if there is substance to the response.
-      res.status = 200;
-    }
-  }
+  res.status =
+    res.status ||
+    // Ensure redirect status.
+    (res.get("Location")
+      ? 302
+      : // Default the status to 200 if there is substance to the response.
+        body
+        ? 200
+        : // Otherwise 404.
+          404);
 
   // Default status message based on status code.
   res.message = res.message || statuses[res.status];
