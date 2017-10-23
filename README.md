@@ -44,11 +44,12 @@
   </a>
 </h1>
 
-Expressive HTTP middleware for [nodejs](https://nodejs.org) and the browser.
-Rill brings cascading middleware to the browser and enables fully universal web applications.
-It makes apps enjoyable to write with a simpler top down mental model of your app and free progressive enhancement.
+Expressive router for [nodejs](https://nodejs.org) and the browser.
+Rill brings cascading middleware to the browser and enables a familiar routing solution for web applications.
 
 Rill provides the minimum for abstractions over [nodejs](https://nodejs.org) and the browser enabling things like routing (with redirecting, refreshes and more), cookies, and middleware with the same api.
+
+It supports many view engines including [Marko](http://markojs.com), [React](https://reactjs.org), [Svelte](https://svelte.technology) and even html only template engines such as [Pug](https://pugjs.org).
 
 # Installation
 
@@ -57,15 +58,15 @@ npm install rill
 ```
 
 # Browser support
-All modern browsers are supported including IE10+. IE9 is also supported with a [History API polyfill](https://github.com/devote/HTML5-History-API).
-
-Older browsers will also need to polyfill the Promise API, checkout [es6-promise](https://github.com/stefanpenner/es6-promise) for a good polyfill, babel-polyfill also covers this.
+All modern browsers are supported including IE10 and above.
+Older browsers will need to polyfill the Promise API, checkout [es6-promise](https://github.com/stefanpenner/es6-promise) for a good polyfill, babel-polyfill also covers this.
 
 # Community
 
 * [API Documentation](https://rill.site/application#docs)
 * [Examples](https://github.com/rill-js/todomvc)
 * [Wiki](https://github.com/rill-js/rill/wiki)
+* [FAQ](https://github.com/rill-js/rill/wiki/FAQ)
 * [Middleware List](https://github.com/rill-js/rill/wiki/Middleware)
 * [Gitter Community](https://gitter.im/rill-js/rill)
 * [Reddit Community](https://www.reddit.com/r/Rill)
@@ -82,9 +83,9 @@ Older browsers will also need to polyfill the Promise API, checkout [es6-promise
 # Why Rill?
 Rill is the answer to a simple question; Can I run my [Express](https://github.com/expressjs/express) style router in the browser? Turns out you can and it works awesome.
 
-It brings a common interface to many typical app like features in both the browser and [nodejs](https://nodejs.org). Many isomorphic frameworks have crazy abstractions and learning curves but with Rill, if you understand [Express](https://github.com/expressjs/express) or [Koa](https://github.com/koajs/koa), you already know how the routing works! In Rill you get to program much of your application logic using the same api (client or server) including routing, rendering, data fetching and more are easily shared.
+It brings a common interface to many typical app like features in both the browser and [nodejs](https://nodejs.org). Many isomorphic frameworks and routers have crazy abstractions and learning curves but with Rill, if you understand [Express](https://github.com/expressjs/express) or [Koa](https://github.com/koajs/koa), you already know how the routing works! In Rill you get to program much of your application logic using the same api (client or server) including routing, rendering, data fetching and more are easily shared.
 
-Rill also works perfectly as a stand alone [nodejs](https://nodejs.org) server or a stand alone browser framework. This allows for easy progressive enhancement. If all is well the browser can handle much of your application logic and if JavaScript fails for any reason your server knows exactly what to do.
+Rill also works perfectly as a stand alone router for [nodejs](https://nodejs.org) or in the browser. This allows for easy progressive enhancement. If all is well the browser can handle much of your application logic and if JavaScript fails for any reason your server knows exactly what to do.
 
 # How does this thing work?
 If you look at the source for Rill [here](https://github.com/rill-js/rill/tree/master/src) you will quickly notice there is ZERO browser specific code. This is all thanks to [@rill/http](https://github.com/rill-js/http) which is node's [HTTP.createServer](https://nodejs.org/api/http.html#http_http_createserver_requestlistener) ported to the browser.
@@ -169,7 +170,7 @@ app.get('/todos', async ({ res })=> {
 ```javascript
 // Respond to a POST request.
 app.post('/add-todo', async ({ req, res })=> {
-  // We handle form submissions with Rill the same way one would with any other node framework.
+  // We handle form submissions with Rill the same way one would express or koa.
   // Here we are simply adding the todo via some service.
   await MyTodoListService.addTodo({ text: req.body.todo })
   // And then we redirect back (same as res.redirect('/todos'))
