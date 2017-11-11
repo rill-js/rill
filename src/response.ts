@@ -4,9 +4,9 @@ import { normalize as normalizeHeader } from "header-field";
 import { parse as parseURL } from "mini-url";
 import * as statuses from "statuses";
 import * as T from "./_types";
-import { Context } from "./context";
+import Context from "./context";
 
-export class Response {
+export default class Response {
   /** The status code for the response (eg: 404) */
   public status?: number;
   /** The status message for the response (eg: Not Found) */
@@ -129,7 +129,7 @@ export class Response {
     const { req } = this.ctx;
 
     // Back uses request referrer header as a url.
-    url = url === "back" ? req.get("Referrer") as string : url;
+    url = url === "back" ? (req.get("Referrer") as string) : url;
     // Default url to alternative.
     url = url || alt;
 
@@ -156,7 +156,7 @@ export class Response {
   public refresh(delay: number | string = 0, url?: string, alt?: string): void {
     const { req } = this.ctx;
     // Back uses request referrer header as a url.
-    url = url === "back" ? req.get("Referrer") as string : url;
+    url = url === "back" ? (req.get("Referrer") as string) : url;
     // Default url to alternative.
     url = url || alt || req.href;
 

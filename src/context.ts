@@ -1,9 +1,9 @@
 import HttpError from "@rill/error";
 import { IncomingMessage, ServerResponse } from "@rill/http";
-import { Request } from "./request";
-import { Response } from "./response";
+import Request from "./request";
+import Response from "./response";
 
-export class Context {
+export default class Context {
   /** The current request. */
   public req: Request;
   /** The current response. */

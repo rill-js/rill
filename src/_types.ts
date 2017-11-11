@@ -6,7 +6,7 @@ import {
   Types as HttpT
 } from "@rill/http";
 import Rill from "./";
-import { Context } from "./context";
+import Context from "./context";
 
 export type Headers = HttpT.Headers;
 

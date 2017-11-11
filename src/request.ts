@@ -4,9 +4,9 @@ import { normalize as toField } from "header-field";
 import { parse as parseQS } from "mini-querystring";
 import { parse as parseURL, parts as URL_PARTS } from "mini-url";
 import * as T from "./_types";
-import { Context } from "./context";
+import Context from "./context";
 
-export class Request {
+export default class Request {
   /** The path part of the url (eg: /a/b?c=d#e). */
   public path: string;
   /** The method for the request (eg: /a/b?c=d#e). */

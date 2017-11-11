@@ -2,7 +2,7 @@
   "compilerOptions": {
       "pretty": true,
       "outDir": "./dist",
-      "target": "es5",
+      "target": "es3",
       "sourceMap": true,
       "declaration": true,
       "importHelpers": true,

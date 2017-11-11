@@ -8,15 +8,13 @@ import {
   ServerResponse
 } from "@rill/http";
 import { createServer as createSecureServer } from "@rill/https";
-import * as extend from "just-extend";
 import { parse, tokensToRegExp } from "path-to-regexp";
 import * as T from "./_types";
 import attachDocument from "./attach";
-import { Context } from "./context";
-import { respond } from "./respond";
+import Context from "./context";
+import respond from "./respond";
 
-export { T as Types };
-export default class Rill {
+class Rill {
   /** The current middleware stack. */
   public stack: T.MiddlewareArg[];
   /** Attaches middleware that only run on OPTION requests. */
@@ -71,6 +69,7 @@ export default class Rill {
      * @return {void}
      */
     return (req: IncomingMessage, res: ServerResponse): void => {
+      res.statusCode = 404;
       const ctx = new Context(req, res);
 
       fn(ctx)
@@ -203,7 +202,8 @@ export default class Rill {
     const fn = chain(middlewares);
 
     return this.use((ctx, next) => {
-      const matchPath = ctx.req.matchPath;
+      const { req } = ctx;
+      const { matchPath, params } = req;
       const matches = matchPath.match(reg);
       // Check if we matched the whole path.
       if (!matches || matches[0] !== matchPath) {
@@ -213,24 +213,22 @@ export default class Rill {
       // Check if params match.
       for (let i = keys.length; i--; ) {
         const key = keys[i];
-        let match: string | string[] = matches[i + 1];
-        if (key.repeat) {
-          match = match == null ? [] : match.split("/");
-        }
-
-        ctx.req.params[key.name] = match;
+        const match: string = matches[i + 1];
+        params[key.name] = key.repeat
+          ? match == null ? [] : match.split("/")
+          : match;
       }
 
       // Update path for nested routes.
       const matched = matches[matches.length - 1] || "";
-      if (ctx.req.matchPath !== matched) {
-        ctx.req.matchPath = "/" + matched;
+      if (matchPath !== matched) {
+        req.matchPath = "/" + matched;
       }
 
       // Run middleware.
       return fn(ctx, () => {
         // Reset nested pathname before calling later middleware.
-        ctx.req.matchPath = matchPath;
+        req.matchPath = matchPath;
         // Run sibling middleware.
         return next();
       });
@@ -243,7 +241,7 @@ export default class Rill {
    *
    * @example
    * app.host("test.com", (ctx, next) => ...)
-   * 
+   *
    * @param hostname The hostname to match before running the middlewares.
    * @param middlewares A list of middlewares to add to the app.
    */
@@ -257,7 +255,8 @@ export default class Rill {
     const fn = chain(middlewares);
 
     return this.use((ctx, next) => {
-      const matchHost = ctx.req.matchHost;
+      const { req } = ctx;
+      const { matchHost, subdomains } = req;
       const matches = matchHost.match(reg);
 
       // Check if we matched the whole hostname.
@@ -268,24 +267,22 @@ export default class Rill {
       // Here we check for the dynamically matched subdomains.
       for (let i = keys.length; i--; ) {
         const key = keys[i];
-        let match: string | string[] = matches[i + 1];
-        if (key.repeat) {
-          match = match == null ? [] : match.split(".");
-        }
-
-        (ctx.req.subdomains as any)[key.name] = match;
+        const match: string = matches[i + 1];
+        (subdomains as any)[key.name] = key.repeat
+          ? match == null ? [] : match.split(".")
+          : match;
       }
 
       // Update hostname for nested routes.
       const matched = matches[matches.length - 1] || "";
-      if (ctx.req.matchHost !== matched) {
-        ctx.req.matchHost = matched;
+      if (matchHost !== matched) {
+        req.matchHost = matched;
       }
 
       // Run middleware.
       return fn(ctx, () => {
         // Reset nested hostname.
-        ctx.req.matchHost = matchHost;
+        req.matchHost = matchHost;
         // Run sibling middleware.
         return next();
       });
@@ -303,8 +300,7 @@ METHODS.forEach(method => {
    * @example
    * app.|method|('/test', ...)
    */
-  Rill.prototype[name] = handleMethodMiddleware;
-  function handleMethodMiddleware(
+  Rill.prototype[name] = function(
     pathname: string | T.MiddlewareArg,
     ...middlewares: T.MiddlewareArg[]
   ): Rill {
@@ -314,12 +310,7 @@ METHODS.forEach(method => {
     }
 
     const fn = chain(middlewares);
-
-    if (pathname) {
-      return this.at(pathname, matchMethod);
-    } else {
-      return this.use(matchMethod);
-    }
+    return pathname ? this.at(pathname, matchMethod) : this.use(matchMethod);
 
     function matchMethod(ctx: Context, next: T.NextFunction) {
       if (ctx.req.method !== method) {
@@ -327,7 +318,7 @@ METHODS.forEach(method => {
       }
       return fn(ctx, next);
     }
-  }
+  };
 });
 
 /**
@@ -360,5 +351,10 @@ function toReg(pathname: string, keys: any[], options: any): RegExp {
   return re;
 }
 
-// Support commonjs and esmodules.
-module.exports = extend(exports.default, exports);
+// Expose module (supports commonjs and esmodules).
+module.exports = exports = Rill;
+export default Rill;
+export const Types = T;
+export { default as Context } from "./context";
+export { default as Request } from "./request";
+export { default as Response } from "./response";

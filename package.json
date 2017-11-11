@@ -17,7 +17,6 @@
     "cookie": "^0.3.1",
     "header-field": "^1.0.5",
     "is-typeof": "^2.0.2",
-    "just-extend": "^1.1.26",
     "mini-querystring": "^2.0.6",
     "mini-url": "^2.1.9",
     "path-to-regexp": "^1.7.0",
@@ -26,21 +25,21 @@
   },
   "devDependencies": {
     "@types/es6-promise": "0.0.33",
-    "@types/mocha": "^2.2.43",
-    "@types/node": "^8.0.46",
+    "@types/mocha": "^2.2.44",
+    "@types/node": "^8.0.51",
     "coveralls": "^3.0.0",
     "get-port": "^3.2.0",
     "husky": "^0.14.3",
-    "lint-staged": "^4.2.3",
+    "lint-staged": "^5.0.0",
     "mocha": "^4.0.1",
-    "nyc": "^11.2.1",
-    "prettier": "^1.7.4",
+    "nyc": "^11.3.0",
+    "prettier": "^1.8.2",
     "source-map-support": "^0.5.0",
     "supertest": "^3.0.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "tslint-config-prettier": "^1.5.0",
-    "typescript": "^2.5.3"
+    "typescript": "^2.6.1"
   },
   "files": [
     "dist"
