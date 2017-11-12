@@ -3,7 +3,7 @@ import { serialize as stringifyCookie } from "cookie";
 import { normalize as normalizeHeader } from "header-field";
 import { parse as parseURL } from "mini-url";
 import * as statuses from "statuses";
-import * as T from "./_types";
+import { Types as T } from "./_types";
 import Context from "./context";
 
 export default class Response {

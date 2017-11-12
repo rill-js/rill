@@ -9,7 +9,7 @@ import {
 } from "@rill/http";
 import { createServer as createSecureServer } from "@rill/https";
 import { parse, tokensToRegExp } from "path-to-regexp";
-import * as T from "./_types";
+import { Types as T } from "./_types";
 import attachDocument from "./attach";
 import Context from "./context";
 import respond from "./respond";
@@ -354,7 +354,7 @@ function toReg(pathname: string, keys: any[], options: any): RegExp {
 // Expose module (supports commonjs and esmodules).
 module.exports = exports = Rill;
 export default Rill;
-export const Types = T;
+export { Types } from "./_types";
 export { default as Context } from "./context";
 export { default as Request } from "./request";
 export { default as Response } from "./response";

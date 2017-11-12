@@ -2,7 +2,7 @@ import { byteLength } from "byte-length";
 import { check as checkType } from "content-check";
 import { isBuffer as checkBuffer, isStream as checkStream } from "is-typeof";
 import * as statuses from "statuses";
-import * as T from "./_types";
+import { Types as T } from "./_types";
 import Context from "./context";
 
 /**

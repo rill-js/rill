@@ -3,7 +3,7 @@ import { parse as parseCookie } from "cookie";
 import { normalize as toField } from "header-field";
 import { parse as parseQS } from "mini-querystring";
 import { parse as parseURL, parts as URL_PARTS } from "mini-url";
-import * as T from "./_types";
+import { Types as T } from "./_types";
 import Context from "./context";
 
 export default class Request {
