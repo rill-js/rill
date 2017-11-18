@@ -69,7 +69,6 @@ class Rill {
      * @return {void}
      */
     return (req: IncomingMessage, res: ServerResponse): void => {
-      res.statusCode = 404;
       const ctx = new Context(req, res);
 
       fn(ctx)
@@ -341,7 +340,7 @@ function toReg(pathname: string, keys: any[], options: any): RegExp {
   const re = tokensToRegExp(tokens, options);
 
   // Assign keys to from regexp.
-  re.keys = keys;
+  (re as any).keys = keys;
   for (let i = 0, len = tokens.length; i < len; i++) {
     if (typeof tokens[i] === "object") {
       keys.push(tokens[i]);
