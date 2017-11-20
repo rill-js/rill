@@ -31,8 +31,8 @@
     <img src="https://img.shields.io/npm/dm/rill.svg?style=flat-square" alt="Downloads"/>
   </a>
   <!-- Size -->
-  <a href="https://npmjs.org/package/header-field">
-    <img src="https://img.shields.io/badge/gzipped-12.4kb-green.svg" alt="Browser Bundle Size (Gzipped)"/>
+  <a href="https://npmjs.org/package/rill">
+    <img src="https://img.shields.io/badge/gzipped-12.2kb-green.svg" alt="Browser Bundle Size (Gzipped)"/>
   </a>
   <!-- Gitter chat -->
   <a href="https://gitter.im/rill-js/rill">
