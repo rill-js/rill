@@ -5,6 +5,7 @@ import {
   ServerResponse,
   Types as HttpT
 } from "@rill/http";
+import { TlsOptions as _TlsOptions } from "tls";
 import Rill from "./";
 import Context from "./context";
 
@@ -15,11 +16,9 @@ export namespace Types {
   export type SetupArg = SetupFunction | false | void;
 
   export type NextFunction = ChainT.NextFunction;
-  export type MiddlewareFunction = (ctx: Context, next?: NextFunction) => any;
-  export type MiddlewareArg = Stack | MiddlewareFunction | Rill | false | void;
-  export interface Stack extends Array<MiddlewareArg> {
-    [index: number]: MiddlewareArg;
-  }
+  export type MiddlewareFunction = ChainT.MiddlewareFunction<Context>;
+  export type MiddlewareArg = ChainT.MiddlewareArg<Context>;
+  export type Stack = ChainT.Stack<Context>;
 
   export type HttpRequestHandler = (
     this: Server,
@@ -33,10 +32,11 @@ export namespace Types {
     ...middlewares: MiddlewareArg[]
   ) => Rill;
 
+  export type TlsOptions = _TlsOptions;
   export interface ListenOptions {
     ip?: string;
     port?: number;
     backlog?: number;
-    tls?: any;
+    tls?: TlsOptions;
   }
 }

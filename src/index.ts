@@ -16,7 +16,7 @@ import respond from "./respond";
 
 class Rill {
   /** The current middleware stack. */
-  public stack: T.MiddlewareArg[];
+  public stack: T.Stack;
   /** Attaches middleware that only run on OPTION requests. */
   public options: T.MethodShortcut;
   /** Attaches middleware that only run on HEAD requests. */
@@ -59,7 +59,7 @@ class Rill {
    * require('http').createServer(app.handler()).listen()
    */
   public handler(): T.HttpRequestHandler {
-    const fn = chain(this.stack);
+    const fn = chain<Context>(this.stack);
 
     /**
      * Handles a node js server request and pushes it through a rill server.
@@ -97,7 +97,7 @@ class Rill {
    *
    * @param tls Optional HTTPS/TLS options (key, cert, etc).
    */
-  public createServer(tls?: any): Server {
+  public createServer(tls?: T.TlsOptions): Server {
     const handler = this.handler();
     const server = tls
       ? createSecureServer(tls, handler)
@@ -198,7 +198,7 @@ class Rill {
 
     const keys = [];
     const reg = toReg(pathname, keys, { end: false, delimiter: "/" });
-    const fn = chain(middlewares);
+    const fn = chain<Context>(middlewares);
 
     return this.use((ctx, next) => {
       const { req } = ctx;
@@ -251,7 +251,7 @@ class Rill {
 
     const keys = [];
     const reg = toReg(hostname, keys, { strict: true, delimiter: "." });
-    const fn = chain(middlewares);
+    const fn = chain<Context>(middlewares);
 
     return this.use((ctx, next) => {
       const { req } = ctx;
@@ -308,7 +308,7 @@ METHODS.forEach(method => {
       pathname = undefined;
     }
 
-    const fn = chain(middlewares);
+    const fn = chain<Context>(middlewares);
     return pathname ? this.at(pathname, matchMethod) : this.use(matchMethod);
 
     function matchMethod(ctx: Context, next: T.NextFunction) {

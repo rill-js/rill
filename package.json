@@ -8,7 +8,7 @@
   },
   "bugs": "https://github.com/rill-js/rill/issues",
   "dependencies": {
-    "@rill/chain": "^1.0.9",
+    "@rill/chain": "^1.1.1",
     "@rill/error": "^1.3.3",
     "@rill/http": "^7.0.0",
     "@rill/https": "^7.0.0",
@@ -21,25 +21,25 @@
     "mini-url": "^2.1.9",
     "path-to-regexp": "^1.7.0",
     "statuses": "^1.4.0",
-    "tslib": "^1.8.0"
+    "tslib": "^1.9.0"
   },
   "devDependencies": {
     "@types/es6-promise": "0.0.33",
-    "@types/mocha": "^2.2.44",
-    "@types/node": "^8.0.53",
+    "@types/mocha": "^2.2.48",
+    "@types/node": "^9.4.6",
     "coveralls": "^3.0.0",
     "get-port": "^3.2.0",
     "husky": "^0.14.3",
-    "lint-staged": "^5.0.0",
-    "mocha": "^4.0.1",
-    "nyc": "^11.3.0",
-    "prettier": "^1.8.2",
-    "source-map-support": "^0.5.0",
+    "lint-staged": "^7.0.0",
+    "mocha": "^5.0.1",
+    "nyc": "^11.4.1",
+    "prettier": "^1.11.0",
+    "source-map-support": "^0.5.3",
     "supertest": "^3.0.0",
-    "ts-node": "^3.3.0",
-    "tslint": "^5.8.0",
-    "tslint-config-prettier": "^1.5.0",
-    "typescript": "^2.6.1"
+    "ts-node": "^5.0.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.9.0",
+    "typescript": "^2.7.2"
   },
   "files": [
     "dist"

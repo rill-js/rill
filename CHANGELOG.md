@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# 7.0.3 - 2018-02-26
+- Add type definitions for TLS options.
+- Updated dev dependencies.
+- Update license dates.
+
 # 7.0.1, 7.0.2 - 2017-11-18
 - Update links to todomvc examples in readme.
 - Fix bad URL for size badge and update size in readme.
