@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-# 7.0.3 - 2018-02-26
+# 7.0.3, 7.0.4 - 2018-02-27
+- Add type definitions for params, querystring, cookies and cookie serialization options.
 - Add type definitions for TLS options.
 - Updated dev dependencies.
 - Update license dates.

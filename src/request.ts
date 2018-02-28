@@ -16,9 +16,9 @@ export default class Request {
   /** True if the request is https. */
   public secure: boolean;
   /** The path parameters object. */
-  public params: any;
+  public params: T.StringOrNumberMap;
   /** The parsed request cookies. */
-  public cookies: any;
+  public cookies: T.StringMap;
   /** The origin part of the request. */
   public origin: string;
   /** The protocol for the request (eg: http). */
@@ -44,7 +44,7 @@ export default class Request {
   /** A placeholder for the parsed request files (see @rill/body). */
   public files: any;
   /** The parsed search object from above (eg: { c: "d" }). */
-  public query: any;
+  public query: T.StringMapNested;
   /** A list of subdomains (after the top level domain) for the request. */
   public subdomains: string[];
   // @internal

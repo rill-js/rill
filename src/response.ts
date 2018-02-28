@@ -96,12 +96,11 @@ export default class Response {
    * @example
    * response.cookie('auth-token', 'abc123', { httoOnly: true })
    *
-   * @param {string} name - The name of the cookie.
-   * @param {*} value - The value for the cookie.
-   * @param {object} [options] - Options for the cookie.
-   * @return {void}
+   * @param name - The name of the cookie.
+   * @param value - The value for the cookie.
+   * @param [options] - Options for the cookie.
    */
-  public cookie(name: string, value: any, options?: any) {
+  public cookie(name: string, value: string, options?: T.CookieOptions) {
     this.append("Set-Cookie", stringifyCookie(name, value, options));
   }
 
@@ -111,7 +110,7 @@ export default class Response {
    * @example
    * response.clearCookie('auth-token')
    */
-  public clearCookie(name: string, options: any): void {
+  public clearCookie(name: string, options?: T.CookieOptions): void {
     this.append(
       "Set-Cookie",
       stringifyCookie(name, "", { ...options, expires: new Date() })
